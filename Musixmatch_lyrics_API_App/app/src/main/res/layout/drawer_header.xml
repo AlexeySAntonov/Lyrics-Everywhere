@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:id="@+id/headerLayout"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="172dp"
+	android:background="@drawable/header6"
+	android:gravity="bottom"
+	android:orientation="vertical"
+	android:padding="16dp">
+
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/avatar"
+		android:layout_width="56dp"
+		android:layout_height="56dp"
+		android:layout_marginBottom="8dp"
+		android:src="@drawable/ava"/>
+
+	<com.devspark.robototextview.widget.RobotoTextView
+		android:id="@+id/name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Alexey Antonov"
+		android:textColor="@android:color/white"
+		android:textSize="20sp"
+		app:robotoTypeface="roboto_medium"/>
+
+	<com.devspark.robototextview.widget.RobotoTextView
+		android:id="@+id/mail"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="alex.antonov150@gmail.com"
+		android:textColor="@android:color/white"
+		android:textSize="14sp"
+		app:robotoTypeface="roboto_regular"/>
+
+</LinearLayout>

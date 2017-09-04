@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<group android:checkableBehavior="single">
+		<item
+			android:id="@+id/rus"
+			android:icon="@drawable/ic_star_white_24dp"
+			android:title="RUSSIAN TOP CHART"/>
+		<item
+			android:id="@+id/usa"
+			android:icon="@drawable/ic_star_white_24dp"
+			android:title="USA TOP CHART"/>
+		<item
+			android:id="@+id/gb"
+			android:icon="@drawable/ic_star_white_24dp"
+			android:title="ENGLISH TOP CHART"/>
+		<item android:title="">
+			<menu>
+				<item
+					android:id="@+id/settings"
+					android:icon="@drawable/ic_settings_white_24dp"
+					android:title="Settings"/>
+				<item
+					android:id="@+id/exit"
+					android:icon="@drawable/ic_exit_to_app_white_24dp"
+					android:title="Exit"/>
+			</menu>
+		</item>
+	</group>
+</menu>
