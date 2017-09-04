@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,9 +31,10 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 	private static final String BUNDLE_COUNTRY = ArtistsAndTracksListFragment.class.getSimpleName() + ".country";
 
 	private ArtistsAndTracksPresenter presenter = new ArtistsAndTracksPresenter();
-	private RecyclerView recyclerView;
+	private String country;
 	private RequestManager imageRequestManager;
 
+	private RecyclerView recyclerView;
 	private ProgressBar progressBar;
 	private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -61,16 +63,26 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 		progressBar.setVisibility(View.VISIBLE);
 
 		swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-		swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadArtists());
+		swipeRefreshLayout.setOnRefreshListener(() -> {
+			if (MyApplication.isOnline(getContext())) {
+				presenter.loadArtists();
+			} else {
+				showLostInternetConnectionDialog();
+			}
+		});
 
 		recyclerView = view.findViewById(R.id.recyclerView);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
+		country = getArguments().getString(BUNDLE_COUNTRY);
 
-		String country = getArguments().getString(BUNDLE_COUNTRY);
-		presenter.onAttach(this, country);
-		Log.d("Presenter", "onAttach()");
+		if (MyApplication.isOnline(getContext())) {
+			presenter.onAttach(this, country);
+			Log.d("Presenter", "onAttach()");
+		} else {
+			showLostInternetConnectionDialog();
+		}
 	}
 
 	@Override
@@ -112,5 +124,19 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 		} else {
 			Snackbar.make(getView(), "Artist have no Twitter", Snackbar.LENGTH_LONG).show();
 		}
+	}
+
+	private void showLostInternetConnectionDialog() {
+		new AlertDialog.Builder(getContext(), R.style.Dialog)
+				.setTitle(R.string.internet_connection_problems)
+				.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+				.setPositiveButton(R.string.retry, (dialogInterface, i) -> {
+					if (MyApplication.isOnline(getContext())) {
+						presenter.onAttach(ArtistsAndTracksListFragment.this, country);
+					} else {
+						showLostInternetConnectionDialog();
+					}
+				})
+				.create().show();
 	}
 }

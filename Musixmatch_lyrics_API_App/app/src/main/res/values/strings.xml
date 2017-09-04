@@ -1,4 +1,7 @@
 <resources>
 	<string name="app_name">Musixmatch_lyrics_API_App</string>
 	<string name="lyrics">Lyrics</string>
+
+	<string name="retry">retry</string>
+	<string name="internet_connection_problems">Internet connection problems</string>
 </resources>

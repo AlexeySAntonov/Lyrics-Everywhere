@@ -2,6 +2,8 @@ package alexejantonov.com.musixmatch_lyrics_api_app;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -52,5 +54,11 @@ public class MyApplication extends Application {
 
 	public static RequestManager getImageRequestManager() {
 		return imageRequestManager;
+	}
+
+	public static boolean isOnline(Context context) {
+		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+		return info != null && info.isConnectedOrConnecting();
 	}
 }
