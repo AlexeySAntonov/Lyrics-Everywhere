@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchApi;
+import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistContainer;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistResponse;
@@ -25,14 +25,14 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private View view;
 	private List<ArtistContainer> artistContainers = new ArrayList<>();
 	private List<TrackContainer> trackContainers = new ArrayList<>();
-	private MusixMatchApi musixMatchApi;
+	private MusixMatchService musixMatchService;
 	private String country;
 	private DataBase dataBase;
 
 	@Override
-	public void onAttach(DataBase dataBase, MusixMatchApi musixMatchApi, View view, String country) {
+	public void onAttach(DataBase dataBase, MusixMatchService musixMatchService, View view, String country) {
 		this.dataBase = dataBase;
-		this.musixMatchApi = musixMatchApi;
+		this.musixMatchService = musixMatchService;
 		this.view = view;
 		this.country = country;
 		loadArtists();
@@ -45,7 +45,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	@Override
 	public void loadArtists() {
-		musixMatchApi.getArtists(country, "1", "100").enqueue(new Callback<ArtistResponse>() {
+		musixMatchService.getArtists(country, "1", "100").enqueue(new Callback<ArtistResponse>() {
 			@Override
 			public void onResponse(Call<ArtistResponse> call, Response<ArtistResponse> response) {
 				if (response.isSuccessful()) {
@@ -65,7 +65,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	@Override
 	public void loadTracks() {
-		musixMatchApi.getTracks(country, "1", "100").enqueue(new Callback<TrackResponse>() {
+		musixMatchService.getTracks(country, "1", "100").enqueue(new Callback<TrackResponse>() {
 			@Override
 			public void onResponse(Call<TrackResponse> call, Response<TrackResponse> response) {
 				if (response.isSuccessful()) {

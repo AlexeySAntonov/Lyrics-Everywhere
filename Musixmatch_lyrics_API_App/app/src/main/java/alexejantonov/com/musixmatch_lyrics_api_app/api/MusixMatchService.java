@@ -7,7 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface MusixMatchApi {
+public interface MusixMatchService {
 
 	@GET("chart.artists.get?apikey=a15ab4dde789e7a4b63d2db9000abb0e")
 	Call<ArtistResponse> getArtists(@Query("country") String country,
