@@ -16,16 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 
 import java.util.List;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.R;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
-import alexejantonov.com.musixmatch_lyrics_api_app.db.DataBase;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsActivity;
 
 public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAndTracksScreenContract.View {
@@ -35,8 +32,6 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 	private ArtistsAndTracksPresenter presenter = new ArtistsAndTracksPresenter();
 	private RecyclerView recyclerView;
 	private RequestManager imageRequestManager;
-	private DataBase dataBase;
-	private MusixMatchService musixMatchService;
 
 	private ProgressBar progressBar;
 	private SwipeRefreshLayout swipeRefreshLayout;
@@ -72,11 +67,9 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-		dataBase = MyApplication.getDataBase();
-		musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
-		String country = getArguments().getString(BUNDLE_COUNTRY);
 
-		presenter.onAttach(dataBase, musixMatchService, this, country);
+		String country = getArguments().getString(BUNDLE_COUNTRY);
+		presenter.onAttach(this, country);
 		Log.d("Presenter", "onAttach()");
 	}
 
@@ -93,7 +86,7 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 		swipeRefreshLayout.setRefreshing(false);
 
 		if (getContext() != null) {
-			imageRequestManager = Glide.with(getContext());
+			imageRequestManager = MyApplication.getImageRequestManager();
 			recyclerView.setAdapter(new DataAdapter(
 					data,
 					this::launchTrackDetailsActivity,

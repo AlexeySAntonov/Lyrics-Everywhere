@@ -12,7 +12,7 @@ public interface ArtistsAndTracksScreenContract {
 	}
 
 	interface Presenter {
-		void onAttach(DataBase dataBase, MusixMatchService musixMatchService, View view, String country);
+		void onAttach(View view, String country);
 		void onDetach();
 		void loadArtists();
 		void loadTracks();

@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistContainer;
@@ -30,9 +31,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private DataBase dataBase;
 
 	@Override
-	public void onAttach(DataBase dataBase, MusixMatchService musixMatchService, View view, String country) {
-		this.dataBase = dataBase;
-		this.musixMatchService = musixMatchService;
+	public void onAttach(View view, String country) {
 		this.view = view;
 		this.country = country;
 		loadArtists();
@@ -45,6 +44,9 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	@Override
 	public void loadArtists() {
+		musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
+		dataBase = MyApplication.getDataBase();
+
 		musixMatchService.getArtists(country, "1", "100").enqueue(new Callback<ArtistResponse>() {
 			@Override
 			public void onResponse(Call<ArtistResponse> call, Response<ArtistResponse> response) {
@@ -101,7 +103,8 @@ public class ArtistsAndTracksPresenter implements Presenter {
 				}
 			}
 		}
-
-		view.showData(data);
+		if (view != null) {
+			view.showData(data);
+		}
 	}
 }

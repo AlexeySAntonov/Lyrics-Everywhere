@@ -20,6 +20,7 @@ public class MyApplication extends Application {
 	private static Retrofit retrofit;
 	private OkHttpClient client;
 	private static DataBase dataBase;
+	private static RequestManager imageRequestManager;
 
 	@Override
 	public void onCreate() {
@@ -37,6 +38,8 @@ public class MyApplication extends Application {
 				.build();
 
 		dataBase = new DataBase(this);
+
+		imageRequestManager = Glide.with(this);
 	}
 
 	public static Retrofit getRetrofit() {
@@ -45,5 +48,9 @@ public class MyApplication extends Application {
 
 	public static DataBase getDataBase() {
 		return dataBase;
+	}
+
+	public static RequestManager getImageRequestManager() {
+		return imageRequestManager;
 	}
 }
