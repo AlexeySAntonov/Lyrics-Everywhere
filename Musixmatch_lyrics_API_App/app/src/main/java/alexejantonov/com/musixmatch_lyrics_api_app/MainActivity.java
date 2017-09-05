@@ -1,11 +1,14 @@
 package alexejantonov.com.musixmatch_lyrics_api_app;
 
+import android.content.res.Configuration;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +19,12 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.Artists
 
 public class MainActivity extends AppCompatActivity {
 
+	private FragmentManager fragmentManager;
+
 	private DrawerLayout drawerLayout;
+	private ActionBarDrawerToggle drawerToggle;
 	private NavigationView navigationView;
 	private Toolbar toolbar;
-	private FragmentManager fragmentManager;
 	private MenuItem lastDrawerMenuItem;
 
 	@Override
@@ -41,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 		toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 		toolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
+		drawerToggle = setupDrawerToggle();
+		drawerLayout.addDrawerListener(drawerToggle);
+
 		defaultInit();
 	}
 
@@ -48,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
 	protected void onStart() {
 		super.onStart();
 		Log.d("Method", "onStart()");
+	}
+
+	@Override
+	protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		drawerToggle.syncState();
 	}
 
 	@Override
@@ -72,6 +86,20 @@ public class MainActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		Log.d("Method", "onDestroy()");
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		drawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (drawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void defaultInit() {
@@ -127,5 +155,9 @@ public class MainActivity extends AppCompatActivity {
 			item.setIcon(R.drawable.ic_star_gold_24dp);
 			drawerLayout.closeDrawers();
 		}
+	}
+
+	private ActionBarDrawerToggle setupDrawerToggle() {
+		return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
 	}
 }

@@ -4,4 +4,6 @@
 
 	<string name="retry">retry</string>
 	<string name="internet_connection_problems">Internet connection problems</string>
+	<string name="drawer_open">Open navigation drawer</string>
+	<string name="drawer_close">Close navigation drawer</string>
 </resources>
