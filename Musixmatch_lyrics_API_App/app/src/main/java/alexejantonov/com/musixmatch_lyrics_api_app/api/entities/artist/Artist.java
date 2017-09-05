@@ -15,6 +15,8 @@ public class Artist implements BaseData {
 	@SerializedName("artist_twitter_url")
 	private String twitterUrl;
 
+	private String topChartCountries = "";
+
 	public String getArtistName() {
 		return artistName;
 	}
@@ -37,6 +39,14 @@ public class Artist implements BaseData {
 
 	public void setTwitterUrl(String twitterUrl) {
 		this.twitterUrl = twitterUrl;
+	}
+
+	public String getTopChartCountries() {
+		return topChartCountries;
+	}
+
+	public void setTopChartCountries(String topChartCountries) {
+		this.topChartCountries = topChartCountries;
 	}
 
 	@Override

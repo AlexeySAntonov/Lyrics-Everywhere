@@ -1,6 +1,7 @@
 package alexejantonov.com.musixmatch_lyrics_api_app;
 
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -10,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		Log.d("Method", "onStart()");
+		Log.d("Activity", "onStart()");
 	}
 
 	@Override
@@ -67,25 +67,25 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.d("Method", "onResume()");
+		Log.d("Activity", "onResume()");
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.d("Method", "onPause()");
+		Log.d("Activity", "onPause()");
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		Log.d("Method", "onStop()");
+		Log.d("Activity", "onStop()");
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Log.d("Method", "onDestroy()");
+		Log.d("Activity", "onDestroy()");
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 		fragmentManager = getSupportFragmentManager();
 		Fragment fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
 		if (fragment == null) {
-			fragment = ArtistsAndTracksListFragment.newInstance("us");
+			fragment = ArtistsAndTracksListFragment.newInstance("ru");
 			fragmentManager
 					.beginTransaction()
 					.add(R.id.fragmentContainer, fragment)

@@ -2,9 +2,6 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks;
 
 import java.util.List;
 
-import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
-import alexejantonov.com.musixmatch_lyrics_api_app.db.DataBase;
-
 public interface ArtistsAndTracksScreenContract {
 
 	interface View {
@@ -14,7 +11,7 @@ public interface ArtistsAndTracksScreenContract {
 	interface Presenter {
 		void onAttach(View view, String country);
 		void onDetach();
-		void loadArtists();
-		void loadTracks();
+
+		void loadData();
 	}
 }

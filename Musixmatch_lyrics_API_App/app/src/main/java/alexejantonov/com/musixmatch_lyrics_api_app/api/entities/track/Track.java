@@ -62,4 +62,15 @@ public class Track implements BaseData, Serializable {
 	public void setAlbumCover(String albumCover) {
 		this.albumCover = albumCover;
 	}
+
+	@Override
+	public String toString() {
+		return "Track{" +
+				"trackId=" + trackId +
+				", trackName='" + trackName + '\'' +
+				", albumName='" + albumName + '\'' +
+				", artistId=" + artistId +
+				", albumCover='" + albumCover + '\'' +
+				'}';
+	}
 }

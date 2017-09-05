@@ -13,10 +13,14 @@ public class DataContainersUtils {
 	public DataContainersUtils() {
 	}
 
-	public static List<Artist> artistContainersToArtists(List<ArtistContainer> artistContainers) {
+	public static List<Artist> artistContainersToArtists(List<ArtistContainer> artistContainers, String country) {
 		List<Artist> artists = new ArrayList<>();
 		for (int i = 0; i < artistContainers.size(); i++) {
 			artists.add(artistContainers.get(i).getArtist());
+		}
+
+		for (Artist artist : artists) {
+			artist.setTopChartCountries(artist.getTopChartCountries() + country);
 		}
 
 		return artists;

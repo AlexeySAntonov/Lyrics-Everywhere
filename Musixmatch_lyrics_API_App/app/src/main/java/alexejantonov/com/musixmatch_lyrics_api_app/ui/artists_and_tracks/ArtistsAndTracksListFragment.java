@@ -77,19 +77,15 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 
 		country = getArguments().getString(BUNDLE_COUNTRY);
 
-		if (MyApplication.isOnline(getContext())) {
-			presenter.onAttach(this, country);
-			Log.d("Presenter", "onAttach()");
-		} else {
-			showLostInternetConnectionDialog();
-		}
+		Log.d("Presenter", "onAttach()");
+		presenter.onAttach(this, country);
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		presenter.onDetach();
 		Log.d("Presenter", "onDetach()");
+		presenter.onDetach();
 	}
 
 	@Override
@@ -129,7 +125,7 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 	private void showLostInternetConnectionDialog() {
 		new AlertDialog.Builder(getContext(), R.style.Dialog)
 				.setTitle(R.string.internet_connection_problems)
-				.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+				.setNeutralButton(R.string.load_from_database, (dialogInterface, i) -> presenter.onAttach(ArtistsAndTracksListFragment.this, country))
 				.setPositiveButton(R.string.retry, (dialogInterface, i) -> {
 					if (MyApplication.isOnline(getContext())) {
 						presenter.onAttach(ArtistsAndTracksListFragment.this, country);
@@ -137,6 +133,7 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 						showLostInternetConnectionDialog();
 					}
 				})
+				.setOnDismissListener(dialogInterface -> swipeRefreshLayout.setRefreshing(false))
 				.create().show();
 	}
 }
