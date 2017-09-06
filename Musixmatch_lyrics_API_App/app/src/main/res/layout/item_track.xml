@@ -40,10 +40,12 @@
 			android:id="@+id/trackAlbum"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:ellipsize="end"
+			android:lines="1"
 			android:textColor="@color/defaultGrayColor"
 			android:textSize="12sp"
 			app:robotoTypeface="roboto_regular"
-			tools:text="ID 12772"/>
+			tools:text="My super-super album"/>
 
 	</LinearLayout>
 
