@@ -86,13 +86,16 @@ public class DataBase {
 	public void insertTracks(List<Track> tracks) {
 		cursor = db.query(TRACKS_TABLE_NAME, null, null, null, null, null, null);
 		int idColumnIndex = cursor.getColumnIndex(COLUMN_TRACK_ID);
+		int nameColumnIndex = cursor.getColumnIndex(COLUMN_TRACK_NAME);
 
 		db.beginTransaction();
 
 		for (Track track : tracks) {
 			if (cursor.moveToFirst()) {
 				do {
-					if (track.getTrackId() == cursor.getInt(idColumnIndex)) exists = true;
+					if (track.getTrackId() == cursor.getInt(idColumnIndex) ||
+							track.getTrackName().equals(cursor.getString(nameColumnIndex)))
+						exists = true;
 				} while (cursor.moveToNext());
 			}
 
