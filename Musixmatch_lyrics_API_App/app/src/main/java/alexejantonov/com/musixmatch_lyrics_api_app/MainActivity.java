@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
 		toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setTitle("Lyrics everywhere");
 		toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 		toolbar.setNavigationOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 		searchItem.collapseActionView();
 
 		final SearchView searchView = (SearchView) searchItem.getActionView();
-		searchView.setQueryHint("Search by artist name...");
+		searchView.setQueryHint(getString(R.string.search_by_artist_name));
 
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
@@ -126,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
 						.commit();
 
 				searchItem.collapseActionView();
-				getSupportActionBar().setTitle("Results for \"" + query + "\"");
 				return false;
 			}
 
@@ -159,23 +157,23 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		lastDrawerMenuItem = item;
-		String country = "us";
+		String country = "";
 
 		switch (item.getItemId()) {
 			case R.id.rus:
-				Snackbar.make(navigationView, "RUSSIAN TOP CHART", Snackbar.LENGTH_LONG).show();
+				Snackbar.make(navigationView, R.string.russian_top_chart, Snackbar.LENGTH_LONG).show();
 				country = "ru";
 				break;
 			case R.id.usa:
-				Snackbar.make(navigationView, "USA TOP CHART", Snackbar.LENGTH_LONG).show();
+				Snackbar.make(navigationView, R.string.usa_top_chart, Snackbar.LENGTH_LONG).show();
 				country = "us";
 				break;
 			case R.id.gb:
-				Snackbar.make(navigationView, "ENGLISH TOP CHART", Snackbar.LENGTH_LONG).show();
+				Snackbar.make(navigationView, R.string.britain_top_chart, Snackbar.LENGTH_LONG).show();
 				country = "gb";
 				break;
 			case R.id.settings:
-				Snackbar.make(navigationView, "Setting pressed", Snackbar.LENGTH_LONG).show();
+				Snackbar.make(navigationView, R.string.settings, Snackbar.LENGTH_LONG).show();
 				break;
 			case R.id.exit:
 				this.finish();
@@ -188,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 					.replace(R.id.fragmentContainer, ArtistsAndTracksListFragment.newInstance(country))
 					.addToBackStack(null)
 					.commit();
-			getSupportActionBar().setTitle(item.getTitle());
 			item.setIcon(R.drawable.ic_star_gold_24dp);
 			drawerLayout.closeDrawers();
 		}

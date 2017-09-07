@@ -4,25 +4,25 @@
 		<item
 			android:id="@+id/rus"
 			android:icon="@drawable/ic_star_white_24dp"
-			android:title="RUSSIAN TOP CHART"/>
+			android:title="@string/russian_top_chart"/>
 		<item
 			android:id="@+id/usa"
 			android:icon="@drawable/ic_star_white_24dp"
-			android:title="USA TOP CHART"/>
+			android:title="@string/usa_top_chart"/>
 		<item
 			android:id="@+id/gb"
 			android:icon="@drawable/ic_star_white_24dp"
-			android:title="ENGLISH TOP CHART"/>
+			android:title="@string/britain_top_chart"/>
 		<item android:title="">
 			<menu>
 				<item
 					android:id="@+id/settings"
 					android:icon="@drawable/ic_settings_white_24dp"
-					android:title="Settings"/>
+					android:title="@string/settings"/>
 				<item
 					android:id="@+id/exit"
 					android:icon="@drawable/ic_exit_to_app_white_24dp"
-					android:title="Exit"/>
+					android:title="@string/exit"/>
 			</menu>
 		</item>
 	</group>

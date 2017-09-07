@@ -14,7 +14,7 @@ import com.bumptech.glide.RequestManager;
 import alexejantonov.com.musixmatch_lyrics_api_app.R;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
 
-import static alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsScreenContract.*;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsScreenContract.View;
 
 public class TrackDetailsActivity extends AppCompatActivity implements View {
 
@@ -45,7 +45,7 @@ public class TrackDetailsActivity extends AppCompatActivity implements View {
 
 		toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setTitle("Lyrics of " + "\"" + track.getTrackName() + "\"");
+		getSupportActionBar().setTitle(getString(R.string.lyrics_of) + "\"" + track.getTrackName() + "\"");
 		toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 		toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
@@ -55,7 +55,7 @@ public class TrackDetailsActivity extends AppCompatActivity implements View {
 		lyrics = findViewById(R.id.lyrics);
 
 		trackName.setText("\"" + track.getTrackName() + "\"");
-		trackAlbum.setText("Album - " + "\"" + track.getAlbumName() + "\"");
+		trackAlbum.setText(getString(R.string.album) + " \"" + track.getAlbumName() + "\"");
 		imageRequestManager = Glide.with(this);
 		imageRequestManager.load(track.getAlbumCover()).into(albumCover);
 

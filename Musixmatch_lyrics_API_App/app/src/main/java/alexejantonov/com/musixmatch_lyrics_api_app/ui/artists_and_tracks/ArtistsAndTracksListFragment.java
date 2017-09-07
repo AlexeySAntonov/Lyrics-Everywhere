@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.bumptech.glide.RequestManager;
 
 import java.util.List;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity;
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.R;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
@@ -75,6 +77,8 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 
 		country = getArguments().getString(BUNDLE_COUNTRY);
 		query = getArguments().getString(BUNDLE_QUERY);
+
+		setToolbarTitle(country, query);
 
 		swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 		swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -137,7 +141,7 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl)));
 			}
 		} else {
-			Snackbar.make(getView(), "Artist have no Twitter", Snackbar.LENGTH_LONG).show();
+			Snackbar.make(getView(), R.string.no_twitter, Snackbar.LENGTH_LONG).show();
 		}
 	}
 
@@ -154,5 +158,25 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 				})
 				.setOnDismissListener(dialogInterface -> swipeRefreshLayout.setRefreshing(false))
 				.create().show();
+	}
+
+	private void setToolbarTitle(String country, String query) {
+		ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
+
+		if (country != null) {
+			switch (country) {
+				case "ru":
+					actionBar.setTitle(R.string.russian_top_chart);
+					break;
+				case "us":
+					actionBar.setTitle(R.string.usa_top_chart);
+					break;
+				case "gb":
+					actionBar.setTitle(R.string.britain_top_chart);
+					break;
+			}
+		} else {
+			actionBar.setTitle(getString(R.string.query_results) + query + "\"");
+		}
 	}
 }
