@@ -32,7 +32,7 @@
 			android:layout_alignParentLeft="true"
 			android:layout_alignParentStart="true"
 			android:layout_alignParentTop="true"
-			tools:src="@drawable/sound2"/>
+			tools:src="@drawable/sound_image"/>
 
 		<com.devspark.robototextview.widget.RobotoTextView
 			android:id="@+id/trackAlbum"

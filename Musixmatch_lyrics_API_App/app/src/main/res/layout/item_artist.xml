@@ -16,7 +16,7 @@
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="168dp"
-		android:background="@drawable/singer"
+		android:background="@drawable/singer_image"
 		android:foreground="?attr/selectableItemBackground">
 
 		<LinearLayout
@@ -54,7 +54,7 @@
 				android:layout_height="24dp"
 				android:layout_marginTop="5dp"
 				android:background="?attr/selectableItemBackground"
-				app:srcCompat="@drawable/twitter_cropped"/>
+				app:srcCompat="@drawable/twitter_image"/>
 
 		</LinearLayout>
 
