@@ -9,7 +9,7 @@ public interface ArtistsAndTracksScreenContract {
 	}
 
 	interface Presenter {
-		void onAttach(View view, String country);
+		void onAttach(View view, String country, String query);
 		void onDetach();
 
 		void loadData();

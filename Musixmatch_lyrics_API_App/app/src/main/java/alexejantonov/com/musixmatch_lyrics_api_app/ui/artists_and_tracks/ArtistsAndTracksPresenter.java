@@ -27,12 +27,14 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private List<Track> tracks = new ArrayList<>();
 	private MusixMatchService musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
 	private String country;
+	private String query;
 	private DataBase dataBase = MyApplication.getDataBase();
 
 	@Override
-	public void onAttach(View view, String country) {
+	public void onAttach(View view, String country, String query) {
 		this.view = view;
 		this.country = country;
+		this.query = query;
 		loadData();
 	}
 
@@ -43,13 +45,17 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	@Override
 	public void loadData() {
-		if (dataBase.getArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
-			//Тащим с БД если не пусто
-			Log.d("Loading", country + " top chart artists from Data base");
-			listsMerge(dataBase.getArtists(country), dataBase.getTracks());
-		} else {
-			//Тащим с сервера
-			loadArtists();
+		if (country != null) {
+			if (dataBase.getArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
+				//Тащим с БД если не пусто
+				Log.d("Loading", country + " top chart artists from Data base");
+				listsMerge(dataBase.getArtists(country), dataBase.getTracks());
+			} else {
+				//Тащим с сервера
+				loadArtists();
+			}
+		} else if (query != null) {
+			listsMerge(dataBase.getQueryArtists(query), dataBase.getTracks());
 		}
 	}
 

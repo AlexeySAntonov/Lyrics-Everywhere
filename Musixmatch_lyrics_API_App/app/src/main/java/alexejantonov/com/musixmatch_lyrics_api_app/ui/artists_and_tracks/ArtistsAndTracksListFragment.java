@@ -29,9 +29,11 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetails
 public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAndTracksScreenContract.View {
 
 	private static final String BUNDLE_COUNTRY = ArtistsAndTracksListFragment.class.getSimpleName() + ".country";
+	private static final String BUNDLE_QUERY = ArtistsAndTracksListFragment.class.getSimpleName() + " .query";
 
 	private ArtistsAndTracksPresenter presenter = new ArtistsAndTracksPresenter();
 	private String country;
+	private String query;
 	private RequestManager imageRequestManager;
 
 	private RecyclerView recyclerView;
@@ -44,6 +46,15 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 	public static ArtistsAndTracksListFragment newInstance(String country) {
 		Bundle args = new Bundle();
 		args.putString(BUNDLE_COUNTRY, country);
+		ArtistsAndTracksListFragment artistsAndTracksListFragment = new ArtistsAndTracksListFragment();
+		artistsAndTracksListFragment.setArguments(args);
+		return artistsAndTracksListFragment;
+	}
+
+	public static ArtistsAndTracksListFragment newInstance(String country, String query) {
+		Bundle args = new Bundle();
+		args.putString(BUNDLE_COUNTRY, country);
+		args.putString(BUNDLE_QUERY, query);
 		ArtistsAndTracksListFragment artistsAndTracksListFragment = new ArtistsAndTracksListFragment();
 		artistsAndTracksListFragment.setArguments(args);
 		return artistsAndTracksListFragment;
@@ -62,12 +73,17 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 		progressBar = view.findViewById(R.id.progressBar);
 		progressBar.setVisibility(View.VISIBLE);
 
+		country = getArguments().getString(BUNDLE_COUNTRY);
+		query = getArguments().getString(BUNDLE_QUERY);
+
 		swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 		swipeRefreshLayout.setOnRefreshListener(() -> {
-			if (MyApplication.isOnline(getContext())) {
+			if (MyApplication.isOnline(getContext()) && query == null) {
 				presenter.loadArtists();
-			} else {
+			} else if (!MyApplication.isOnline(getContext())) {
 				showLostInternetConnectionDialog();
+			} else {
+				swipeRefreshLayout.setRefreshing(false);
 			}
 		});
 
@@ -75,10 +91,13 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-		country = getArguments().getString(BUNDLE_COUNTRY);
-
-		Log.d("Presenter", "onAttach()");
-		presenter.onAttach(this, country);
+		if (country != null) {
+			Log.d("Presenter", "onAttach()");
+			presenter.onAttach(this, country, null);
+		} else {
+			Log.d("Performed query: ", query);
+			presenter.onAttach(this, null, query);
+		}
 	}
 
 	@Override
@@ -125,10 +144,10 @@ public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAnd
 	private void showLostInternetConnectionDialog() {
 		new AlertDialog.Builder(getContext(), R.style.Dialog)
 				.setTitle(R.string.internet_connection_problems)
-				.setNeutralButton(R.string.load_from_database, (dialogInterface, i) -> presenter.onAttach(ArtistsAndTracksListFragment.this, country))
+				.setNeutralButton(R.string.load_from_database, (dialogInterface, i) -> presenter.onAttach(ArtistsAndTracksListFragment.this, country, null))
 				.setPositiveButton(R.string.retry, (dialogInterface, i) -> {
 					if (MyApplication.isOnline(getContext())) {
-						presenter.onAttach(ArtistsAndTracksListFragment.this, country);
+						presenter.onAttach(ArtistsAndTracksListFragment.this, country, null);
 					} else {
 						showLostInternetConnectionDialog();
 					}

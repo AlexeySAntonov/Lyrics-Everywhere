@@ -166,4 +166,28 @@ public class DataBase {
 
 		return tracks;
 	}
+
+	public List<Artist> getQueryArtists(String queryName) {
+		List<Artist> artists = new ArrayList<>();
+		cursor = db.query(ARTISTS_TABLE_NAME, null, "name LIKE '%" + queryName + "%'", null, null, null, null);
+
+		db.beginTransaction();
+
+		if (cursor.moveToFirst()) {
+			do {
+				Artist artist = new Artist();
+				artist.setArtistId(cursor.getInt(cursor.getColumnIndex(COLUMN_ARTIST_ID)));
+				artist.setArtistName(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST_NAME)));
+				artist.setTwitterUrl(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST_TWITTER)));
+				artist.setTopChartCountries(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST_TOP_CHART_COUNTRIES)));
+				artists.add(artist);
+			} while (cursor.moveToNext());
+		}
+
+		db.setTransactionSuccessful();
+		db.endTransaction();
+		cursor.close();
+
+		return artists;
+	}
 }

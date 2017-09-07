@@ -11,8 +11,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksListFragment;
@@ -100,6 +102,41 @@ public class MainActivity extends AppCompatActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.search_menu, menu);
+		MenuItem searchItem = menu.findItem(R.id.search);
+		searchItem.collapseActionView();
+
+		final SearchView searchView = (SearchView) searchItem.getActionView();
+		searchView.setQueryHint("Search by artist name...");
+
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				// Perform query
+				Log.d("Query: ", query);
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.fragmentContainer, ArtistsAndTracksListFragment.newInstance(null, query))
+						.addToBackStack(null)
+						.commit();
+
+				searchItem.collapseActionView();
+				getSupportActionBar().setTitle("Results for \"" + query + "\"");
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+		});
+
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	private void defaultInit() {
