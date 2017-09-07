@@ -58,6 +58,6 @@
 		android:layout_centerVertical="true"
 		android:layout_marginEnd="16dp"
 		android:layout_marginRight="16dp"
-		app:srcCompat="@drawable/sound2"/>
+		app:srcCompat="@drawable/sound_image"/>
 
 </RelativeLayout>
