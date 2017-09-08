@@ -4,7 +4,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="172dp"
+	android:layout_height="184dp"
 	android:background="@drawable/header_image"
 	android:gravity="bottom"
 	android:orientation="vertical"
@@ -21,7 +21,7 @@
 		android:id="@+id/name"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="Alexey Antonov"
+		android:text="@string/alexey_antonov"
 		android:textColor="@android:color/white"
 		android:textSize="20sp"
 		app:robotoTypeface="roboto_medium"/>
@@ -30,7 +30,7 @@
 		android:id="@+id/mail"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="alex.antonov150@gmail.com"
+		android:text="@string/alex_antonov150_gmail_com"
 		android:textColor="@android:color/white"
 		android:textSize="14sp"
 		app:robotoTypeface="roboto_regular"/>
