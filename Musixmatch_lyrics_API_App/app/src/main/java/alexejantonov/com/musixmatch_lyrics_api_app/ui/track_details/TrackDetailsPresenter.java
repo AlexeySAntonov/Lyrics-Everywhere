@@ -7,7 +7,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsScreenContract.*;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsScreenContract.Presenter;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsScreenContract.View;
 
 public class TrackDetailsPresenter implements Presenter {
 
@@ -15,6 +16,7 @@ public class TrackDetailsPresenter implements Presenter {
 	private String trackId;
 	private String lyricsText;
 	private MusixMatchService musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
+	private String apiKey = "a15ab4dde789e7a4b63d2db9000abb0e";
 
 	@Override
 	public void onAttach(View view) {
@@ -34,7 +36,7 @@ public class TrackDetailsPresenter implements Presenter {
 
 	@Override
 	public void loadLyrics() {
-		musixMatchService.getLyrics(trackId).enqueue(new Callback<LyricsResponse>() {
+		musixMatchService.getLyrics(apiKey, trackId).enqueue(new Callback<LyricsResponse>() {
 			@Override
 			public void onResponse(Call<LyricsResponse> call, Response<LyricsResponse> response) {
 				if (response.isSuccessful()) {

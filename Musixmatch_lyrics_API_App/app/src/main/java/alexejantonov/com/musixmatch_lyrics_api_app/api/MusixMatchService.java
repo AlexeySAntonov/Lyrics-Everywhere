@@ -7,18 +7,30 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants.API_KEY;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants.COUNTRY;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants.TOP_PAGE;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants.TOP_PAGE_SIZE;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants.TRACK_ID;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Methods.ARTISTS_GET;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Methods.LYRICS_GET;
+import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Methods.TRACKS_GET;
+
 public interface MusixMatchService {
 
-	@GET("chart.artists.get?apikey=a15ab4dde789e7a4b63d2db9000abb0e")
-	Call<ArtistResponse> getArtists(@Query("country") String country,
-	                                @Query("page") String page,
-	                                @Query("page_size") String pageSize);
+	@GET(ARTISTS_GET)
+	Call<ArtistResponse> getArtists(@Query(API_KEY) String apiKey,
+	                                @Query(COUNTRY) String country,
+	                                @Query(TOP_PAGE) String page,
+	                                @Query(TOP_PAGE_SIZE) String pageSize);
 
-	@GET("chart.tracks.get?apikey=a15ab4dde789e7a4b63d2db9000abb0e")
-	Call<TrackResponse> getTracks(@Query("country") String country,
-	                              @Query("page") String page,
-	                              @Query("page_size") String pageSize);
+	@GET(TRACKS_GET)
+	Call<TrackResponse> getTracks(@Query(API_KEY) String apiKey,
+	                              @Query(COUNTRY) String country,
+	                              @Query(TOP_PAGE) String page,
+	                              @Query(TOP_PAGE_SIZE) String pageSize);
 
-	@GET("track.lyrics.get?apikey=a15ab4dde789e7a4b63d2db9000abb0e")
-	Call<LyricsResponse> getLyrics(@Query("track_id") String trackId);
+	@GET(LYRICS_GET)
+	Call<LyricsResponse> getLyrics(@Query(API_KEY) String apiKey,
+	                               @Query(TRACK_ID) String trackId);
 }

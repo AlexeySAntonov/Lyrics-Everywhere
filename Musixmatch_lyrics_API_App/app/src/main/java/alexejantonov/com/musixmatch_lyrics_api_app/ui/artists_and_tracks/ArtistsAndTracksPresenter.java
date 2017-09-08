@@ -29,6 +29,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private String country;
 	private String query;
 	private DataBase dataBase = MyApplication.getDataBase();
+	private String apiKey = "a15ab4dde789e7a4b63d2db9000abb0e";
 
 	@Override
 	public void onAttach(View view, String country, String query) {
@@ -61,7 +62,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	public void loadArtists() {
 		Log.d("Loading", country + " top chart artists from Server");
-		musixMatchService.getArtists(country, "1", "100").enqueue(new Callback<ArtistResponse>() {
+		musixMatchService.getArtists(apiKey, country, "1", "100").enqueue(new Callback<ArtistResponse>() {
 			@Override
 			public void onResponse(Call<ArtistResponse> call, Response<ArtistResponse> response) {
 				if (response.isSuccessful()) {
@@ -81,14 +82,14 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Call<ArtistResponse> call, Throwable t) {
-
+				Log.d("Loading failed", t.getMessage().toString());
 			}
 		});
 	}
 
 	public void loadTracks() {
 
-		musixMatchService.getTracks(country, "1", "100").enqueue(new Callback<TrackResponse>() {
+		musixMatchService.getTracks(apiKey, country, "1", "100").enqueue(new Callback<TrackResponse>() {
 			@Override
 			public void onResponse(Call<TrackResponse> call, Response<TrackResponse> response) {
 				if (response.isSuccessful()) {
