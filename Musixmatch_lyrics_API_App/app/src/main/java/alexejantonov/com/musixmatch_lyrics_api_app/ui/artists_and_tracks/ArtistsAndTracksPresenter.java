@@ -29,7 +29,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private String country;
 	private String query;
 	private DataBase dataBase = MyApplication.getDataBase();
-	private String apiKey = "a15ab4dde789e7a4b63d2db9000abb0e";
+	private String apiKey = "your_api_key";
 
 	@Override
 	public void onAttach(View view, String country, String query) {
@@ -82,7 +82,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Call<ArtistResponse> call, Throwable t) {
-				Log.d("Loading failed", t.getMessage().toString());
+				Log.d("Artists loading failed", t.getMessage());
 			}
 		});
 	}
@@ -108,7 +108,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Call<TrackResponse> call, Throwable t) {
-
+				Log.d("Tracks loading failed", t.getMessage());
 			}
 		});
 	}

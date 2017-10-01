@@ -1,5 +1,7 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details;
 
+import android.util.Log;
+
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.lyrics.LyricsResponse;
@@ -16,7 +18,7 @@ public class TrackDetailsPresenter implements Presenter {
 	private String trackId;
 	private String lyricsText;
 	private MusixMatchService musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
-	private String apiKey = "a15ab4dde789e7a4b63d2db9000abb0e";
+	private String apiKey = "your_api_key";
 
 	@Override
 	public void onAttach(View view) {
@@ -47,7 +49,7 @@ public class TrackDetailsPresenter implements Presenter {
 
 			@Override
 			public void onFailure(Call<LyricsResponse> call, Throwable t) {
-
+				Log.d("Lyrics loading failed", t.getMessage());
 			}
 		});
 	}

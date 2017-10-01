@@ -30,7 +30,7 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetails
 
 public class ArtistsAndTracksListFragment extends Fragment implements ArtistsAndTracksScreenContract.View {
 
-	private static final String BUNDLE_COUNTRY = ArtistsAndTracksListFragment.class.getSimpleName() + ".country";
+	private static final String BUNDLE_COUNTRY = ArtistsAndTracksListFragment.class.getSimpleName() + " .country";
 	private static final String BUNDLE_QUERY = ArtistsAndTracksListFragment.class.getSimpleName() + " .query";
 
 	private ArtistsAndTracksPresenter presenter = new ArtistsAndTracksPresenter();
