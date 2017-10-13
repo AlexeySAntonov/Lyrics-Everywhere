@@ -10,6 +10,7 @@ import com.bumptech.glide.RequestManager;
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
 import alexejantonov.com.musixmatch_lyrics_api_app.db.DataBase;
 import okhttp3.OkHttpClient;
@@ -18,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyApplication extends Application {
 
-	private static Retrofit retrofit;
+	private static MusixMatchService service;
 	private OkHttpClient client;
 	private static DataBase dataBase;
 	private static RequestManager imageRequestManager;
@@ -32,19 +33,20 @@ public class MyApplication extends Application {
 				.addNetworkInterceptor(new StethoInterceptor())
 				.build();
 
-		retrofit = new Retrofit.Builder()
+		service = new Retrofit.Builder()
 				.client(client)
 				.addConverterFactory(GsonConverterFactory.create())
 				.baseUrl(Constants.API_URL)
-				.build();
+				.build()
+				.create(MusixMatchService.class);
 
 		dataBase = new DataBase(this);
 
 		imageRequestManager = Glide.with(this);
 	}
 
-	public static Retrofit getRetrofit() {
-		return retrofit;
+	public static MusixMatchService getService() {
+		return service;
 	}
 
 	public static DataBase getDataBase() {

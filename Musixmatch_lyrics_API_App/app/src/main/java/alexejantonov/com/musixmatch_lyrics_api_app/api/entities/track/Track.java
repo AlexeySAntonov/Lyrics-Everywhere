@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.BaseData;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
 
 public class Track implements BaseData, Serializable {
 

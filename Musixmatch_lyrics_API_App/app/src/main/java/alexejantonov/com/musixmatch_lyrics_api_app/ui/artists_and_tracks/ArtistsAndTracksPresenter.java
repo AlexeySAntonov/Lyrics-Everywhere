@@ -12,7 +12,8 @@ import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistRes
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.TrackResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.db.DataBase;
-import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataContainersUtils;
+import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataContainersUtil;
+import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataMergeUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,17 +26,15 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private View view;
 	private List<Artist> artists = new ArrayList<>();
 	private List<Track> tracks = new ArrayList<>();
-	private MusixMatchService musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
+	private MusixMatchService musixMatchService = MyApplication.getService();
 	private String country;
-	private String query;
 	private DataBase dataBase = MyApplication.getDataBase();
 	private String apiKey = "your_api_key";
 
 	@Override
-	public void onAttach(View view, String country, String query) {
+	public void onAttach(View view, String country) {
 		this.view = view;
 		this.country = country;
-		this.query = query;
 		loadData();
 	}
 
@@ -46,17 +45,11 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	@Override
 	public void loadData() {
-		if (country != null) {
-			if (dataBase.getArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
-				//Тащим с БД если не пусто
-				Log.d("Loading", country + " top chart artists from Data base");
-				listsMerge(dataBase.getArtists(country), dataBase.getTracks());
-			} else {
-				//Тащим с сервера
-				loadArtists();
-			}
-		} else if (query != null) {
-			listsMerge(dataBase.getQueryArtists(query), dataBase.getTracks());
+		if (dataBase.getArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
+			//Тащим с БД если не пусто
+			view.showData(DataMergeUtil.listsMerge(dataBase.getArtists(country), dataBase.getTracks()));
+		} else {
+			loadArtists();
 		}
 	}
 
@@ -66,7 +59,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 			@Override
 			public void onResponse(Call<ArtistResponse> call, Response<ArtistResponse> response) {
 				if (response.isSuccessful()) {
-					artists = DataContainersUtils.artistContainersToArtists(
+					artists = DataContainersUtil.artistContainersToArtists(
 							response.body()
 									.getMessage()
 									.getBody()
@@ -93,7 +86,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 			@Override
 			public void onResponse(Call<TrackResponse> call, Response<TrackResponse> response) {
 				if (response.isSuccessful()) {
-					tracks = DataContainersUtils.trackContainersToTracks(
+					tracks = DataContainersUtil.trackContainersToTracks(
 							response.body()
 									.getMessage()
 									.getBody()
@@ -102,7 +95,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 					//Если и треки успешно загрузились, обновляем данные в БД и мержим списки для адаптера
 					dataBase.insertArtists(artists);
 					dataBase.insertTracks(tracks);
-					listsMerge(artists, tracks);
+					view.showData(DataMergeUtil.listsMerge(artists, tracks));
 				}
 			}
 
@@ -111,22 +104,5 @@ public class ArtistsAndTracksPresenter implements Presenter {
 				Log.d("Tracks loading failed", t.getMessage());
 			}
 		});
-	}
-
-	private void listsMerge(List<Artist> artists, List<Track> tracks) {
-		List<BaseData> data = new ArrayList<>();
-
-		for (int i = 0; i < artists.size(); i++) {
-			data.add(artists.get(i));
-
-			for (int j = 0; j < tracks.size(); j++) {
-				if (artists.get(i).getArtistId() == tracks.get(j).getArtistId()) {
-					data.add(tracks.get(j));
-				}
-			}
-		}
-		if (view != null) {
-			view.showData(data);
-		}
 	}
 }

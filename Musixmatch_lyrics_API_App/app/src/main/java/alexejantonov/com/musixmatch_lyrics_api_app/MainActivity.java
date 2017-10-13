@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +12,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksListFragment;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
+
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.FragmentType.COUNTRY;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.FragmentType.SEARCH;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.gb;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.ru;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.search;
+import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.us;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 	private NavigationView navigationView;
 	private Toolbar toolbar;
 	private MenuItem lastDrawerMenuItem;
+	public SearchView searchView;
+	public MenuItem searchItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,39 +63,9 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		Log.d("Activity", "onStart()");
-	}
-
-	@Override
 	protected void onPostCreate(@Nullable Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		drawerToggle.syncState();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.d("Activity", "onResume()");
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		Log.d("Activity", "onPause()");
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Log.d("Activity", "onStop()");
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Log.d("Activity", "onDestroy()");
 	}
 
 	@Override
@@ -107,46 +86,43 @@ public class MainActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		getMenuInflater().inflate(R.menu.search_menu, menu);
-		MenuItem searchItem = menu.findItem(R.id.search);
-		searchItem.collapseActionView();
+		searchItem = menu.findItem(R.id.search);
 
-		final SearchView searchView = (SearchView) searchItem.getActionView();
-		searchView.setQueryHint(getString(R.string.search_by_artist_name));
-
-		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				// Perform query
-				Log.d("Query: ", query);
-				fragmentManager
-						.beginTransaction()
-						.replace(R.id.fragmentContainer, ArtistsAndTracksListFragment.newInstance(null, query))
-						.addToBackStack(null)
-						.commit();
-
-				searchItem.collapseActionView();
-				return false;
-			}
-
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
+		searchItem.setOnMenuItemClickListener(menuItem -> {
+			fragmentManager.beginTransaction()
+					.replace(R.id.fragmentContainer, BaseFragment.newInstance(SEARCH, search))
+					.addToBackStack(null)
+					.commit();
+			return false;
 		});
+
+		searchView = (SearchView) searchItem.getActionView();
+		searchView.setQueryHint(getString(R.string.search_by_artist_name));
+		searchView.setSubmitButtonEnabled(true);
+		searchView.setIconifiedByDefault(false);
 
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	@Override
+	public void onBackPressed() {
+		if (drawerLayout.isDrawerOpen(Gravity.START)) {
+			drawerLayout.closeDrawer(Gravity.START);
+		} else {
+			super.onBackPressed();
+		}
+	}
+
 	private void defaultInit() {
 		fragmentManager = getSupportFragmentManager();
-		Fragment fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
+		BaseFragment fragment = (BaseFragment) fragmentManager.findFragmentById(R.id.fragmentContainer);
 		if (fragment == null) {
-			fragment = ArtistsAndTracksListFragment.newInstance("ru");
-			fragmentManager
-					.beginTransaction()
-					.add(R.id.fragmentContainer, fragment)
+			fragment = BaseFragment.newInstance(COUNTRY, ru);
+			fragmentManager.beginTransaction()
+					.replace(R.id.fragmentContainer, fragment)
 					.addToBackStack(null)
 					.commit();
+
 		}
 	}
 
@@ -157,20 +133,20 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		lastDrawerMenuItem = item;
-		String country = "";
+		QueryType countryId = null;
 
 		switch (item.getItemId()) {
 			case R.id.rus:
 				Snackbar.make(navigationView, R.string.russian_top_chart, Snackbar.LENGTH_LONG).show();
-				country = "ru";
+				countryId = ru;
 				break;
 			case R.id.usa:
 				Snackbar.make(navigationView, R.string.usa_top_chart, Snackbar.LENGTH_LONG).show();
-				country = "us";
+				countryId = us;
 				break;
 			case R.id.gb:
 				Snackbar.make(navigationView, R.string.britain_top_chart, Snackbar.LENGTH_LONG).show();
-				country = "gb";
+				countryId = gb;
 				break;
 			case R.id.settings:
 				Snackbar.make(navigationView, R.string.settings, Snackbar.LENGTH_LONG).show();
@@ -181,14 +157,13 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		if (item.getItemId() != R.id.exit && item.getItemId() != R.id.settings) {
-			fragmentManager
-					.beginTransaction()
-					.replace(R.id.fragmentContainer, ArtistsAndTracksListFragment.newInstance(country))
+			fragmentManager.beginTransaction()
+					.replace(R.id.fragmentContainer, BaseFragment.newInstance(COUNTRY, countryId))
 					.addToBackStack(null)
 					.commit();
 			item.setIcon(R.drawable.ic_star_gold_24dp);
-			drawerLayout.closeDrawers();
 		}
+		drawerLayout.closeDrawers();
 	}
 
 	private ActionBarDrawerToggle setupDrawerToggle() {

@@ -1,4 +1,4 @@
-package alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks;
+package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -84,6 +84,11 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		return data.size();
 	}
 
+	public void setData(List<BaseData> data) {
+		this.data = data;
+		notifyDataSetChanged();
+	}
+
 	private class ArtistViewHolder extends RecyclerView.ViewHolder {
 
 		private TextView artistName;
@@ -126,11 +131,11 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		}
 	}
 
-	interface OnTrackClickListener {
+	public interface OnTrackClickListener {
 		void onClick(Track track);
 	}
 
-	interface OnTwitterClickListener {
+	public interface OnTwitterClickListener {
 		void onClick(String twitterUrl);
 	}
 }

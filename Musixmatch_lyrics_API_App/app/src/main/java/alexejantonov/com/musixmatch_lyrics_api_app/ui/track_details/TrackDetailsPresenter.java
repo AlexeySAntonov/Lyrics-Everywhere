@@ -17,7 +17,7 @@ public class TrackDetailsPresenter implements Presenter {
 	private View view;
 	private String trackId;
 	private String lyricsText;
-	private MusixMatchService musixMatchService = MyApplication.getRetrofit().create(MusixMatchService.class);
+	private MusixMatchService musixMatchService = MyApplication.getService();
 	private String apiKey = "your_api_key";
 
 	@Override

@@ -8,9 +8,9 @@ import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistCon
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.TrackContainer;
 
-public class DataContainersUtils {
+public class DataContainersUtil {
 
-	public DataContainersUtils() {
+	public DataContainersUtil() {
 	}
 
 	public static List<Artist> artistContainersToArtists(List<ArtistContainer> artistContainers, String country) {

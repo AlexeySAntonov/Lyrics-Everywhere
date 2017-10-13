@@ -2,7 +2,7 @@ package alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist;
 
 import com.google.gson.annotations.SerializedName;
 
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.BaseData;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
 
 public class Artist implements BaseData {
 
