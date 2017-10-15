@@ -4,6 +4,7 @@ import android.util.Log;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
+import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.lyrics.LyricsResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +19,6 @@ public class TrackDetailsPresenter implements Presenter {
 	private String trackId;
 	private String lyricsText;
 	private MusixMatchService musixMatchService = MyApplication.getService();
-	private String apiKey = "your_api_key";
 
 	@Override
 	public void onAttach(View view) {
@@ -38,7 +38,7 @@ public class TrackDetailsPresenter implements Presenter {
 
 	@Override
 	public void loadLyrics() {
-		musixMatchService.getLyrics(apiKey, trackId).enqueue(new Callback<LyricsResponse>() {
+		musixMatchService.getLyrics(Constants.API_KEY_VALUE, trackId).enqueue(new Callback<LyricsResponse>() {
 			@Override
 			public void onResponse(Call<LyricsResponse> call, Response<LyricsResponse> response) {
 				if (response.isSuccessful()) {

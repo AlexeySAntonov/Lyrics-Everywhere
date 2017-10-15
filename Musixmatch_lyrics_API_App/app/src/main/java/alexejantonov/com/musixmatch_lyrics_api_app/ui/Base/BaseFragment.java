@@ -70,6 +70,8 @@ public abstract class BaseFragment extends Fragment {
 			case search:
 				actionBar.setTitle("Results for query \"" + queryStr + " \"");
 				break;
+			case default_search:
+				actionBar.setTitle("Do a Search");
 		}
 	}
 }

@@ -4,5 +4,6 @@ public enum QueryType {
 	ru,
 	us,
 	gb,
-	search
+	search,
+	default_search
 }

@@ -84,8 +84,9 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 
 	@Override
 	public void onDestroyView() {
-		super.onDestroyView();
+		adapter = null;
 		presenter.onDetach();
+		super.onDestroyView();
 	}
 
 	@Override

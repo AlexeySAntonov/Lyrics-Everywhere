@@ -52,6 +52,8 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
+		setToolbarTitle(QueryType.default_search);
+
 		presenter.onAttach(this);
 
 		activity.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -74,6 +76,7 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 
 	@Override
 	public void onDestroyView() {
+		adapter = null;
 		presenter.onDetach();
 		super.onDestroyView();
 	}

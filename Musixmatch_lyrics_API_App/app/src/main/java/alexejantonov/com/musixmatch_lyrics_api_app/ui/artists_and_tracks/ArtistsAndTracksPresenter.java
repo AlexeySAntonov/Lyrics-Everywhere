@@ -7,6 +7,7 @@ import java.util.List;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
+import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
@@ -29,7 +30,6 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private MusixMatchService musixMatchService = MyApplication.getService();
 	private String country;
 	private DataBase dataBase = MyApplication.getDataBase();
-	private String apiKey = "your_api_key";
 
 	@Override
 	public void onAttach(View view, String country) {
@@ -55,7 +55,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	public void loadArtists() {
 		Log.d("Loading", country + " top chart artists from Server");
-		musixMatchService.getArtists(apiKey, country, "1", "100").enqueue(new Callback<ArtistResponse>() {
+		musixMatchService.getArtists(Constants.API_KEY_VALUE, country, "1", "100").enqueue(new Callback<ArtistResponse>() {
 			@Override
 			public void onResponse(Call<ArtistResponse> call, Response<ArtistResponse> response) {
 				if (response.isSuccessful()) {
@@ -82,7 +82,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 
 	public void loadTracks() {
 
-		musixMatchService.getTracks(apiKey, country, "1", "100").enqueue(new Callback<TrackResponse>() {
+		musixMatchService.getTracks(Constants.API_KEY_VALUE, country, "1", "100").enqueue(new Callback<TrackResponse>() {
 			@Override
 			public void onResponse(Call<TrackResponse> call, Response<TrackResponse> response) {
 				if (response.isSuccessful()) {

@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -92,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
 			fragmentManager.beginTransaction()
 					.replace(R.id.fragmentContainer, BaseFragment.newInstance(SEARCH, search))
 					.addToBackStack(null)
-					.commit();
+					.commitAllowingStateLoss();
+			Log.d("Backstack count", String.valueOf(fragmentManager.getBackStackEntryCount()));
 			return false;
 		});
 
@@ -121,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
 			fragmentManager.beginTransaction()
 					.replace(R.id.fragmentContainer, fragment)
 					.addToBackStack(null)
-					.commit();
-
+					.commitAllowingStateLoss();
+			Log.d("Backstack count", String.valueOf(fragmentManager.getBackStackEntryCount()));
 		}
 	}
 
@@ -160,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
 			fragmentManager.beginTransaction()
 					.replace(R.id.fragmentContainer, BaseFragment.newInstance(COUNTRY, countryId))
 					.addToBackStack(null)
-					.commit();
+					.commitAllowingStateLoss();
+			Log.d("Backstack count", String.valueOf(fragmentManager.getBackStackEntryCount()));
 			item.setIcon(R.drawable.ic_star_gold_24dp);
 		}
 		drawerLayout.closeDrawers();

@@ -4,6 +4,8 @@ public final class Constants {
 
 	public static final String API_KEY = "apikey";
 
+	public static final String API_KEY_VALUE = "api_key_value";
+
 	public final static String API_URL = "http://api.musixmatch.com/ws/1.1/";
 
 	public final static String COUNTRY = "country";
