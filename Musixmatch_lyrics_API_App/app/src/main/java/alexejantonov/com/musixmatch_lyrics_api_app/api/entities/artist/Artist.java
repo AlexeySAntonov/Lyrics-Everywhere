@@ -56,4 +56,13 @@ public class Artist implements BaseData {
 				", artistId=" + artistId +
 				'}';
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Artist)) {
+			return false;
+		}
+		Artist artist = (Artist) o;
+		return artistId == artist.artistId;
+	}
 }

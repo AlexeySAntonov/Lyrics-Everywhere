@@ -73,4 +73,13 @@ public class Track implements BaseData, Serializable {
 				", albumCover='" + albumCover + '\'' +
 				'}';
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Track)) {
+			return false;
+		}
+		Track track = (Track) o;
+		return artistId == track.artistId;
+	}
 }

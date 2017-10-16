@@ -95,7 +95,7 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 					null);
 			recyclerView.setAdapter(adapter);
 		} else {
-			adapter.setData(data, query);
+			adapter.updateQueryData(data, query);
 		}
 	}
 }

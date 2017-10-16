@@ -1,5 +1,6 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base;
 
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -89,7 +90,15 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		return data.size();
 	}
 
-	public void setData(List<BaseData> data, String query) {
+	public void updateData(List<BaseData> data) {
+		DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DataDiffCallback(this.data, data));
+
+		this.data.clear();
+		this.data.addAll(data);
+		diffResult.dispatchUpdatesTo(this);
+	}
+
+	public void updateQueryData(List<BaseData> data, String query) {
 		this.data = data;
 		this.query = query;
 		notifyDataSetChanged();

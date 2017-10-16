@@ -102,7 +102,7 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 						null);
 				recyclerView.setAdapter(adapter);
 			} else {
-				adapter.setData(data, null);
+				adapter.updateData(data);
 			}
 		}
 	}
