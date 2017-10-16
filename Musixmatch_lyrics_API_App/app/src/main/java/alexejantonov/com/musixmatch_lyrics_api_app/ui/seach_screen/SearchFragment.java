@@ -25,6 +25,7 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 	private DataAdapter adapter;
 	private RecyclerView recyclerView;
 	private SearchPresenter presenter = new SearchPresenter();
+	private String query;
 
 	private ProgressBar progressBar;
 
@@ -68,6 +69,7 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
+				query = newText;
 				presenter.loadData(newText);
 				return false;
 			}
@@ -89,10 +91,11 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 					data,
 					this::launchTrackDetailsActivity,
 					this::launchTwitter,
-					MyApplication.getImageRequestManager());
+					MyApplication.getImageRequestManager(),
+					null);
 			recyclerView.setAdapter(adapter);
 		} else {
-			adapter.setData(data);
+			adapter.setData(data, query);
 		}
 	}
 }

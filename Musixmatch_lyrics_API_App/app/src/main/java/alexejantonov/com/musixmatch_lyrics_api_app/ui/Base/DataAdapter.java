@@ -1,6 +1,9 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +25,18 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	private OnTrackClickListener listener;
 	private OnTwitterClickListener onTwitterClickListener;
 	private RequestManager imageRequestManager;
+	private String query;
 
 	public DataAdapter(List<BaseData> data,
 	                   OnTrackClickListener listener,
 	                   OnTwitterClickListener onTwitterClickListener,
-	                   RequestManager imageRequestManager) {
+	                   RequestManager imageRequestManager, String query) {
 
 		this.data = data;
 		this.listener = listener;
 		this.onTwitterClickListener = onTwitterClickListener;
 		this.imageRequestManager = imageRequestManager;
+		this.query = query;
 	}
 
 	@Override
@@ -84,8 +89,9 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		return data.size();
 	}
 
-	public void setData(List<BaseData> data) {
+	public void setData(List<BaseData> data, String query) {
 		this.data = data;
+		this.query = query;
 		notifyDataSetChanged();
 	}
 
@@ -103,7 +109,29 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		}
 
 		private void bindTo(Artist artist) {
-			artistName.setText(artist.getArtistName());
+			if (query != null) {
+				int startIndex = indexOfSearchQuery(artist.getArtistName());
+				if (startIndex == -1) {
+					artistName.setText(artist.getArtistName());
+				} else {
+					SpannableString highLightedName = new SpannableString(artist.getArtistName());
+					highLightedName.setSpan(
+							new TextAppearanceSpan(itemView.getContext(), R.style.searchTextHighlight),
+							startIndex,
+							startIndex + query.length(),
+							0);
+					artistName.setText(highLightedName);
+				}
+			} else {
+				artistName.setText(artist.getArtistName());
+			}
+		}
+
+		private int indexOfSearchQuery(String artistName) {
+			if (!TextUtils.isEmpty(query)) {
+				return artistName.toLowerCase().indexOf(query.toLowerCase());
+			}
+			return -1;
 		}
 	}
 

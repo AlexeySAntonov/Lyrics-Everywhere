@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.RequestManager;
-
 import java.util.List;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
@@ -29,7 +27,6 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 
 	private ArtistsAndTracksPresenter presenter = new ArtistsAndTracksPresenter();
 	private QueryType country;
-	private RequestManager imageRequestManager;
 	private DataAdapter adapter;
 
 	private RecyclerView recyclerView;
@@ -95,17 +92,17 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 		swipeRefreshLayout.setRefreshing(false);
 
 		if (getContext() != null) {
-			imageRequestManager = MyApplication.getImageRequestManager();
 
 			if (adapter == null) {
 				adapter = new DataAdapter(
 						data,
 						this::launchTrackDetailsActivity,
 						this::launchTwitter,
-						imageRequestManager);
+						MyApplication.getImageRequestManager(),
+						null);
 				recyclerView.setAdapter(adapter);
 			} else {
-				adapter.setData(data);
+				adapter.setData(data, null);
 			}
 		}
 	}

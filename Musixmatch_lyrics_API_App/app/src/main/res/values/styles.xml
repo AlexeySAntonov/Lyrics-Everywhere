@@ -15,4 +15,10 @@
 		<item name="colorAccent">@color/colorPrimary</item>
 	</style>
 
+	<style name="searchTextHighlight">
+		<item name="android:textColor">@android:color/holo_blue_dark</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">24sp</item>
+	</style>
+
 </resources>
