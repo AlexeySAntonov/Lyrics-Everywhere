@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+
 import java.util.List;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
@@ -20,14 +22,16 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 
-public class SearchFragment extends BaseFragment implements SeachScreenContract.View {
+public class SearchFragment extends BaseFragment implements SearchFragmentView {
 
 	private DataAdapter adapter;
 	private RecyclerView recyclerView;
-	private SearchPresenter presenter = new SearchPresenter();
 	private String query;
 
 	private ProgressBar progressBar;
+
+	@InjectPresenter
+	SearchPresenter presenter;
 
 	public SearchFragment() {
 	}
@@ -55,8 +59,6 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 
 		setToolbarTitle(QueryType.default_search);
 
-		presenter.onAttach(this);
-
 		activity.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
@@ -79,7 +81,6 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 	@Override
 	public void onDestroyView() {
 		adapter = null;
-		presenter.onDetach();
 		super.onDestroyView();
 	}
 
