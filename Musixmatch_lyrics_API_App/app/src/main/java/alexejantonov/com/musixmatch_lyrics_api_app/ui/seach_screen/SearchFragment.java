@@ -92,7 +92,7 @@ public class SearchFragment extends BaseFragment implements SeachScreenContract.
 					this::launchTrackDetailsActivity,
 					this::launchTwitter,
 					MyApplication.getImageRequestManager(),
-					null);
+					query);
 			recyclerView.setAdapter(adapter);
 		} else {
 			adapter.updateQueryData(data, query);
