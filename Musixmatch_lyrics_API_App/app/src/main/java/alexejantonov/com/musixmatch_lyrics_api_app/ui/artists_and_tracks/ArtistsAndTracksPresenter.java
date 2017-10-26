@@ -2,6 +2,9 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks;
 
 import android.util.Log;
 
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +16,16 @@ import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistRes
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.TrackResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.db.DataBase;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataContainersUtil;
 import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataMergeUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksScreenContract.Presenter;
-import static alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksScreenContract.View;
+@InjectViewState
+public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksListView> {
 
-public class ArtistsAndTracksPresenter implements Presenter {
-
-	private View view;
 	private List<Artist> artists = new ArrayList<>();
 	private List<Track> tracks = new ArrayList<>();
 	private MusixMatchService musixMatchService = MyApplication.getService();
@@ -32,22 +33,22 @@ public class ArtistsAndTracksPresenter implements Presenter {
 	private DataBase dataBase = MyApplication.getDataBase();
 
 	@Override
-	public void onAttach(View view, String country) {
-		this.view = view;
-		this.country = country;
+	protected void onFirstViewAttach() {
+		super.onFirstViewAttach();
 		loadData();
 	}
 
-	@Override
-	public void onDetach() {
-		view = null;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	@Override
 	public void loadData() {
+		if (country == null) {
+			country = QueryType.ru.name();
+		}
 		if (dataBase.getArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
 			//Тащим с БД если не пусто
-			view.showData(DataMergeUtil.listsMerge(dataBase.getArtists(country), dataBase.getTracks()));
+			getViewState().showData(DataMergeUtil.listsMerge(dataBase.getArtists(country), dataBase.getTracks()));
 		} else {
 			loadArtists();
 		}
@@ -95,7 +96,7 @@ public class ArtistsAndTracksPresenter implements Presenter {
 					//Если и треки успешно загрузились, обновляем данные в БД и мержим списки для адаптера
 					dataBase.insertArtists(artists);
 					dataBase.insertTracks(tracks);
-					view.showData(DataMergeUtil.listsMerge(artists, tracks));
+					getViewState().showData(DataMergeUtil.listsMerge(artists, tracks));
 				}
 			}
 

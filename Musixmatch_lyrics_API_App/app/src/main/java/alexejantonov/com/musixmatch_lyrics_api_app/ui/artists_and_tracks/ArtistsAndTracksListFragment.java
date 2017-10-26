@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+
 import java.util.List;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
@@ -21,17 +23,19 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 
-public class ArtistsAndTracksListFragment extends BaseFragment implements ArtistsAndTracksScreenContract.View {
+public class ArtistsAndTracksListFragment extends BaseFragment implements ArtistsAndTracksListView {
 
 	private static final String BUNDLE_COUNTRY = ArtistsAndTracksListFragment.class.getSimpleName() + " .country";
 
-	private ArtistsAndTracksPresenter presenter = new ArtistsAndTracksPresenter();
 	private QueryType country;
 	private DataAdapter adapter;
 
 	private RecyclerView recyclerView;
 	private ProgressBar progressBar;
 	private SwipeRefreshLayout swipeRefreshLayout;
+
+	@InjectPresenter
+	ArtistsAndTracksPresenter presenter;
 
 	public ArtistsAndTracksListFragment() {
 	}
@@ -76,13 +80,12 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-		presenter.onAttach(this, country.name());
+		presenter.setCountry(country.name());
 	}
 
 	@Override
 	public void onDestroyView() {
 		adapter = null;
-		presenter.onDetach();
 		super.onDestroyView();
 	}
 
@@ -110,10 +113,14 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 	private void showLostInternetConnectionDialog() {
 		new AlertDialog.Builder(getContext(), R.style.Dialog)
 				.setTitle(R.string.internet_connection_problems)
-				.setNeutralButton(R.string.load_from_database, (dialogInterface, i) -> presenter.onAttach(ArtistsAndTracksListFragment.this, country.name()))
+				.setNeutralButton(R.string.load_from_database, (dialogInterface, i) -> {
+					presenter.setCountry(country.name());
+					presenter.loadData();
+				})
 				.setPositiveButton(R.string.retry, (dialogInterface, i) -> {
 					if (MyApplication.isOnline(getContext())) {
-						presenter.onAttach(ArtistsAndTracksListFragment.this, country.name());
+						presenter.setCountry(country.name());
+						presenter.loadData();
 					} else {
 						showLostInternetConnectionDialog();
 					}

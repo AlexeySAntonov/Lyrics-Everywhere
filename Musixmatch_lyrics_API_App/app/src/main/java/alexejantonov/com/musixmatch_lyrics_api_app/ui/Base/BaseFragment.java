@@ -5,9 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+
+import com.arellomobile.mvp.MvpAppCompatFragment;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity;
 import alexejantonov.com.musixmatch_lyrics_api_app.R;
@@ -16,7 +17,7 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.Artists
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.seach_screen.SearchFragment;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsActivity;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends MvpAppCompatFragment {
 
 	public MainActivity activity;
 	public String queryStr;
