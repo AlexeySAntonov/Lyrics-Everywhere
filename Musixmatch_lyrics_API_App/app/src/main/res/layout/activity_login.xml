@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/login_screen_background"
+	android:gravity="bottom"
+	android:orientation="vertical"
+	android:padding="16dp">
+
+	<EditText
+		android:id="@+id/apiKeyEditText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/login_screen_edit_background"
+		android:cursorVisible="false"
+		android:drawableLeft="@drawable/ic_key"
+		android:drawableStart="@drawable/ic_key"
+		android:gravity="center"
+		android:hint="@string/api_key"
+		android:inputType="textVisiblePassword"
+		android:paddingBottom="8dp"
+		android:paddingEnd="40dp"
+		android:paddingLeft="8dp"
+		android:paddingRight="40dp"
+		android:paddingStart="8dp"
+		android:paddingTop="8dp"
+		android:textColor="@android:color/white"
+		android:textColorHint="@android:color/white"
+		android:textSize="14sp"/>
+
+	<Button
+		android:id="@+id/loginButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/login_screen_buttons_background_selector"
+		android:enabled="true"
+		android:text="@string/login"
+		android:textColor="@android:color/white"
+		android:textSize="18sp"/>
+
+	<Button
+		android:id="@+id/registerButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:background="@drawable/login_screen_buttons_background_selector"
+		android:text="@string/sign_up"
+		android:textColor="@android:color/white"
+		android:textSize="18sp"/>
+
+</LinearLayout>

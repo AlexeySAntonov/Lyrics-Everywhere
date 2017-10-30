@@ -1,5 +1,6 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
@@ -8,10 +9,9 @@ import com.arellomobile.mvp.MvpPresenter;
 import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.lyrics.LyricsResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class TrackDetailsPresenter extends MvpPresenter<TrackDetailsView> {
@@ -19,6 +19,8 @@ public class TrackDetailsPresenter extends MvpPresenter<TrackDetailsView> {
 	private String trackId;
 	private String lyricsText;
 	private MusixMatchService musixMatchService = MyApplication.getService();
+	private SharedPreferences preferences = MyApplication.getPreferences();
+	private CompositeDisposable subscriptions = new CompositeDisposable();
 
 	@Override
 	protected void onFirstViewAttach() {
@@ -31,19 +33,22 @@ public class TrackDetailsPresenter extends MvpPresenter<TrackDetailsView> {
 	}
 
 	public void loadLyrics() {
-		musixMatchService.getLyrics(Constants.API_KEY_VALUE, trackId).enqueue(new Callback<LyricsResponse>() {
-			@Override
-			public void onResponse(Call<LyricsResponse> call, Response<LyricsResponse> response) {
-				if (response.isSuccessful()) {
-					lyricsText = response.body().getMessage().getBody().getLyrics().getLyricsText();
-					getViewState().showData(lyricsText);
-				}
-			}
+		subscriptions.add(musixMatchService.getLyrics(preferences.getString(Constants.API_KEY, ""), trackId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(
+						lyricsResponse -> {
+							lyricsText = lyricsResponse.getMessage().getBody().getLyrics().getLyricsText();
+							getViewState().showData(lyricsText);
+						},
+						e -> Log.d("Lyrics loading failed", Log.getStackTraceString(e))
+				)
+		);
+	}
 
-			@Override
-			public void onFailure(Call<LyricsResponse> call, Throwable t) {
-				Log.d("Lyrics loading failed", t.getMessage());
-			}
-		});
+	@Override
+	public void detachView(TrackDetailsView view) {
+		subscriptions.clear();
+		super.detachView(view);
 	}
 }

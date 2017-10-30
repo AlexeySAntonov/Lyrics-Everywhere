@@ -3,7 +3,7 @@ package alexejantonov.com.musixmatch_lyrics_api_app.api;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.lyrics.LyricsResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.TrackResponse;
-import retrofit2.Call;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -19,18 +19,18 @@ import static alexejantonov.com.musixmatch_lyrics_api_app.api.config.Methods.TRA
 public interface MusixMatchService {
 
 	@GET(ARTISTS_GET)
-	Call<ArtistResponse> getArtists(@Query(API_KEY) String apiKey,
+	Single<ArtistResponse> getArtists(@Query(API_KEY) String apiKey,
+	                                  @Query(COUNTRY) String country,
+	                                  @Query(TOP_PAGE) String page,
+	                                  @Query(TOP_PAGE_SIZE) String pageSize);
+
+	@GET(TRACKS_GET)
+	Single<TrackResponse> getTracks(@Query(API_KEY) String apiKey,
 	                                @Query(COUNTRY) String country,
 	                                @Query(TOP_PAGE) String page,
 	                                @Query(TOP_PAGE_SIZE) String pageSize);
 
-	@GET(TRACKS_GET)
-	Call<TrackResponse> getTracks(@Query(API_KEY) String apiKey,
-	                              @Query(COUNTRY) String country,
-	                              @Query(TOP_PAGE) String page,
-	                              @Query(TOP_PAGE_SIZE) String pageSize);
-
 	@GET(LYRICS_GET)
-	Call<LyricsResponse> getLyrics(@Query(API_KEY) String apiKey,
-	                               @Query(TRACK_ID) String trackId);
+	Single<LyricsResponse> getLyrics(@Query(API_KEY) String apiKey,
+	                                 @Query(TRACK_ID) String trackId);
 }

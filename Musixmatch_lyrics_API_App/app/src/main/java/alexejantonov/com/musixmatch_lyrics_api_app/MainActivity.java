@@ -1,5 +1,7 @@
 package alexejantonov.com.musixmatch_lyrics_api_app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
 	private MenuItem lastDrawerMenuItem;
 	public SearchView searchView;
 	public MenuItem searchItem;
+
+	public static Intent newIntent(Context context) {
+		Intent intent = new Intent(context, MainActivity.class);
+		return intent;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

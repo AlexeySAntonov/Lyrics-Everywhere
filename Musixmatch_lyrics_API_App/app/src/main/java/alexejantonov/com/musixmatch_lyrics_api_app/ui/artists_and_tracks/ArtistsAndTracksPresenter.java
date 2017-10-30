@@ -1,5 +1,6 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
@@ -12,16 +13,14 @@ import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.MusixMatchService;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.ArtistResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.TrackResponse;
 import alexejantonov.com.musixmatch_lyrics_api_app.db.DataBase;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataContainersUtil;
 import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataMergeUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksListView> {
@@ -31,6 +30,8 @@ public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksList
 	private MusixMatchService musixMatchService = MyApplication.getService();
 	private String country;
 	private DataBase dataBase = MyApplication.getDataBase();
+	private CompositeDisposable subscriptions = new CompositeDisposable();
+	private SharedPreferences preferences = MyApplication.getPreferences();
 
 	@Override
 	protected void onFirstViewAttach() {
@@ -56,54 +57,44 @@ public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksList
 
 	public void loadArtists() {
 		Log.d("Loading", country + " top chart artists from Server");
-		musixMatchService.getArtists(Constants.API_KEY_VALUE, country, "1", "100").enqueue(new Callback<ArtistResponse>() {
-			@Override
-			public void onResponse(Call<ArtistResponse> call, Response<ArtistResponse> response) {
-				if (response.isSuccessful()) {
-					artists = DataContainersUtil.artistContainersToArtists(
-							response.body()
-									.getMessage()
-									.getBody()
-									.getArtistContainers(),
-							country
-					);
-
-					//Только если загрузились исполнители, начинаем загружать треки
-					Log.d("Loading", "Tracks");
-					loadTracks();
-				}
-			}
-
-			@Override
-			public void onFailure(Call<ArtistResponse> call, Throwable t) {
-				Log.d("Artists loading failed", t.getMessage());
-			}
-		});
+		subscriptions.add(musixMatchService.getArtists(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(
+						response -> {
+							artists = DataContainersUtil.artistContainersToArtists(
+									response.getMessage().getBody().getArtistContainers(), country
+							);
+							//Только если загрузились исполнители, начинаем загружать треки
+							Log.d("Loading", "Tracks");
+							loadTracks();
+						},
+						e -> Log.d("Artists loading failed", Log.getStackTraceString(e))
+				)
+		);
 	}
 
 	public void loadTracks() {
+		subscriptions.add(musixMatchService.getTracks(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(
+						trackResponse -> {
+							tracks = DataContainersUtil.trackContainersToTracks(
+									trackResponse.getMessage().getBody().getTrackContainers()
+							);
+							dataBase.insertArtists(artists);
+							dataBase.insertTracks(tracks);
+							getViewState().showData(DataMergeUtil.listsMerge(artists, tracks));
+						},
+						e -> Log.d("Tracks loading failed", Log.getStackTraceString(e))
+				)
+		);
+	}
 
-		musixMatchService.getTracks(Constants.API_KEY_VALUE, country, "1", "100").enqueue(new Callback<TrackResponse>() {
-			@Override
-			public void onResponse(Call<TrackResponse> call, Response<TrackResponse> response) {
-				if (response.isSuccessful()) {
-					tracks = DataContainersUtil.trackContainersToTracks(
-							response.body()
-									.getMessage()
-									.getBody()
-									.getTrackContainers()
-					);
-					//Если и треки успешно загрузились, обновляем данные в БД и мержим списки для адаптера
-					dataBase.insertArtists(artists);
-					dataBase.insertTracks(tracks);
-					getViewState().showData(DataMergeUtil.listsMerge(artists, tracks));
-				}
-			}
-
-			@Override
-			public void onFailure(Call<TrackResponse> call, Throwable t) {
-				Log.d("Tracks loading failed", t.getMessage());
-			}
-		});
+	@Override
+	public void detachView(ArtistsAndTracksListView view) {
+		subscriptions.clear();
+		super.detachView(view);
 	}
 }
