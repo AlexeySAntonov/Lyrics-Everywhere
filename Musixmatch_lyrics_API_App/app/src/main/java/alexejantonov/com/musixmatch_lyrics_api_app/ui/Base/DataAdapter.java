@@ -109,7 +109,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		private TextView artistName;
 		private ImageView twitterImage;
 
-		public ArtistViewHolder(View itemView) {
+		ArtistViewHolder(View itemView) {
 			super(itemView);
 
 			artistName = itemView.findViewById(R.id.artistName);
@@ -150,7 +150,7 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		private TextView trackAlbum;
 		private ImageView albumCover;
 
-		public TrackViewHolder(View itemView, OnTrackClickListener listener) {
+		TrackViewHolder(View itemView, OnTrackClickListener listener) {
 			super(itemView);
 
 			trackName = itemView.findViewById(R.id.trackName);

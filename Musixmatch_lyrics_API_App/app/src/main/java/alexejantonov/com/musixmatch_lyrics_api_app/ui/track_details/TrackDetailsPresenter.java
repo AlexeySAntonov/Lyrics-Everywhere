@@ -28,11 +28,11 @@ public class TrackDetailsPresenter extends MvpPresenter<TrackDetailsView> {
 		loadLyrics();
 	}
 
-	public void setTrackId(String trackId) {
+	void setTrackId(String trackId) {
 		this.trackId = trackId;
 	}
 
-	public void loadLyrics() {
+	private void loadLyrics() {
 		subscriptions.add(musixMatchService.getLyrics(preferences.getString(Constants.API_KEY, ""), trackId)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())

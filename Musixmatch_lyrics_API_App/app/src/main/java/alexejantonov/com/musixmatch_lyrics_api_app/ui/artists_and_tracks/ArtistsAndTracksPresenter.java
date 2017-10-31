@@ -39,11 +39,11 @@ public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksList
 		loadData();
 	}
 
-	public void setCountry(String country) {
+	void setCountry(String country) {
 		this.country = country;
 	}
 
-	public void loadData() {
+	void loadData() {
 		if (country == null) {
 			country = QueryType.ru.name();
 		}
@@ -55,7 +55,7 @@ public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksList
 		}
 	}
 
-	public void loadArtists() {
+	void loadArtists() {
 		Log.d("Loading", country + " top chart artists from Server");
 		subscriptions.add(musixMatchService.getArtists(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
 				.subscribeOn(Schedulers.io())
@@ -74,7 +74,7 @@ public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksList
 		);
 	}
 
-	public void loadTracks() {
+	private void loadTracks() {
 		subscriptions.add(musixMatchService.getTracks(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
