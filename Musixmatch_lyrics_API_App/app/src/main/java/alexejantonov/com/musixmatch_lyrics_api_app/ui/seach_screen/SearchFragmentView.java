@@ -10,5 +10,5 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface SearchFragmentView extends MvpView {
-	void showData(List<BaseData> data);
+	void showData(List<BaseData> data, String query);
 }

@@ -25,9 +25,9 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 public class SearchFragment extends BaseFragment implements SearchFragmentView {
 
 	private DataAdapter adapter;
-	private RecyclerView recyclerView;
-	private String query;
+	private boolean isSubmited;
 
+	private RecyclerView recyclerView;
 	private ProgressBar progressBar;
 
 	@InjectPresenter
@@ -59,23 +59,30 @@ public class SearchFragment extends BaseFragment implements SearchFragmentView {
 
 		setToolbarTitle(QueryType.default_search);
 
-		activity.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				queryStr = query;
-				setToolbarTitle(QueryType.search);
-				activity.searchItem.collapseActionView();
-				presenter.loadData(query);
-				return false;
-			}
+		if (activity.searchView != null) {
+			activity.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+				@Override
+				public boolean onQueryTextSubmit(String submitText) {
+					isSubmited = true;
+					queryTitle = submitText;
+					setToolbarTitle(QueryType.search);
+					activity.searchItem.collapseActionView();
+					presenter.loadData(submitText);
+					return false;
+				}
 
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				query = newText;
-				presenter.loadData(newText);
-				return false;
-			}
-		});
+				@Override
+				public boolean onQueryTextChange(String newText) {
+					if (!isSubmited) {
+						queryTitle = newText;
+						presenter.loadData(newText);
+					} else {
+						isSubmited = false;
+					}
+					return false;
+				}
+			});
+		}
 	}
 
 	@Override
@@ -85,7 +92,7 @@ public class SearchFragment extends BaseFragment implements SearchFragmentView {
 	}
 
 	@Override
-	public void showData(List<BaseData> data) {
+	public void showData(List<BaseData> data, String query) {
 		progressBar.setVisibility(View.INVISIBLE);
 		if (adapter == null) {
 			adapter = new DataAdapter(

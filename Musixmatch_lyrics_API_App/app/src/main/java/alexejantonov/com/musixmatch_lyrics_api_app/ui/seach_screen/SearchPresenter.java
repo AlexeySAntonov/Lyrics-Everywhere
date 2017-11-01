@@ -13,6 +13,6 @@ public class SearchPresenter extends MvpPresenter<SearchFragmentView> {
 	private DataBase dataBase = MyApplication.getDataBase();
 
 	void loadData(String query) {
-		getViewState().showData(DataMergeUtil.listsMerge(dataBase.getQueryArtists(query), dataBase.getTracks()));
+		getViewState().showData(DataMergeUtil.listsMerge(dataBase.getQueryArtists(query), dataBase.getTracks()), query);
 	}
 }

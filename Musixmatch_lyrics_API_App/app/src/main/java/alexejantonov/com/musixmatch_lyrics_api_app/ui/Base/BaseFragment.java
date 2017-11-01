@@ -20,7 +20,7 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetails
 public abstract class BaseFragment extends MvpAppCompatFragment {
 
 	public MainActivity activity;
-	public String queryStr;
+	public String queryTitle;
 
 	public static BaseFragment newInstance(FragmentType type, QueryType query) {
 		switch (type) {
@@ -69,7 +69,7 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
 				actionBar.setTitle(R.string.britain_top_chart);
 				break;
 			case search:
-				actionBar.setTitle("Results for query \"" + queryStr + " \"");
+				actionBar.setTitle("Results for query \"" + queryTitle + " \"");
 				break;
 			case default_search:
 				actionBar.setTitle("Do a Search");
