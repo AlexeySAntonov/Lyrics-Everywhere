@@ -2,6 +2,7 @@ package alexejantonov.com.musixmatch_lyrics_api_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment;
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.login_screen.LoginActivity;
 
 import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.FragmentType.COUNTRY;
 import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.FragmentType.SEARCH;
@@ -32,6 +34,7 @@ import static alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.us;
 public class MainActivity extends AppCompatActivity {
 
 	private FragmentManager fragmentManager;
+	private SharedPreferences preferences = MyApplication.getPreferences();
 
 	private DrawerLayout drawerLayout;
 	private ActionBarDrawerToggle drawerToggle;
@@ -160,12 +163,14 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.settings:
 				Snackbar.make(navigationView, R.string.settings, Snackbar.LENGTH_LONG).show();
 				break;
-			case R.id.exit:
-				this.finish();
+			case R.id.logOut:
+				preferences.edit().clear().commit();
+				finish();
+				startActivity(new Intent(this, LoginActivity.class));
 				break;
 		}
 
-		if (item.getItemId() != R.id.exit && item.getItemId() != R.id.settings) {
+		if (item.getItemId() != R.id.logOut && item.getItemId() != R.id.settings) {
 			fragmentManager.beginTransaction()
 					.replace(R.id.fragmentContainer, BaseFragment.newInstance(COUNTRY, countryId))
 					.addToBackStack(null)

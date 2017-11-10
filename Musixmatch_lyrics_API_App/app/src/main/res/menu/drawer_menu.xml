@@ -20,7 +20,7 @@
 					android:icon="@drawable/ic_settings_white_24dp"
 					android:title="@string/settings"/>
 				<item
-					android:id="@+id/exit"
+					android:id="@+id/logOut"
 					android:icon="@drawable/ic_exit_to_app_white_24dp"
 					android:title="@string/exit"/>
 			</menu>
