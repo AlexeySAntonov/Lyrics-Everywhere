@@ -21,6 +21,6 @@
 	<string name="alexey_antonov">Alexey Antonov</string>
 	<string name="alex_antonov150_gmail_com">alex.antonov150@gmail.com</string>
 	<string name="api_key">API KEY</string>
-	<string name="login">log in</string>
+	<string name="login">Sign in</string>
 	<string name="sign_up">sign up</string>
 </resources>

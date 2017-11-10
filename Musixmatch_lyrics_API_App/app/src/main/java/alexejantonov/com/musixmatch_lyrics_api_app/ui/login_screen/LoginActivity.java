@@ -2,6 +2,7 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.login_screen;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,8 @@ public class LoginActivity extends MvpAppCompatActivity implements LoginView {
 					presenter.tokenValidation(token);
 				}
 			});
+			registerButton.setOnClickListener(v ->
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.musixmatch.com/signup"))));
 		} else {
 			finish();
 			startMainActivity();

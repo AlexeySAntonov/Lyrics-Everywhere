@@ -14,7 +14,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
 		android:background="@drawable/login_screen_edit_background"
-		android:cursorVisible="false"
+		android:cursorVisible="true"
 		android:drawableLeft="@drawable/ic_key"
 		android:drawableStart="@drawable/ic_key"
 		android:gravity="center"

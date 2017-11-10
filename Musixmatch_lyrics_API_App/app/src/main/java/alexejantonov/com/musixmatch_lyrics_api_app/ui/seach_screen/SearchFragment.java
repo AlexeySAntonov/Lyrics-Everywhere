@@ -25,7 +25,7 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 public class SearchFragment extends BaseFragment implements SearchFragmentView {
 
 	private DataAdapter adapter;
-	private boolean isSubmited;
+	private boolean isSubmitted;
 
 	private RecyclerView recyclerView;
 	private ProgressBar progressBar;
@@ -63,7 +63,7 @@ public class SearchFragment extends BaseFragment implements SearchFragmentView {
 			activity.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 				@Override
 				public boolean onQueryTextSubmit(String submitText) {
-					isSubmited = true;
+					isSubmitted = true;
 					queryTitle = submitText;
 					setToolbarTitle(QueryType.search);
 					activity.searchItem.collapseActionView();
@@ -73,11 +73,11 @@ public class SearchFragment extends BaseFragment implements SearchFragmentView {
 
 				@Override
 				public boolean onQueryTextChange(String newText) {
-					if (!isSubmited) {
+					if (!isSubmitted) {
 						queryTitle = newText;
 						presenter.loadData(newText);
 					} else {
-						isSubmited = false;
+						isSubmitted = false;
 					}
 					return false;
 				}
