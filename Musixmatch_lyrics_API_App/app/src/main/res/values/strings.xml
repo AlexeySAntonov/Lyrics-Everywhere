@@ -15,7 +15,7 @@
 	<string name="exit">Log out</string>
 	<string name="no_twitter">Artist have no Twitter</string>
 	<string name="query_results">Results for \"</string>
-	<string name="search_by_artist_name">Search by artist name...</string>
+	<string name="search_by_artist_name">Search by artist name &#8230;</string>
 	<string name="lyrics_of">Lyrics of &#160;</string>
 	<string name="album">Album -</string>
 	<string name="alexey_antonov">Alexey Antonov</string>

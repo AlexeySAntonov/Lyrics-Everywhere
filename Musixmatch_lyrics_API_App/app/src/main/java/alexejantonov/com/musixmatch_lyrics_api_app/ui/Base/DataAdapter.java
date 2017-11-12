@@ -161,10 +161,32 @@ public class DataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		}
 
 		private void bindTo(Track track) {
-			trackName.setText(track.getTrackName());
+			if (query != null) {
+				int startIndex = indexOfSearchQuery(track.getTrackName());
+				if (startIndex == -1) {
+					trackName.setText(track.getTrackName());
+				} else {
+					SpannableString highLightedName = new SpannableString(track.getTrackName());
+					highLightedName.setSpan(
+							new TextAppearanceSpan(itemView.getContext(), R.style.searchTextHighlight),
+							startIndex,
+							startIndex + query.length(),
+							0);
+					trackName.setText(highLightedName);
+				}
+			} else {
+				trackName.setText(track.getTrackName());
+			}
 			trackAlbum.setText(track.getAlbumName());
 			imageRequestManager.load(track.getAlbumCover()).into(albumCover);
 			Log.d("album_cover", track.getAlbumCover());
+		}
+
+		private int indexOfSearchQuery(String artistName) {
+			if (!TextUtils.isEmpty(query)) {
+				return artistName.toLowerCase().indexOf(query.toLowerCase());
+			}
+			return -1;
 		}
 	}
 

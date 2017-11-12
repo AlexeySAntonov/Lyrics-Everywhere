@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
 
 import static alexejantonov.com.musixmatch_lyrics_api_app.db.DataBaseContract.ArtistsTable.ARTISTS_TABLE_NAME;
 import static alexejantonov.com.musixmatch_lyrics_api_app.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_ID;
@@ -118,9 +120,33 @@ public class DataBase {
 		cursor.close();
 	}
 
-	public List<Artist> getArtists(String country) {
+	public List<Artist> getCountryArtists(String country) {
 		List<Artist> artists = new ArrayList<>();
 		cursor = db.query(ARTISTS_TABLE_NAME, null, "countries LIKE '%" + country + "%'", null, null, null, null);
+
+		db.beginTransaction();
+
+		if (cursor.moveToFirst()) {
+			do {
+				Artist artist = new Artist();
+				artist.setArtistId(cursor.getInt(cursor.getColumnIndex(COLUMN_ARTIST_ID)));
+				artist.setArtistName(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST_NAME)));
+				artist.setTwitterUrl(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST_TWITTER)));
+				artist.setTopChartCountries(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST_TOP_CHART_COUNTRIES)));
+				artists.add(artist);
+			} while (cursor.moveToNext());
+		}
+
+		db.setTransactionSuccessful();
+		db.endTransaction();
+		cursor.close();
+
+		return artists;
+	}
+
+	public List<Artist> getAllArtist() {
+		List<Artist> artists = new ArrayList<>();
+		cursor = db.query(ARTISTS_TABLE_NAME, null, null, null, null, null, null);
 
 		db.beginTransaction();
 
@@ -167,7 +193,7 @@ public class DataBase {
 		return tracks;
 	}
 
-	public List<Artist> getQueryArtists(String queryName) {
+	public List<BaseData> getQueryData(String queryName) {
 		List<Artist> artists = new ArrayList<>();
 		cursor = db.query(ARTISTS_TABLE_NAME, null, "name LIKE '%" + queryName + "%'", null, null, null, null);
 
@@ -188,6 +214,33 @@ public class DataBase {
 		db.endTransaction();
 		cursor.close();
 
-		return artists;
+		List<Track> tracks = new ArrayList<>();
+		cursor = db.query(TRACKS_TABLE_NAME, null, "name LIKE '%" + queryName + "%'", null, null, null, null);
+		db.beginTransaction();
+
+		if (cursor.moveToFirst()) {
+			do {
+				Track track = new Track();
+				track.setTrackId(cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ID)));
+				track.setTrackName(cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_NAME)));
+				track.setAlbumName(cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_ALBUM)));
+				track.setAlbumCover(cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_ALBUM_COVER)));
+				track.setArtistId(cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ARTIST_ID)));
+				tracks.add(track);
+			} while (cursor.moveToNext());
+		}
+
+		db.setTransactionSuccessful();
+		db.endTransaction();
+		cursor.close();
+
+		List<BaseData> data = new ArrayList<BaseData>() {{
+			addAll(artists);
+			addAll(tracks);
+		}};
+
+		Collections.shuffle(data);
+
+		return data;
 	}
 }

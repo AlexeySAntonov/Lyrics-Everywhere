@@ -47,9 +47,9 @@ public class ArtistsAndTracksPresenter extends MvpPresenter<ArtistsAndTracksList
 		if (country == null) {
 			country = QueryType.ru.name();
 		}
-		if (dataBase.getArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
+		if (dataBase.getCountryArtists(country).size() > 0 && dataBase.getTracks().size() > 0) {
 			//Тащим с БД если не пусто
-			getViewState().showData(DataMergeUtil.listsMerge(dataBase.getArtists(country), dataBase.getTracks()));
+			getViewState().showData(DataMergeUtil.listsMerge(dataBase.getCountryArtists(country), dataBase.getTracks()));
 		} else {
 			loadArtists();
 		}
