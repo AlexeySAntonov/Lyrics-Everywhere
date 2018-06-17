@@ -1,5 +1,11 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity;
+import alexejantonov.com.musixmatch_lyrics_api_app.R;
+import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksListFragment;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.seach_screen.SearchFragment;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,15 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
-
 import com.arellomobile.mvp.MvpAppCompatFragment;
-
-import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity;
-import alexejantonov.com.musixmatch_lyrics_api_app.R;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksListFragment;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.seach_screen.SearchFragment;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsActivity;
 
 public abstract class BaseFragment extends MvpAppCompatFragment {
 
@@ -27,7 +25,7 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
 			case COUNTRY:
 				return ArtistsAndTracksListFragment.newInstance(query);
 			case SEARCH:
-				return SearchFragment.newInstance();
+				return SearchFragment.Companion.newInstance();
 		}
 		throw new IllegalArgumentException("Unknown fragment type: " + type.toString());
 	}
@@ -39,7 +37,7 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
 	}
 
 	public void launchTrackDetailsActivity(Track track) {
-		Intent i = TrackDetailsActivity.newIntent(getContext(), track);
+		Intent i = TrackDetailsActivity.Companion.newIntent(getContext(), track);
 		startActivity(i);
 	}
 
@@ -59,19 +57,19 @@ public abstract class BaseFragment extends MvpAppCompatFragment {
 	public void setToolbarTitle(QueryType query) {
 		ActionBar actionBar = activity.getSupportActionBar();
 		switch (query) {
-			case ru:
+			case RU:
 				actionBar.setTitle(R.string.russian_top_chart);
 				break;
-			case us:
+			case US:
 				actionBar.setTitle(R.string.usa_top_chart);
 				break;
-			case gb:
+			case GB:
 				actionBar.setTitle(R.string.britain_top_chart);
 				break;
-			case search:
+			case SEARCH:
 				actionBar.setTitle("Results for query \"" + queryTitle + " \"");
 				break;
-			case default_search:
+			case DEFAULT_SEARCH:
 				actionBar.setTitle("Do a Search");
 		}
 	}

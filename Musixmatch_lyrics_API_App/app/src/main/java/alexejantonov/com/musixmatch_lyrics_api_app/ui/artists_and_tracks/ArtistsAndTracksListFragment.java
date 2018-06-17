@@ -1,5 +1,11 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
+import alexejantonov.com.musixmatch_lyrics_api_app.R;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,17 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
 import com.arellomobile.mvp.presenter.InjectPresenter;
-
 import java.util.List;
-
-import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
-import alexejantonov.com.musixmatch_lyrics_api_app.R;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType;
 
 public class ArtistsAndTracksListFragment extends BaseFragment implements ArtistsAndTracksListView {
 
@@ -67,9 +64,9 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 
 		swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 		swipeRefreshLayout.setOnRefreshListener(() -> {
-			if (MyApplication.isOnline(getContext())) {
+      if (MyApplication.Companion.isOnline(getContext())) {
 				presenter.loadArtists();
-			} else if (!MyApplication.isOnline(getContext())) {
+      } else if (!MyApplication.Companion.isOnline(getContext())) {
 				showLostInternetConnectionDialog();
 			} else {
 				swipeRefreshLayout.setRefreshing(false);
@@ -101,7 +98,7 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 						data,
 						this::launchTrackDetailsActivity,
 						this::launchTwitter,
-						MyApplication.getImageRequestManager(),
+            MyApplication.Companion.getImageRequestManager(),
 						null);
 				recyclerView.setAdapter(adapter);
 			} else {
@@ -118,7 +115,7 @@ public class ArtistsAndTracksListFragment extends BaseFragment implements Artist
 					presenter.loadData();
 				})
 				.setPositiveButton(R.string.retry, (dialogInterface, i) -> {
-					if (MyApplication.isOnline(getContext())) {
+          if (MyApplication.Companion.isOnline(getContext())) {
 						presenter.setCountry(country.name());
 						presenter.loadData();
 					} else {

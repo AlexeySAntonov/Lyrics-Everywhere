@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<group android:checkableBehavior="single">
-		<item
-			android:id="@+id/rus"
-			android:icon="@drawable/ic_star_white_24dp"
-			android:title="@string/russian_top_chart"/>
-		<item
-			android:id="@+id/usa"
-			android:icon="@drawable/ic_star_white_24dp"
-			android:title="@string/usa_top_chart"/>
-		<item
-			android:id="@+id/gb"
-			android:icon="@drawable/ic_star_white_24dp"
-			android:title="@string/britain_top_chart"/>
-		<item android:title="">
-			<menu>
-				<item
-					android:id="@+id/settings"
-					android:icon="@drawable/ic_settings_white_24dp"
-					android:title="@string/settings"/>
-				<item
-					android:id="@+id/logOut"
-					android:icon="@drawable/ic_exit_to_app_white_24dp"
-					android:title="@string/exit"/>
-			</menu>
-		</item>
-	</group>
+  <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/rus"
+        android:icon="@drawable/ic_star_white_24dp"
+        android:title="@string/russian_top_chart"/>
+    <item
+        android:id="@+id/usa"
+        android:icon="@drawable/ic_star_white_24dp"
+        android:title="@string/usa_top_chart"/>
+    <item
+        android:id="@+id/gb"
+        android:icon="@drawable/ic_star_white_24dp"
+        android:title="@string/britain_top_chart"/>
+    <item android:title="">
+      <menu>
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="@string/settings"/>
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/ic_exit_to_app_white_24dp"
+            android:title="@string/exit"/>
+      </menu>
+    </item>
+  </group>
 </menu>

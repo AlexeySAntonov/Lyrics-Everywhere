@@ -17,7 +17,7 @@
 	<string name="query_results">Results for \"</string>
 	<string name="search_by_artist_name">Search by &#8230;</string>
 	<string name="lyrics_of">Lyrics of &#160;</string>
-	<string name="album">Album -</string>
+	<string name="album">Album - \"%s\"</string>
 	<string name="alexey_antonov">Alexey Antonov</string>
 	<string name="alex_antonov150_gmail_com">alex.antonov150@gmail.com</string>
 	<string name="api_key">API KEY</string>

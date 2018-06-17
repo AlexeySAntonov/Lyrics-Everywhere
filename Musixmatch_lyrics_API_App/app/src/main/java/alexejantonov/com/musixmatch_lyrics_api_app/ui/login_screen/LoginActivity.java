@@ -1,5 +1,9 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.ui.login_screen;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity;
+import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
+import alexejantonov.com.musixmatch_lyrics_api_app.R;
+import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -7,19 +11,13 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-
-import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity;
-import alexejantonov.com.musixmatch_lyrics_api_app.MyApplication;
-import alexejantonov.com.musixmatch_lyrics_api_app.R;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.config.Constants;
 
 public class LoginActivity extends MvpAppCompatActivity implements LoginView {
 
 	private String token;
-	private SharedPreferences preferences = MyApplication.getPreferences();
+  private SharedPreferences preferences = MyApplication.Companion.getPreferences();
 
 	private Button loginButton;
 	private Button registerButton;
@@ -76,7 +74,7 @@ public class LoginActivity extends MvpAppCompatActivity implements LoginView {
 	}
 
 	private void startMainActivity() {
-		Intent intent = MainActivity.newIntent(this);
+    Intent intent = MainActivity.Companion.newIntent(this);
 		startActivity(intent);
 	}
 }
