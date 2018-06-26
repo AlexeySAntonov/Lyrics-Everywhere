@@ -106,15 +106,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     lastDrawerMenuItem = item
-    var countryId: QueryType? = null
+    val countryId = when (item.itemId) {
+      R.id.usa -> US
+      R.id.gb  -> GB
+      else     -> RU
+    }
 
     when (item.itemId) {
-      R.id.rus      -> countryId = RU
-      R.id.usa      -> countryId = US
-      R.id.gb       -> countryId = GB
       R.id.settings -> Snackbar.make(navigationView, R.string.settings, Snackbar.LENGTH_LONG).show()
       R.id.logOut   -> {
-        MyApplication.preferences?.let { it.edit().clear().apply() }
+        MyApplication.preferences.edit().clear().apply()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
       }

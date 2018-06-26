@@ -1,18 +1,16 @@
 package alexejantonov.com.musixmatch_lyrics_api_app.db;
 
+import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
+import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist;
-import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track;
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseData;
 
 import static alexejantonov.com.musixmatch_lyrics_api_app.db.DataBaseContract.ArtistsTable.ARTISTS_TABLE_NAME;
 import static alexejantonov.com.musixmatch_lyrics_api_app.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_ID;
@@ -194,7 +192,7 @@ public class DataBase {
 	}
 
 	public List<BaseData> getQueryData(String queryName) {
-		List<Artist> artists = new ArrayList<>();
+		final List<Artist> artists = new ArrayList<>();
 		cursor = db.query(ARTISTS_TABLE_NAME, null, "name LIKE '%" + queryName + "%'", null, null, null, null);
 
 		db.beginTransaction();
@@ -214,7 +212,7 @@ public class DataBase {
 		db.endTransaction();
 		cursor.close();
 
-		List<Track> tracks = new ArrayList<>();
+		final List<Track> tracks = new ArrayList<>();
 		cursor = db.query(TRACKS_TABLE_NAME, null, "name LIKE '%" + queryName + "%'", null, null, null, null);
 		db.beginTransaction();
 
