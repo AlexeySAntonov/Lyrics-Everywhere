@@ -10,6 +10,7 @@ import alexejantonov.com.musixmatch_lyrics_api_app.utils.DataMergeUtil
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -39,7 +40,7 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
     if (country == null) {
       country = QueryType.RU.name
     }
-    if (dataBase.getCountryArtists(country).size > 0 && dataBase.tracks.size > 0) {
+    if (dataBase.getCountryArtists(country).isNotEmpty() && dataBase.tracks.isNotEmpty()) {
       viewState.showData(DataMergeUtil.listsMerge(dataBase.getCountryArtists(country), dataBase.tracks))
     } else {
       loadArtists()
@@ -48,34 +49,40 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
 
   fun loadArtists() {
     subscriptions.add(
-        musixMatchService.getArtists(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
+        musixMatchService
+            .getArtists(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
+            .flatMapCompletable {
+              Completable.fromAction {
+                artists = DataContainersUtil.artistContainersToArtists(it.message.body.artistContainers, country!!)
+                dataBase.insertArtists(artists)
+              }
+            }
+            .doOnComplete { loadTracks() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {
-                  artists = DataContainersUtil.artistContainersToArtists(it.message.body.artistContainers, country!!)
-                  loadTracks()
-                },
+                { Log.d("Artists loading", "succeed") },
                 { Log.d("Artists loading failed", Log.getStackTraceString(it)) }
             )
     )
   }
 
   private fun loadTracks() {
-    subscriptions.add(musixMatchService.getTracks(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-            {
-              tracks = DataContainersUtil.trackContainersToTracks(it.message.body.trackContainers)
-              dataBase.apply {
-                insertArtists(artists)
-                insertTracks(tracks)
+    subscriptions.add(
+        musixMatchService
+            .getTracks(preferences.getString(Constants.API_KEY, ""), country, "1", "100")
+            .flatMapCompletable {
+              Completable.fromAction {
+                tracks = DataContainersUtil.trackContainersToTracks(it.message.body.trackContainers)
+                dataBase.insertTracks(tracks)
               }
-              viewState.showData(DataMergeUtil.listsMerge(artists, tracks))
-            },
-            { Log.d("Tracks loading failed", Log.getStackTraceString(it)) }
-        )
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { viewState.showData(DataMergeUtil.listsMerge(artists, tracks)) },
+                { Log.d("Tracks loading failed", Log.getStackTraceString(it)) }
+            )
     )
   }
 

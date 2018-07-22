@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 @InjectViewState
 class TrackDetailsPresenter : MvpPresenter<TrackDetailsView>() {
 
-  private var trackId: String? = null
+  private lateinit var trackId: String
   private val musixMatchService = MyApplication.service
   private val preferences = MyApplication.preferences
   private val subscriptions = CompositeDisposable()
