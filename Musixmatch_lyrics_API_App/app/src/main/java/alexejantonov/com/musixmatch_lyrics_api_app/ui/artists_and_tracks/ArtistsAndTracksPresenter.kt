@@ -11,6 +11,7 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -40,11 +41,33 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
     if (country == null) {
       country = QueryType.RU.name
     }
-    if (dataBase.getCountryArtists(country).isNotEmpty() && dataBase.tracks.isNotEmpty()) {
-      viewState.showData(DataMergeUtil.listsMerge(dataBase.getCountryArtists(country), dataBase.tracks))
-    } else {
-      loadArtists()
-    }
+    subscriptions.add(
+        Single
+            .fromCallable {
+              dataBase.getCountryArtists(country)
+            }
+            .flatMap {
+              if (it.isNotEmpty()) {
+                artists = it
+                Single.fromCallable { dataBase.tracks }
+              } else {
+                Single.just(emptyList())
+              }
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                  if (it.isNotEmpty()) {
+                    tracks = it
+                    viewState.showData(DataMergeUtil.listsMerge(artists, tracks))
+                  } else {
+                    loadArtists()
+                  }
+                },
+                { Log.e("Data loading failed", Log.getStackTraceString(it)) }
+            )
+    )
   }
 
   fun loadArtists() {
