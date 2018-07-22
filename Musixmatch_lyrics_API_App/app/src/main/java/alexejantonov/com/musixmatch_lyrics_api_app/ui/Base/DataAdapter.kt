@@ -3,7 +3,6 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base
 import alexejantonov.com.musixmatch_lyrics_api_app.R
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.TextUtils
@@ -49,21 +48,19 @@ class DataAdapter(
   override fun getItemCount() = data.size
 
   fun updateData(data: List<BaseData>) {
-    val diffResult = DiffUtil.calculateDiff(DataDiffCallback(this.data, data))
-
     this.data.clear()
     this.data.addAll(data)
-    diffResult.dispatchUpdatesTo(this)
+    notifyDataSetChanged()
   }
 
-  fun updateQueryData(data: MutableList<BaseData>, query: String) {
+  fun updateQueryData(data: List<BaseData>, query: String) {
     this.data.clear()
     this.data.addAll(data)
     this.query = query
     notifyDataSetChanged()
   }
 
-  private inner class ArtistViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  private inner class ArtistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bindTo(artist: Artist) {
       itemView.apply {
@@ -83,7 +80,7 @@ class DataAdapter(
         } else {
           artistName.text = artist.artistName
         }
-        twitterIcon.setOnClickListener { onTwitterClickListener.onClick((data[adapterPosition] as Artist).twitterUrl) }
+        twitterIcon.setOnClickListener { onTwitterClickListener.onClick(artist.twitterUrl) }
       }
     }
 
@@ -94,7 +91,7 @@ class DataAdapter(
     }
   }
 
-  private inner class TrackViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  private inner class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bindTo(track: Track) {
       itemView.apply {
@@ -116,7 +113,7 @@ class DataAdapter(
         }
         trackAlbum.text = track.albumName
         imageRequestManager.load(track.albumCover).into(albumCover)
-        setOnClickListener { onTrackClickListener.onClick(data[adapterPosition] as Track) }
+        setOnClickListener { onTrackClickListener.onClick(track) }
       }
     }
 

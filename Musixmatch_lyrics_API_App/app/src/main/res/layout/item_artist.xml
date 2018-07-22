@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="168dp"
+    android:background="@drawable/singer_image">
 
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:orientation="vertical">
+  <View
+      android:id="@+id/divider"
+      android:layout_width="0dp"
+      android:layout_height="8dp"
+      android:background="@color/colorAccent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
 
-	<View
-		android:layout_width="match_parent"
-		android:layout_height="8dp"
-		android:background="@color/colorAccent"/>
+  <android.support.constraint.Guideline
+      android:id="@+id/guideline1"
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintGuide_percent="0.15"/>
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="168dp"
-		android:background="@drawable/singer_image"
-		android:foreground="?attr/selectableItemBackground">
+  <android.support.constraint.Guideline
+      android:id="@+id/guideline2"
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintGuide_percent="0.85"/>
 
-		<LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
-			android:layout_marginEnd="16dp"
-			android:layout_marginLeft="48dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginStart="48dp"
-			android:layout_marginTop="16dp"
-			android:gravity="top"
-			android:orientation="horizontal">
+  <com.devspark.robototextview.widget.RobotoTextView
+      android:id="@+id/artistName"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:gravity="end"
+      android:inputType="textMultiLine"
+      android:textColor="@color/colorPrimaryDark"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/guideline2"
+      app:layout_constraintStart_toEndOf="@id/guideline1"
+      app:layout_constraintTop_toTopOf="@id/divider"
+      app:layout_constraintVertical_bias="0.2"
+      app:robotoTypeface="roboto_medium"
+      tools:text="Martin Garrix Martin Garrix Martin Garrix"/>
 
-			<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/artistName"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_marginEnd="16dp"
-				android:layout_marginRight="16dp"
-				android:layout_weight="1"
-				android:gravity="end"
-				android:inputType="textMultiLine"
-				android:maxLength="42"
-				android:textColor="@color/colorPrimaryDark"
-				android:textSize="22sp"
-				android:textStyle="bold"
-				app:robotoTypeface="roboto_medium"
-				tools:text="Martin Garrix Martin Garrix Martin Garrix"/>
+  <ImageView
+      android:id="@+id/twitterIcon"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:background="?attr/selectableItemBackground"
+      app:layout_constraintBottom_toBottomOf="@+id/artistName"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@id/guideline2"
+      app:layout_constraintTop_toTopOf="@+id/artistName"
+      app:srcCompat="@drawable/twitter_image"/>
 
-			<ImageView
-				android:id="@+id/twitterIcon"
-				android:layout_width="24dp"
-				android:layout_height="24dp"
-				android:layout_marginTop="5dp"
-				android:background="?attr/selectableItemBackground"
-				app:srcCompat="@drawable/twitter_image"/>
-
-		</LinearLayout>
-
-	</RelativeLayout>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

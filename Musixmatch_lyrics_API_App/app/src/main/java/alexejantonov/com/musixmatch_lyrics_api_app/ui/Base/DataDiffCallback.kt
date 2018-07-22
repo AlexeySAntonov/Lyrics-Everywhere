@@ -2,6 +2,7 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base
 
 import android.support.v7.util.DiffUtil
 
+@Deprecated("Redundant")
 class DataDiffCallback(private val oldList: List<BaseData>, private val newList: List<BaseData>) : DiffUtil.Callback() {
 
   override fun getOldListSize() = oldList.size

@@ -93,7 +93,7 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
       )
       recyclerView.adapter = adapter
     } else {
-      adapter?.updateQueryData(data.toMutableList(), query)
+      adapter?.updateQueryData(data, query)
     }
   }
 }

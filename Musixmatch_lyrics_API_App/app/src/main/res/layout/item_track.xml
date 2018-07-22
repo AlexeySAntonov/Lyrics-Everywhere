@@ -1,63 +1,68 @@
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="56dp"
-	android:foreground="?attr/selectableItemBackground">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground">
 
-	<ImageView
-		android:id="@+id/albumCover"
-		android:layout_width="56dp"
-		android:layout_height="56dp"
-		tools:background="@color/colorAccent"/>
+  <ImageView
+      android:id="@+id/albumCover"
+      android:layout_width="56dp"
+      android:layout_height="56dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:background="@color/colorAccent"/>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_toEndOf="@+id/albumCover"
-		android:layout_toLeftOf="@+id/sound"
-		android:layout_toRightOf="@+id/albumCover"
-		android:layout_toStartOf="@+id/sound"
-		android:gravity="center_vertical"
-		android:orientation="vertical"
-		android:paddingLeft="16dp"
-		android:paddingRight="16dp">
+  <com.devspark.robototextview.widget.RobotoTextView
+      android:id="@+id/trackName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="16dp"
+      android:ellipsize="end"
+      android:lines="1"
+      android:textColor="@color/defaultGrayColor"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@+id/trackAlbum"
+      app:layout_constraintEnd_toStartOf="@+id/sound"
+      app:layout_constraintHorizontal_chainStyle="spread_inside"
+      app:layout_constraintStart_toEndOf="@+id/albumCover"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_chainStyle="packed"
+      app:robotoTypeface="roboto_medium"
+      tools:text="Animals"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
-			android:id="@+id/trackName"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:ellipsize="end"
-			android:lines="1"
-			android:textColor="@color/defaultGrayColor"
-			android:textSize="16sp"
-			android:textStyle="bold"
-			app:robotoTypeface="roboto_medium"
-			tools:text="Animals"/>
+  <com.devspark.robototextview.widget.RobotoTextView
+      android:id="@+id/trackAlbum"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:ellipsize="end"
+      android:lines="1"
+      android:textColor="@color/defaultGrayColor"
+      android:textSize="12sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/trackName"
+      app:layout_constraintTop_toBottomOf="@+id/trackName"
+      app:robotoTypeface="roboto_regular"
+      tools:text="My super-super album"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
-			android:id="@+id/trackAlbum"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:ellipsize="end"
-			android:lines="1"
-			android:textColor="@color/defaultGrayColor"
-			android:textSize="12sp"
-			app:robotoTypeface="roboto_regular"
-			tools:text="My super-super album"/>
+  <ImageView
+      android:id="@+id/sound"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:layout_marginEnd="16dp"
+      android:layout_marginRight="16dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@id/trackName"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/sound_image"/>
 
-	</LinearLayout>
-
-	<ImageView
-		android:id="@+id/sound"
-		android:layout_width="24dp"
-		android:layout_height="24dp"
-		android:layout_alignParentEnd="true"
-		android:layout_alignParentRight="true"
-		android:layout_centerVertical="true"
-		android:layout_marginEnd="16dp"
-		android:layout_marginRight="16dp"
-		app:srcCompat="@drawable/sound_image"/>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
