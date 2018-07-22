@@ -9,56 +9,45 @@ object DataMergeUtil {
   fun listsMerge(artists: List<Artist>, tracks: List<Track>): List<BaseData> {
     val data = mutableListOf<BaseData>()
 
-    for (i in artists.indices) {
-      data.add(artists[i])
-      for (j in tracks.indices) {
-        if (artists[i].artistId == tracks[j].artistId) {
-          data.add(tracks[j])
+    for (artist in artists) {
+      data.add(artist)
+      for (track in tracks) {
+        if (artist.artistId == track.artistId) {
+          data.add(track)
         }
       }
     }
     return data
   }
 
-  fun searchListsMerge(artists: List<Artist>, tracks: List<Track>, data: List<BaseData>): List<BaseData> {
+  fun searchListsMerge(artists: List<Artist>, tracks: MutableList<Track>, query: String): List<BaseData> {
     val mergeData = mutableListOf<BaseData>()
-    val dataMap = mutableMapOf<Artist, MutableList<Track>>()
+    val tracksClone = mutableListOf<Track>().apply { addAll(tracks) }
 
-    for (i in data.indices) {
-      if (data[i] is Artist) {
-        for (j in tracks.indices) {
-          if (data[i].artistId == tracks[j].artistId) {
-            if (dataMap.containsKey(data[i])) {
-              dataMap[data[i]]?.add(tracks[j])
-            } else {
-              val mapBucketTracks = ArrayList<Track>()
-              mapBucketTracks.add(tracks[j])
-              dataMap[data[i] as Artist] = mapBucketTracks
-            }
-          }
-        }
-      } else if (data[i] is Track) {
-        for (j in artists.indices) {
-          if (data[i].artistId == artists[j].artistId) {
-            if (dataMap.containsKey(artists[j])) {
-              dataMap[artists[j]]?.add(data[i] as Track)
-              break
-            } else {
-              val mapBucketTrack = ArrayList<Track>()
-              mapBucketTrack.add(data[i] as Track)
-              dataMap[artists[j]] = mapBucketTrack
-              break
-            }
+    for (artist in artists) {
+      if (artist.artistName.toLowerCase().contains(query.toLowerCase())) {
+        mergeData.add(artist)
+        for (track in tracks) {
+          if (track.artistId == artist.artistId) {
+            mergeData.add(track)
+            tracksClone.remove(track)
           }
         }
       }
     }
 
-    for (artist in dataMap.keys) {
-      mergeData.add(artist)
-      mergeData.addAll(dataMap[artist] as List<BaseData>)
+    for (track in tracksClone) {
+      if (track.trackName.toLowerCase().contains(query.toLowerCase())) {
+        for (artist in artists) {
+          if (artist.artistId == track.artistId) {
+            if (mergeData.contains(artist).not()) {
+              mergeData.add(artist)
+            }
+          }
+        }
+        mergeData.add(track)
+      }
     }
-
     return mergeData
   }
 }

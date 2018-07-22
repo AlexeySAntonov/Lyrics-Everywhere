@@ -196,6 +196,7 @@ class DataBase(context: Context) {
     return artists
   }
 
+  @Deprecated("Expensive search")
   fun getQueryData(queryName: String): List<BaseData> {
     val artists = ArrayList<Artist>()
     cursor = db.query(ARTISTS_TABLE_NAME, null, "name LIKE '%$queryName%'", null, null, null, null)
