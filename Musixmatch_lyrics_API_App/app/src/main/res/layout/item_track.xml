@@ -17,7 +17,7 @@
 
   <TextView
       android:id="@+id/trackName"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
       android:layout_marginStart="16dp"
@@ -26,18 +26,17 @@
       android:lines="1"
       android:textColor="@color/defaultGrayColor"
       android:textSize="16sp"
-      android:textStyle="bold"
       app:layout_constraintBottom_toTopOf="@+id/trackAlbum"
       app:layout_constraintEnd_toStartOf="@+id/sound"
       app:layout_constraintHorizontal_chainStyle="spread_inside"
       app:layout_constraintStart_toEndOf="@+id/albumCover"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_chainStyle="packed"
-      tools:text="Animals"/>
+      tools:text="Animals Animals Animals Animals Animals Animals Animals "/>
 
   <TextView
       android:id="@+id/trackAlbum"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="4dp"
       android:ellipsize="end"
@@ -46,9 +45,10 @@
       android:textColor="@color/defaultGrayColor"
       android:textSize="12sp"
       app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/sound"
       app:layout_constraintStart_toStartOf="@+id/trackName"
       app:layout_constraintTop_toBottomOf="@+id/trackName"
-      tools:text="My super-super album"/>
+      tools:text="My super-super album My super-super album My super-super album My super-super album"/>
 
   <ImageView
       android:id="@+id/sound"
