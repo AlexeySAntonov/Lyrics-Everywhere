@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.squareup.leakcanary.LeakCanary
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -23,6 +24,11 @@ class MyApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     Stetho.initializeWithDefaults(this)
+
+    if (BuildConfig.DEBUG) {
+      if (LeakCanary.isInAnalyzerProcess(this)) return
+      LeakCanary.install(this)
+    }
 
     client = OkHttpClient.Builder()
         .addNetworkInterceptor(StethoInterceptor())

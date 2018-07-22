@@ -1,105 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:fitsSystemWindows="true">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-	<android.support.design.widget.AppBarLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
 
-	</android.support.design.widget.AppBarLayout>
+  </android.support.design.widget.AppBarLayout>
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<ImageView
-			android:id="@+id/albumCover"
-			android:layout_width="100dp"
-			android:layout_height="100dp"
-			android:layout_alignParentLeft="true"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentTop="true"
-			tools:src="@drawable/sound_image"/>
+    <ImageView
+        android:id="@+id/albumCover"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:src="@drawable/sound_image"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
-			android:id="@+id/trackAlbum"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginEnd="16dp"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="16dp"
-			android:layout_toEndOf="@+id/albumCover"
-			android:layout_toRightOf="@+id/albumCover"
-			android:ellipsize="end"
-			android:lines="1"
-			android:textSize="14sp"
-			app:robotoTypeface="roboto_regular"
-			tools:text="Album - Tralalala"/>
+    <TextView
+        android:id="@+id/trackAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/albumCover"
+        android:layout_toRightOf="@+id/albumCover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:lines="1"
+        android:textSize="14sp"
+        tools:text="Album - Tralalala"/>
 
-		<com.devspark.robototextview.widget.RobotoTextView
-			android:id="@+id/trackName"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignTop="@+id/trackAlbum"
-			android:layout_marginEnd="16dp"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="20dp"
-			android:layout_toEndOf="@+id/albumCover"
-			android:layout_toRightOf="@+id/albumCover"
-			android:ellipsize="end"
-			android:lines="2"
-			android:textSize="18sp"
-			app:robotoTypeface="roboto_regular"
-			tools:text="Track name"/>
+    <TextView
+        android:id="@+id/trackName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/trackAlbum"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/albumCover"
+        android:layout_toRightOf="@+id/albumCover"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:lines="2"
+        android:textSize="18sp"
+        tools:text="Track name"/>
 
-		<View
-			android:id="@+id/textDivider"
-			android:layout_width="match_parent"
-			android:layout_height="8dp"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
-			android:layout_below="@id/albumCover"
-			android:background="@color/colorAccent"/>
+    <View
+        android:id="@+id/textDivider"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/albumCover"
+        android:background="@color/colorAccent"/>
 
-		<android.support.v4.widget.NestedScrollView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/textDivider"
-			android:layout_marginBottom="8dp"
-			android:layout_marginTop="8dp">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textDivider"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
 
-			<com.devspark.robototextview.widget.RobotoTextView
-				android:id="@+id/lyrics"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginEnd="16dp"
-				android:layout_marginLeft="16dp"
-				android:layout_marginRight="16dp"
-				android:layout_marginStart="16dp"
-				android:inputType="textMultiLine"
-				android:textSize="16sp"
-				app:robotoTypeface="roboto_regular"
-				tools:text="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"/>
+      <TextView
+          android:id="@+id/lyrics"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+          android:layout_marginStart="16dp"
+          android:fontFamily="sans-serif"
+          android:textSize="16sp"
+          tools:text="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"/>
 
-		</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-	</RelativeLayout>
+  </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

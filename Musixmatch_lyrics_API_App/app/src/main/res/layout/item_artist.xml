@@ -31,21 +31,19 @@
       android:layout_height="wrap_content"
       app:layout_constraintGuide_percent="0.85"/>
 
-  <com.devspark.robototextview.widget.RobotoTextView
+  <TextView
       android:id="@+id/artistName"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:fontFamily="sans-serif-medium"
       android:gravity="end"
-      android:inputType="textMultiLine"
       android:textColor="@color/colorPrimaryDark"
       android:textSize="22sp"
-      android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@id/guideline2"
       app:layout_constraintStart_toEndOf="@id/guideline1"
       app:layout_constraintTop_toTopOf="@id/divider"
       app:layout_constraintVertical_bias="0.2"
-      app:robotoTypeface="roboto_medium"
       tools:text="Martin Garrix Martin Garrix Martin Garrix"/>
 
   <ImageView
