@@ -4,6 +4,5 @@ enum class QueryType {
   RU,
   US,
   GB,
-  SEARCH,
-  DEFAULT_SEARCH
+  SEARCH
 }

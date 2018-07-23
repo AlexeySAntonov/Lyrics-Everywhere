@@ -8,4 +8,6 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface ArtistsAndTracksListView : MvpView {
   fun showData(data: List<BaseData>)
+  fun showLoading()
+  fun hideLoading()
 }

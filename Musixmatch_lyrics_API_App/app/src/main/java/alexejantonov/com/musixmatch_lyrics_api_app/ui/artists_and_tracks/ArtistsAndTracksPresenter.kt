@@ -56,6 +56,8 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.showLoading() }
+            .doAfterTerminate { viewState.hideLoading() }
             .subscribe(
                 {
                   if (it.isNotEmpty()) {
@@ -83,6 +85,8 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
             .doOnComplete { loadTracks() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.showLoading() }
+            .doAfterTerminate { viewState.hideLoading() }
             .subscribe(
                 { Log.d("Artists loading", "succeed") },
                 { Log.d("Artists loading failed", Log.getStackTraceString(it)) }
@@ -102,6 +106,8 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.showLoading() }
+            .doAfterTerminate { viewState.hideLoading() }
             .subscribe(
                 { viewState.showData(DataMergeUtil.listsMerge(artists, tracks)) },
                 { Log.d("Tracks loading failed", Log.getStackTraceString(it)) }

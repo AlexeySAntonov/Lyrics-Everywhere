@@ -8,17 +8,19 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.BaseFragment
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter.OnTrackClickListener
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter.OnTwitterClickListener
-import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_search.progressBar
 import kotlinx.android.synthetic.main.fragment_search.recyclerView
+import kotlinx.android.synthetic.main.fragment_search.toolbar
 
 class SearchFragment : BaseFragment(), SearchFragmentView {
   companion object {
@@ -27,6 +29,9 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
 
   private var adapter: DataAdapter? = null
   private var isSubmitted: Boolean = false
+  private var searchView: SearchView? = null
+  private var searchItem: MenuItem? = null
+  private var queryTitle: String? = null
 
   @InjectPresenter
   lateinit var presenter: SearchPresenter
@@ -37,35 +42,17 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    progressBar.visibility = View.VISIBLE
-
     recyclerView.apply {
       layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
       addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
-    setToolbarTitle(QueryType.DEFAULT_SEARCH)
-
-    activity.searchView?.setOnQueryTextListener(object : OnQueryTextListener {
-      override fun onQueryTextSubmit(submitText: String): Boolean {
-        isSubmitted = true
-        queryTitle = submitText
-        setToolbarTitle(QueryType.SEARCH)
-        activity.searchItem?.collapseActionView()
-        presenter.loadData(submitText)
-        return false
-      }
-
-      override fun onQueryTextChange(newText: String): Boolean {
-        if (isSubmitted.not()) {
-          queryTitle = newText
-          presenter.loadData(newText)
-        } else {
-          isSubmitted = false
-        }
-        return false
-      }
-    })
+    toolbar.apply {
+      title = getText(R.string.search_by_artist_name)
+      setNavigationOnClickListener { activity.onBackPressed() }
+      inflateMenu(R.menu.search_menu)
+    }
+    setupSearchView()
   }
 
   override fun onDestroyView() {
@@ -95,5 +82,45 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
     } else {
       adapter?.updateQueryData(data, query)
     }
+  }
+
+  override fun showLoading() {
+    progressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideLoading() {
+    progressBar.visibility = View.GONE
+  }
+
+  private fun setupSearchView() {
+    searchItem = toolbar.menu.findItem(R.id.search)
+    searchItem?.expandActionView()
+    searchView = searchItem?.actionView as SearchView
+    searchView?.apply {
+      queryHint = getString(R.string.search_by_artist_name)
+      isSubmitButtonEnabled = true
+      setIconifiedByDefault(false)
+    }
+
+    searchView?.setOnQueryTextListener(object : OnQueryTextListener {
+      override fun onQueryTextSubmit(submitText: String): Boolean {
+        isSubmitted = true
+        queryTitle = submitText
+        toolbar.title = String.format(getString(R.string.query_results), queryTitle)
+        searchItem?.collapseActionView()
+        presenter.loadData(submitText)
+        return false
+      }
+
+      override fun onQueryTextChange(newText: String): Boolean {
+        if (isSubmitted.not()) {
+          queryTitle = newText
+          presenter.loadData(newText)
+        } else {
+          isSubmitted = false
+        }
+        return false
+      }
+    })
   }
 }

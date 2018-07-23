@@ -10,6 +10,7 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter.OnTrackCl
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.DataAdapter.OnTwitterClickListener
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.RU
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType.SEARCH
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DividerItemDecoration
@@ -20,7 +21,9 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_artists.progressBar
 import kotlinx.android.synthetic.main.fragment_artists.recyclerView
+import kotlinx.android.synthetic.main.fragment_artists.searchIcon
 import kotlinx.android.synthetic.main.fragment_artists.swipeRefreshLayout
+import kotlinx.android.synthetic.main.fragment_artists.toolbar
 
 class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
 
@@ -45,11 +48,21 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    progressBar.visibility = View.VISIBLE
-
     queryType = arguments?.getSerializable(BUNDLE_QUERY_TYPE) as QueryType? ?: RU
+
+    searchIcon.setOnClickListener { activity.navigateTo(SEARCH, QueryType.SEARCH, true) }
+
+    toolbar.apply {
+      title = when (queryType) {
+        QueryType.US -> getText(R.string.usa_top_chart)
+        QueryType.GB -> getText(R.string.britain_top_chart)
+        else         -> getText(R.string.russian_top_chart)
+      }
+      setNavigationOnClickListener {
+        activity.setDrawerState()
+      }
+    }
     presenter.setCountry(queryType.name)
-    setToolbarTitle(queryType)
 
     context?.let {
       swipeRefreshLayout.setOnRefreshListener {
@@ -95,6 +108,14 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
         adapter?.updateData(data)
       }
     }
+  }
+
+  override fun showLoading() {
+    progressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideLoading() {
+    progressBar.visibility = View.GONE
   }
 
   private fun showLostInternetConnectionDialog() {

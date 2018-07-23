@@ -16,16 +16,15 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 abstract class BaseFragment : MvpAppCompatFragment() {
 
   companion object {
-    fun newInstance(type: FragmentType, query: QueryType): BaseFragment {
+    fun newInstance(type: ScreenType, query: QueryType): BaseFragment {
       return when (type) {
-        FragmentType.COUNTRY -> ArtistsAndTracksListFragment.newInstance(query)
-        FragmentType.SEARCH  -> SearchFragment.newInstance()
+        ScreenType.COUNTRY -> ArtistsAndTracksListFragment.newInstance(query)
+        ScreenType.SEARCH  -> SearchFragment.newInstance()
       }
     }
   }
 
   lateinit var activity: MainActivity
-  var queryTitle: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -44,16 +43,6 @@ abstract class BaseFragment : MvpAppCompatFragment() {
       }
     } else {
       view?.let { Snackbar.make(it, R.string.no_twitter, Snackbar.LENGTH_LONG).show() }
-    }
-  }
-
-  fun setToolbarTitle(query: QueryType) {
-    activity.supportActionBar?.title = when (query) {
-      QueryType.RU             -> getText(R.string.russian_top_chart)
-      QueryType.US             -> getText(R.string.usa_top_chart)
-      QueryType.GB             -> getText(R.string.britain_top_chart)
-      QueryType.SEARCH         -> "Results for query \"$queryTitle \""
-      QueryType.DEFAULT_SEARCH -> "Do a Search"
     }
   }
 }
