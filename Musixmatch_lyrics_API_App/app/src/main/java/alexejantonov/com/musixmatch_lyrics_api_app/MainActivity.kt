@@ -7,12 +7,12 @@ import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.RU
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.QueryType.US
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType.COUNTRY
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType.SETTINGS
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.login_screen.LoginActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.MenuItem
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     when (item.itemId) {
-      R.id.settings -> Snackbar.make(navigationView, R.string.settings, Snackbar.LENGTH_LONG).show()
+      R.id.settings -> navigateTo(SETTINGS, QueryType.SETTINGS)
       R.id.logOut   -> {
         MyApplication.preferences.edit().clear().apply()
         startActivity(Intent(this, LoginActivity::class.java))

@@ -58,9 +58,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
         QueryType.GB -> getText(R.string.britain_top_chart)
         else         -> getText(R.string.russian_top_chart)
       }
-      setNavigationOnClickListener {
-        activity.setDrawerState()
-      }
+      setNavigationOnClickListener { activity.setDrawerState() }
     }
     presenter.setCountry(queryType.name)
 

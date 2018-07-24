@@ -3,8 +3,12 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base
 import alexejantonov.com.musixmatch_lyrics_api_app.MainActivity
 import alexejantonov.com.musixmatch_lyrics_api_app.R
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType.COUNTRY
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType.SEARCH
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.Base.ScreenType.SETTINGS
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.artists_and_tracks.ArtistsAndTracksListFragment
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.seach_screen.SearchFragment
+import alexejantonov.com.musixmatch_lyrics_api_app.ui.settings.SettingsFragment
 import alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details.TrackDetailsActivity
 import android.content.Intent
 import android.net.Uri
@@ -18,8 +22,9 @@ abstract class BaseFragment : MvpAppCompatFragment() {
   companion object {
     fun newInstance(type: ScreenType, query: QueryType): BaseFragment {
       return when (type) {
-        ScreenType.COUNTRY -> ArtistsAndTracksListFragment.newInstance(query)
-        ScreenType.SEARCH  -> SearchFragment.newInstance()
+        COUNTRY  -> ArtistsAndTracksListFragment.newInstance(query)
+        SEARCH   -> SearchFragment.newInstance()
+        SETTINGS -> SettingsFragment.newInstance()
       }
     }
   }

@@ -23,4 +23,7 @@
   <string name="api_key">API KEY</string>
   <string name="login">Sign in</string>
   <string name="sign_up">sign up</string>
+  <string name="modes">Modes</string>
+  <string name="night_mode">Night</string>
+  <string name="day_mode">Day</string>
 </resources>
