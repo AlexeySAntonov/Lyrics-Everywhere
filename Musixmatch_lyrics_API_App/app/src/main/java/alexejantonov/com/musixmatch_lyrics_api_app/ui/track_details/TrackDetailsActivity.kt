@@ -5,11 +5,13 @@ import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_track_details.albumCover
 import kotlinx.android.synthetic.main.activity_track_details.lyrics
+import kotlinx.android.synthetic.main.activity_track_details.progressBar
 import kotlinx.android.synthetic.main.activity_track_details.toolbar
 import kotlinx.android.synthetic.main.activity_track_details.trackAlbum
 import kotlinx.android.synthetic.main.activity_track_details.trackName
@@ -50,5 +52,13 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
 
   override fun showData(lyricsText: String) {
     lyrics.text = lyricsText
+  }
+
+  override fun showLoading() {
+    progressBar.visibility = View.VISIBLE
+  }
+
+  override fun hideLoading() {
+    progressBar.visibility = View.GONE
   }
 }

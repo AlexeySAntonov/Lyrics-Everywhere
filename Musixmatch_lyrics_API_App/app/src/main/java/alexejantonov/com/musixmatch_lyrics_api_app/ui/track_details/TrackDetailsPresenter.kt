@@ -35,6 +35,8 @@ class TrackDetailsPresenter : MvpPresenter<TrackDetailsView>() {
     subscriptions.add(musixMatchService.getLyrics(preferences.getString(Constants.API_KEY, ""), trackId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnSubscribe { viewState.showLoading() }
+        .doAfterTerminate { viewState.hideLoading() }
         .subscribe(
             {
               viewState.showData(it.message.body.lyrics.lyricsText)

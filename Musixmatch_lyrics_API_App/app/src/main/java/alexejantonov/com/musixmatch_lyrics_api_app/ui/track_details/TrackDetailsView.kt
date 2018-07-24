@@ -7,4 +7,6 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface TrackDetailsView : MvpView {
   fun showData(lyricsText: String)
+  fun showLoading()
+  fun hideLoading()
 }
