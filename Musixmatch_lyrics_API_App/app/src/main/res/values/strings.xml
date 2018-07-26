@@ -26,4 +26,6 @@
   <string name="modes">Modes</string>
   <string name="night_mode">Night</string>
   <string name="day_mode">Day</string>
+  <string name="system_mode">Follow system</string>
+  <string name="auto_mode">Auto</string>
 </resources>

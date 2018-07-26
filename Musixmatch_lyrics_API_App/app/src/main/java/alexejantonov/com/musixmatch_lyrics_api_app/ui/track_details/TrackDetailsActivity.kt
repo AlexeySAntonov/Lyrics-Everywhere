@@ -5,6 +5,8 @@ import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatDelegate
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_track_details.albumCover
 import kotlinx.android.synthetic.main.activity_track_details.lyrics
 import kotlinx.android.synthetic.main.activity_track_details.progressBar
+import kotlinx.android.synthetic.main.activity_track_details.textDivider
 import kotlinx.android.synthetic.main.activity_track_details.toolbar
 import kotlinx.android.synthetic.main.activity_track_details.trackAlbum
 import kotlinx.android.synthetic.main.activity_track_details.trackName
@@ -41,6 +44,11 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
     toolbar.apply {
       setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
       setNavigationOnClickListener { onBackPressed() }
+    }
+
+    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+      textDivider.setBackgroundColor(ContextCompat.getColor(this, R.color.defaultGrayColor))
+      albumCover.alpha = 0.5f
     }
 
     trackName.text = track?.trackName

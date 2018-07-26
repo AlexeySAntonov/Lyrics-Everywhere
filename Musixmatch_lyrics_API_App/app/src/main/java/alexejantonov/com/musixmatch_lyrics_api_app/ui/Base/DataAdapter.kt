@@ -3,6 +3,8 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base
 import alexejantonov.com.musixmatch_lyrics_api_app.R
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.TextUtils
@@ -12,8 +14,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.RequestManager
 import kotlinx.android.synthetic.main.item_artist.view.artistName
+import kotlinx.android.synthetic.main.item_artist.view.divider
 import kotlinx.android.synthetic.main.item_artist.view.twitterIcon
 import kotlinx.android.synthetic.main.item_track.view.albumCover
+import kotlinx.android.synthetic.main.item_track.view.sound
 import kotlinx.android.synthetic.main.item_track.view.trackAlbum
 import kotlinx.android.synthetic.main.item_track.view.trackName
 
@@ -81,6 +85,13 @@ class DataAdapter(
           artistName.text = artist.artistName
         }
         twitterIcon.setOnClickListener { onTwitterClickListener.onClick(artist.twitterUrl) }
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+          ContextCompat.getColor(context, R.color.defaultGrayColor).let {
+            divider.setBackgroundColor(it)
+            artistName.setTextColor(it)
+          }
+          twitterIcon.alpha = 0.5f
+        }
       }
     }
 
@@ -114,6 +125,10 @@ class DataAdapter(
         trackAlbum.text = track.albumName
         imageRequestManager.load(track.albumCover).into(albumCover)
         setOnClickListener { onTrackClickListener.onClick(track) }
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+          sound.alpha = 0.5f
+          albumCover.alpha = 0.5f
+        }
       }
     }
 

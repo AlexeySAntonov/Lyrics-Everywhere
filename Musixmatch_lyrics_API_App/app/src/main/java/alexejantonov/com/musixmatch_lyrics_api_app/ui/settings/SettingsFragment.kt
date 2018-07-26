@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatDelegate
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_settings.autoButton
+import kotlinx.android.synthetic.main.fragment_settings.dayButton
+import kotlinx.android.synthetic.main.fragment_settings.followSysButton
 import kotlinx.android.synthetic.main.fragment_settings.nightButton
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
 
@@ -27,9 +30,22 @@ class SettingsFragment : BaseFragment() {
       setNavigationOnClickListener { activity.setDrawerState() }
     }
 
-    nightButton.setOnClickListener {
-      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-      activity.recreate()
+    val mode = AppCompatDelegate.getDefaultNightMode()
+    when (mode) {
+      -1 -> followSysButton.isChecked = true
+      0  -> autoButton.isChecked = true
+      1  -> dayButton.isChecked = true
+      2  -> nightButton.isChecked = true
     }
+
+    followSysButton.setOnClickListener { setMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) }
+    autoButton.setOnClickListener { setMode(AppCompatDelegate.MODE_NIGHT_AUTO) }
+    nightButton.setOnClickListener { setMode(AppCompatDelegate.MODE_NIGHT_YES) }
+    dayButton.setOnClickListener { setMode(AppCompatDelegate.MODE_NIGHT_NO) }
+  }
+
+  private fun setMode(@AppCompatDelegate.NightMode mode: Int) {
+    AppCompatDelegate.setDefaultNightMode(mode)
+    activity.recreate()
   }
 }

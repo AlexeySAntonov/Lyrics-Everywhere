@@ -9,6 +9,7 @@
       android:layout_width="0dp"
       android:layout_height="?attr/actionBarSize"
       android:background="@color/colorPrimary"
+      android:elevation="4dp"
       app:layout_constraintBottom_toTopOf="@+id/recyclerView"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
