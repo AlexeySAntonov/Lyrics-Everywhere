@@ -21,10 +21,12 @@ import kotlinx.android.synthetic.main.activity_main.navigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
   companion object {
+    private const val DRAWER_ITEM_ID = "drawer_item_id"
     fun newIntent(context: Context) = Intent(context, MainActivity::class.java)
   }
 
-  private var lastDrawerMenuItem: MenuItem? = null
+  private var lastItem: MenuItem? = null
+  private var lastItemId = R.id.rus
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -34,7 +36,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       setNavigationItemSelectedListener(this@MainActivity)
       itemIconTintList = null
     }
-    defaultInit()
+    defaultInit(savedInstanceState?.getInt(DRAWER_ITEM_ID))
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    outState.putInt(DRAWER_ITEM_ID, lastItemId)
   }
 
   override fun onBackPressed() {
@@ -52,16 +59,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     else drawerLayout.openDrawer(Gravity.START)
   }
 
-  private fun defaultInit() = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-      ?: onNavigationItemSelected(navigationView.menu.getItem(0))
+  private fun defaultInit(lastItemId: Int?) =
+      supportFragmentManager
+          .findFragmentById(R.id.fragmentContainer)?.let {
+            lastItemId?.let {
+              lastItem = navigationView.menu.findItem(it)
+              lastItem?.setIcon(R.drawable.ic_star_gold_24dp)
+            }
+          }
+          ?: onNavigationItemSelected(navigationView.menu.getItem(0))
 
   private fun selectDrawerItem(item: MenuItem) {
 
-    if (lastDrawerMenuItem != null && lastDrawerMenuItem!!.itemId != R.id.settings) {
-      lastDrawerMenuItem!!.setIcon(R.drawable.ic_star_white_24dp)
-    }
+    if (lastItem != null && lastItem!!.itemId != R.id.settings) lastItem!!.setIcon(R.drawable.ic_star_white_24dp)
 
-    lastDrawerMenuItem = item
+    lastItem = item
+    lastItemId = item.itemId
     val country = when (item.itemId) {
       R.id.usa -> US
       R.id.gb  -> GB
