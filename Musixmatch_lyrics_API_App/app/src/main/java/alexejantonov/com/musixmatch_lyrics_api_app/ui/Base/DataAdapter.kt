@@ -3,8 +3,11 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.Base
 import alexejantonov.com.musixmatch_lyrics_api_app.R
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.artist.Artist
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
+import alexejantonov.com.musixmatch_lyrics_api_app.utils.DateTimeUtil
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatDelegate
+import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_AUTO
+import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_YES
+import android.support.v7.app.AppCompatDelegate.getDefaultNightMode
 import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.TextUtils
@@ -85,7 +88,7 @@ class DataAdapter(
           artistName.text = artist.artistName
         }
         twitterIcon.setOnClickListener { onTwitterClickListener.onClick(artist.twitterUrl) }
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+        if (getDefaultNightMode() == MODE_NIGHT_YES || (getDefaultNightMode() == MODE_NIGHT_AUTO && DateTimeUtil.isNightModeNecessary())) {
           ContextCompat.getColor(context, R.color.defaultGrayColor).let {
             divider.setBackgroundColor(it)
             artistName.setTextColor(it)
@@ -125,7 +128,7 @@ class DataAdapter(
         trackAlbum.text = track.albumName
         imageRequestManager.load(track.albumCover).into(albumCover)
         setOnClickListener { onTrackClickListener.onClick(track) }
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+        if (getDefaultNightMode() == MODE_NIGHT_YES || (getDefaultNightMode() == MODE_NIGHT_AUTO && DateTimeUtil.isNightModeNecessary())) {
           sound.alpha = 0.5f
           albumCover.alpha = 0.5f
         }

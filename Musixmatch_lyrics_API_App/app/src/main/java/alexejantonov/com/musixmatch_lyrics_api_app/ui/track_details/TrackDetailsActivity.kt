@@ -2,11 +2,14 @@ package alexejantonov.com.musixmatch_lyrics_api_app.ui.track_details
 
 import alexejantonov.com.musixmatch_lyrics_api_app.R
 import alexejantonov.com.musixmatch_lyrics_api_app.api.entities.track.Track
+import alexejantonov.com.musixmatch_lyrics_api_app.utils.DateTimeUtil
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatDelegate
+import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_AUTO
+import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_YES
+import android.support.v7.app.AppCompatDelegate.getDefaultNightMode
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -46,7 +49,7 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
       setNavigationOnClickListener { onBackPressed() }
     }
 
-    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+    if (getDefaultNightMode() == MODE_NIGHT_YES || (getDefaultNightMode() == MODE_NIGHT_AUTO && DateTimeUtil.isNightModeNecessary())) {
       textDivider.setBackgroundColor(ContextCompat.getColor(this, R.color.defaultGrayColor))
       albumCover.alpha = 0.5f
     }
