@@ -7,7 +7,7 @@ apply plugin: 'kotlin-kapt'
 android {
   compileSdkVersion 27
   defaultConfig {
-    applicationId "alexejantonov.com.musixmatch_lyrics_api_app"
+    applicationId "com.aleksejantonov.lyricseverywhere"
     minSdkVersion 16
     targetSdkVersion 27
     versionCode 1
