@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Musixmatch_lyrics_API_App</string>
+  <string name="app_name">Lyrics Everywhere</string>
   <string name="lyrics">Lyrics</string>
 
   <string name="retry">retry</string>
