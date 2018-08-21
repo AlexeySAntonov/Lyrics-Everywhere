@@ -36,7 +36,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       setNavigationItemSelectedListener(this@MainActivity)
       itemIconTintList = null
     }
-    defaultInit(savedInstanceState?.getInt(DRAWER_ITEM_ID))
+    savedInstanceState?.getInt(DRAWER_ITEM_ID)?.let {
+      lastItemId = it
+      defaultInit(it)
+    } ?: defaultInit(lastItemId)
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
