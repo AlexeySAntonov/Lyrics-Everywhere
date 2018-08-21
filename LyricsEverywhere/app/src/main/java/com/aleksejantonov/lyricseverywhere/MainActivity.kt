@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .findFragmentById(R.id.fragmentContainer)?.let {
             lastItemId?.let {
               lastItem = navigationView.menu.findItem(it)
-              lastItem?.setIcon(R.drawable.ic_star_gold_24dp)
+              if (it != R.id.settings && it != R.id.logOut) lastItem?.setIcon(R.drawable.ic_star_gold_24dp)
             }
           }
           ?: onNavigationItemSelected(navigationView.menu.getItem(0))
