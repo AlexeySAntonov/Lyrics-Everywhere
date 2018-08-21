@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.ARTISTS_TABLE_NAME
@@ -19,6 +18,7 @@ import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUM
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_NAME
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.TRACKS_TABLE_NAME
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
+import timber.log.Timber
 import java.util.ArrayList
 import java.util.Collections
 
@@ -119,7 +119,7 @@ class DataBase(context: Context) {
       values.put(COLUMN_ARTIST_TWITTER, artist.twitterUrl)
 
       if (exists) {
-        Log.d(EXIST_TAG, "Artist already exists in the db --> UPDATE info")
+        Timber.d(EXIST_TAG, "Artist already exists in the db --> UPDATE info")
         if (!currentCountries.contains(artist.topChartCountries)) {
           values.put(COLUMN_ARTIST_TOP_CHART_COUNTRIES, currentCountries + artist.topChartCountries)
           db.update(ARTISTS_TABLE_NAME, values, "artistId=${artist.artistId}", null)
@@ -152,7 +152,7 @@ class DataBase(context: Context) {
       }
 
       if (exists)
-        Log.d(EXIST_TAG, "Track already exists in the db")
+        Timber.d(EXIST_TAG, "Track already exists in the db")
       else {
         val values = ContentValues()
         values.put(COLUMN_TRACK_ID, track.trackId)

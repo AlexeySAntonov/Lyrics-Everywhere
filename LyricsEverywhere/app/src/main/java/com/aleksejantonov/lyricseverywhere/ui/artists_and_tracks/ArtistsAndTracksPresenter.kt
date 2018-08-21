@@ -1,6 +1,5 @@
 package com.aleksejantonov.lyricseverywhere.ui.artists_and_tracks
 
-import android.util.Log
 import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
@@ -15,6 +14,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.util.ArrayList
 
 @InjectViewState
@@ -67,7 +67,7 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
                     loadArtists()
                   }
                 },
-                { Log.e("Data loading failed", Log.getStackTraceString(it)) }
+                { Timber.e("Data loading failed: ${it.message}") }
             )
     )
   }
@@ -88,8 +88,8 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
             .doOnSubscribe { viewState.showLoading() }
             .doAfterTerminate { viewState.hideLoading() }
             .subscribe(
-                { Log.d("Artists loading", "succeed") },
-                { Log.d("Artists loading failed", Log.getStackTraceString(it)) }
+                { Timber.d("Artists loading succeed") },
+                { Timber.d("Artists loading failed: ${it.message}") }
             )
     )
   }
@@ -110,7 +110,7 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
             .doAfterTerminate { viewState.hideLoading() }
             .subscribe(
                 { viewState.showData(DataMergeUtil.listsMerge(artists, tracks)) },
-                { Log.d("Tracks loading failed", Log.getStackTraceString(it)) }
+                { Timber.d("Tracks loading failed: ${it.message}") }
             )
     )
   }

@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
 class MyApplication : Application() {
 
@@ -25,11 +26,12 @@ class MyApplication : Application() {
     super.onCreate()
     Stetho.initializeWithDefaults(this)
 
-    if (BuildConfig.DEBUG) {
-      if (LeakCanary.isInAnalyzerProcess(this)) return
-      LeakCanary.install(this)
-    }
+    initAppScope()
+    initLeakCanary()
+    initTimber()
+  }
 
+  private fun initAppScope() {
     client = OkHttpClient.Builder()
         .addNetworkInterceptor(StethoInterceptor())
         .build()
@@ -47,6 +49,19 @@ class MyApplication : Application() {
     imageRequestManager = Glide.with(this)
 
     preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+  }
+
+  private fun initLeakCanary() {
+    if (BuildConfig.DEBUG) {
+      if (LeakCanary.isInAnalyzerProcess(this)) return
+      LeakCanary.install(this)
+    }
+  }
+
+  private fun initTimber() {
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
+    }
   }
 
   companion object {

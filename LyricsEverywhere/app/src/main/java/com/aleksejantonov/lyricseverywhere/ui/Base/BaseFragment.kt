@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.util.Log
 import com.aleksejantonov.lyricseverywhere.MainActivity
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
@@ -16,6 +15,7 @@ import com.aleksejantonov.lyricseverywhere.ui.seach_screen.SearchFragment
 import com.aleksejantonov.lyricseverywhere.ui.settings.SettingsFragment
 import com.aleksejantonov.lyricseverywhere.ui.track_details.TrackDetailsActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
+import timber.log.Timber
 
 abstract class BaseFragment : MvpAppCompatFragment() {
 
@@ -40,9 +40,9 @@ abstract class BaseFragment : MvpAppCompatFragment() {
 
   fun launchTwitter(twitterUrl: String) {
     if (twitterUrl.isNotEmpty()) {
-      Log.d("twitter", "twitter://user?screen_name=" + twitterUrl.substring(20))
+      Timber.d("twitter://user?screen_name=${twitterUrl.substring(20)}")
       try {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name=" + twitterUrl.substring(20))))
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name=${twitterUrl.substring(20)}")))
       } catch (e: Exception) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl)))
       }

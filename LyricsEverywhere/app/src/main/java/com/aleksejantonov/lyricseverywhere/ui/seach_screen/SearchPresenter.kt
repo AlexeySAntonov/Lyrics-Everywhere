@@ -1,6 +1,5 @@
 package com.aleksejantonov.lyricseverywhere.ui.seach_screen
 
-import android.util.Log
 import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
@@ -13,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 @InjectViewState
 class SearchPresenter : MvpPresenter<SearchFragmentView>() {
@@ -34,7 +34,7 @@ class SearchPresenter : MvpPresenter<SearchFragmentView>() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { viewState.showData(it, query) },
-                { Log.e("Search failed: ", Log.getStackTraceString(it)) }
+                { Timber.e("Search failed: ${it.message}") }
             )
     )
   }

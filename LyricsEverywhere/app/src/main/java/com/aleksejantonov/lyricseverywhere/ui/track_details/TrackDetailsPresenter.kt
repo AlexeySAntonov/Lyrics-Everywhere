@@ -1,6 +1,5 @@
 package com.aleksejantonov.lyricseverywhere.ui.track_details
 
-import android.util.Log
 import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.arellomobile.mvp.InjectViewState
@@ -8,6 +7,7 @@ import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 @InjectViewState
 class TrackDetailsPresenter : MvpPresenter<TrackDetailsView>() {
@@ -41,7 +41,7 @@ class TrackDetailsPresenter : MvpPresenter<TrackDetailsView>() {
             {
               viewState.showData(it.message.body.lyrics.lyricsText)
             },
-            { Log.e("Lyrics loading failed", Log.getStackTraceString(it)) }
+            { Timber.e("Lyrics loading failed: ${it.message}") }
         )
     )
   }
