@@ -1,7 +1,10 @@
 package com.aleksejantonov.lyricseverywhere.api.entities.artist
 
+import android.os.Build.VERSION_CODES
+import android.support.annotation.RequiresApi
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
 import com.google.gson.annotations.SerializedName
+import java.util.Objects
 
 data class Artist(
     @SerializedName("artist_id") override var artistId: Int,
@@ -18,11 +21,11 @@ data class Artist(
         '}'.toString()
   }
 
-  override fun equals(o: Any?): Boolean {
-    if (o !is Artist) {
-      return false
-    }
-    val artist = o as Artist?
-    return artistId == artist!!.artistId
+  override fun equals(other: Any?): Boolean {
+    if (other == null || other !is Artist) return false
+    return artistId == other.artistId
   }
+
+  @RequiresApi(VERSION_CODES.KITKAT)
+  override fun hashCode() = Objects.hash(artistId, artistName, twitterUrl)
 }

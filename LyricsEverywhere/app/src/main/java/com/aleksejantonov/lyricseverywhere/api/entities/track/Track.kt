@@ -1,8 +1,11 @@
 package com.aleksejantonov.lyricseverywhere.api.entities.track
 
+import android.os.Build.VERSION_CODES
+import android.support.annotation.RequiresApi
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.Objects
 
 data class Track(
     @SerializedName("track_id") val trackId: Int,
@@ -22,11 +25,11 @@ data class Track(
         '}'.toString()
   }
 
-  override fun equals(o: Any?): Boolean {
-    if (o !is Track) {
-      return false
-    }
-    val track = o as Track?
-    return artistId == track!!.artistId
+  override fun equals(other: Any?): Boolean {
+    if (other == null || other !is Track) return false
+    return artistId == other.artistId
   }
+
+  @RequiresApi(VERSION_CODES.KITKAT)
+  override fun hashCode() = Objects.hash(trackId, trackName, albumName, artistId, albumCover)
 }
