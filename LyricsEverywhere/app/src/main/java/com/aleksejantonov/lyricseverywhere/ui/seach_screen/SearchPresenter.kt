@@ -1,8 +1,8 @@
 package com.aleksejantonov.lyricseverywhere.ui.seach_screen
 
-import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
+import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState
@@ -17,7 +17,7 @@ import timber.log.Timber
 @InjectViewState
 class SearchPresenter : MvpPresenter<SearchFragmentView>() {
 
-  private val dataBase = MyApplication.dataBase
+  private val dataBase = DI.componentManager().appComponent.dataBase
   private val subscriptions = CompositeDisposable()
 
   fun loadData(query: String) {

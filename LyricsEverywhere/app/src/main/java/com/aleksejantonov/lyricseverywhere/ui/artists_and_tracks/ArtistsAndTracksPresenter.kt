@@ -1,9 +1,9 @@
 package com.aleksejantonov.lyricseverywhere.ui.artists_and_tracks
 
-import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
+import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
 import com.aleksejantonov.lyricseverywhere.utils.DataContainersUtil
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
@@ -22,11 +22,11 @@ class ArtistsAndTracksPresenter : MvpPresenter<ArtistsAndTracksListView>() {
 
   private var artists: List<Artist> = ArrayList()
   private var tracks: List<Track> = ArrayList()
-  private val musixMatchService = MyApplication.service
+  private val musixMatchService = DI.componentManager().appComponent.service
   private var country: String? = null
-  private val dataBase = MyApplication.dataBase
+  private val dataBase = DI.componentManager().appComponent.dataBase
   private val subscriptions = CompositeDisposable()
-  private val preferences = MyApplication.preferences
+  private val preferences = DI.componentManager().appComponent.preferences
 
   override fun onFirstViewAttach() {
     super.onFirstViewAttach()

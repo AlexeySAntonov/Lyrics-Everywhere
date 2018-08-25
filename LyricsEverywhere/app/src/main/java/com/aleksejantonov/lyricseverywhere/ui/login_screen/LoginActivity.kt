@@ -4,10 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import com.aleksejantonov.lyricseverywhere.MainActivity
-import com.aleksejantonov.lyricseverywhere.MyApplication
+import com.aleksejantonov.lyricseverywhere.ui.MainActivity
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
+import com.aleksejantonov.lyricseverywhere.di.DI
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_login.apiKeyEditText
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_login.registerButton
 class LoginActivity : MvpAppCompatActivity(), LoginView {
 
   private var apiKey: String = ""
-  private val preferences = MyApplication.preferences
+  private val preferences = DI.componentManager().appComponent.preferences
 
   @InjectPresenter
   lateinit var presenter: LoginPresenter

@@ -1,7 +1,7 @@
 package com.aleksejantonov.lyricseverywhere.ui.login_screen
 
-import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
+import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -21,12 +21,12 @@ class LoginPresenter : MvpPresenter<LoginView>() {
   }
 
   fun apiKeyValidation(apiKey: String) {
-    subscriptions.add(MyApplication.service.getArtists(apiKey, QueryType.RU.name, "1", "1")
+    subscriptions.add(DI.componentManager().appComponent.service.getArtists(apiKey, QueryType.RU.name, "1", "1")
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .subscribe(
             {
-              MyApplication.preferences.edit().putString(Constants.API_KEY, apiKey).apply()
+              DI.componentManager().appComponent.preferences.edit().putString(Constants.API_KEY, apiKey).apply()
               viewState.onValidationSuccess()
             },
             {

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import com.aleksejantonov.lyricseverywhere.MainActivity
+import com.aleksejantonov.lyricseverywhere.ui.MainActivity
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.ui.Base.ScreenType.COUNTRY

@@ -20,7 +20,7 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="com.aleksejantonov.lyricseverywhere.MainActivity">
+		<activity android:name="com.aleksejantonov.lyricseverywhere.ui.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 

@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
+import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseFragment
 import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter
@@ -75,7 +75,7 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
               launchTwitter(twitterUrl)
             }
           },
-          imageRequestManager = MyApplication.imageRequestManager,
+          imageRequestManager = DI.componentManager().appComponent.imageRequestManager,
           query = query
       )
       recyclerView.adapter = adapter

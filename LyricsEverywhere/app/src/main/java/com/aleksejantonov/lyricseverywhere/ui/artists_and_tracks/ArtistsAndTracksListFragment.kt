@@ -7,9 +7,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.aleksejantonov.lyricseverywhere.MyApplication
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
+import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
 import com.aleksejantonov.lyricseverywhere.ui.Base.BaseFragment
 import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter
@@ -18,6 +18,7 @@ import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter.OnTwitterClickLis
 import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
 import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType.RU
 import com.aleksejantonov.lyricseverywhere.ui.Base.ScreenType.SEARCH
+import com.aleksejantonov.lyricseverywhere.utils.NetworkUtil
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_artists.progressBar
 import kotlinx.android.synthetic.main.fragment_artists.recyclerView
@@ -64,7 +65,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
 
     context?.let {
       swipeRefreshLayout.setOnRefreshListener {
-        if (MyApplication.isOnline(it)) presenter.loadArtists()
+        if (NetworkUtil.isOnline(it)) presenter.loadArtists()
         else showLostInternetConnectionDialog()
         swipeRefreshLayout.isRefreshing = false
       }
@@ -98,7 +99,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
                 launchTwitter(twitterUrl)
               }
             },
-            imageRequestManager = MyApplication.imageRequestManager,
+            imageRequestManager = DI.componentManager().appComponent.imageRequestManager,
             query = null
         )
         recyclerView.adapter = adapter
@@ -127,7 +128,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
             }
           }
           .setPositiveButton(R.string.retry) { _, _ ->
-            if (MyApplication.isOnline(it)) {
+            if (NetworkUtil.isOnline(it)) {
               presenter.apply {
                 setCountry(queryType.name)
                 presenter.loadData()
