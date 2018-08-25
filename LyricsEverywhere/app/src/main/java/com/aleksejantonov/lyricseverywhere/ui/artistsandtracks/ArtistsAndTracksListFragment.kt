@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.artists_and_tracks
+package com.aleksejantonov.lyricseverywhere.ui.artistsandtracks
 
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -10,14 +10,14 @@ import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseFragment
-import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter
-import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter.OnTrackClickListener
-import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter.OnTwitterClickListener
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType.RU
-import com.aleksejantonov.lyricseverywhere.ui.Base.ScreenType.SEARCH
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
+import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter
+import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTrackClickListener
+import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTwitterClickListener
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.RU
+import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.SEARCH
 import com.aleksejantonov.lyricseverywhere.utils.NetworkUtil
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_artists.progressBar

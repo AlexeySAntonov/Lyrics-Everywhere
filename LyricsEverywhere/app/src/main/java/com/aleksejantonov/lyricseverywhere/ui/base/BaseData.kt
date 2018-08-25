@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.Base
+package com.aleksejantonov.lyricseverywhere.ui.base
 
 //Маркер для слияния списков
 interface BaseData {

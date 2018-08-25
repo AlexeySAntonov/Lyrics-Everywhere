@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseFragment
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.autoButton
 import kotlinx.android.synthetic.main.fragment_settings.dayButton
 import kotlinx.android.synthetic.main.fragment_settings.followSysButton

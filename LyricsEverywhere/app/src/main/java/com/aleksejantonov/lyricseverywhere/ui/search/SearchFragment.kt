@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.seach_screen
+package com.aleksejantonov.lyricseverywhere.ui.search
 
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
@@ -12,11 +12,11 @@ import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseFragment
-import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter
-import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter.OnTrackClickListener
-import com.aleksejantonov.lyricseverywhere.ui.Base.DataAdapter.OnTwitterClickListener
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
+import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter
+import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTrackClickListener
+import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTwitterClickListener
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_search.progressBar
 import kotlinx.android.synthetic.main.fragment_search.recyclerView

@@ -2,7 +2,7 @@ package com.aleksejantonov.lyricseverywhere.utils
 
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 
 object DataMergeUtil {
 

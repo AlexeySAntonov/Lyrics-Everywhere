@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.track_details
+package com.aleksejantonov.lyricseverywhere.ui.trackdetails
 
 import android.content.Context
 import android.content.Intent

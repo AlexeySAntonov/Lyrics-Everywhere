@@ -1,6 +1,6 @@
-package com.aleksejantonov.lyricseverywhere.ui.seach_screen
+package com.aleksejantonov.lyricseverywhere.ui.search
 
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType

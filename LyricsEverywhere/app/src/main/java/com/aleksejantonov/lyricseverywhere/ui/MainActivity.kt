@@ -11,15 +11,15 @@ import com.aleksejantonov.lyricseverywhere.R.drawable
 import com.aleksejantonov.lyricseverywhere.R.id
 import com.aleksejantonov.lyricseverywhere.R.layout
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseFragment
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType.GB
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType.RU
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType.US
-import com.aleksejantonov.lyricseverywhere.ui.Base.ScreenType
-import com.aleksejantonov.lyricseverywhere.ui.Base.ScreenType.COUNTRY
-import com.aleksejantonov.lyricseverywhere.ui.Base.ScreenType.SETTINGS
-import com.aleksejantonov.lyricseverywhere.ui.login_screen.LoginActivity
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.GB
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.RU
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.US
+import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType
+import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.COUNTRY
+import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.SETTINGS
+import com.aleksejantonov.lyricseverywhere.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.drawerLayout
 import kotlinx.android.synthetic.main.activity_main.navigationView
 

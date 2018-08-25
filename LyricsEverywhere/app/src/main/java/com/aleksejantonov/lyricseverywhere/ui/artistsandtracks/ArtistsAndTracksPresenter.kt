@@ -1,10 +1,10 @@
-package com.aleksejantonov.lyricseverywhere.ui.artists_and_tracks
+package com.aleksejantonov.lyricseverywhere.ui.artistsandtracks
 
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
 import com.aleksejantonov.lyricseverywhere.utils.DataContainersUtil
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState

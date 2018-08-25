@@ -1,9 +1,9 @@
-package com.aleksejantonov.lyricseverywhere.ui.seach_screen
+package com.aleksejantonov.lyricseverywhere.ui.search
 
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter

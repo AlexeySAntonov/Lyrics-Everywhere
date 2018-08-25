@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.track_details
+package com.aleksejantonov.lyricseverywhere.ui.trackdetails
 
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.di.DI

@@ -17,7 +17,7 @@ import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUM
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ID
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_NAME
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.TRACKS_TABLE_NAME
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import timber.log.Timber
 import java.util.ArrayList
 import java.util.Collections

@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.login_screen
+package com.aleksejantonov.lyricseverywhere.ui.login
 
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy

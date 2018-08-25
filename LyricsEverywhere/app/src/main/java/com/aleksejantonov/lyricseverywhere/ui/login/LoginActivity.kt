@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.login_screen
+package com.aleksejantonov.lyricseverywhere.ui.login
 
 import android.content.Intent
 import android.net.Uri

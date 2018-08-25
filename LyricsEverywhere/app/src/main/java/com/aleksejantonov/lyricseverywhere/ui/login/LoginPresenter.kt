@@ -1,8 +1,8 @@
-package com.aleksejantonov.lyricseverywhere.ui.login_screen
+package com.aleksejantonov.lyricseverywhere.ui.login
 
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.Base.QueryType
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers

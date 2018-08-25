@@ -2,7 +2,7 @@ package com.aleksejantonov.lyricseverywhere.api.entities.artist
 
 import android.os.Build.VERSION_CODES
 import android.support.annotation.RequiresApi
-import com.aleksejantonov.lyricseverywhere.ui.Base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import com.google.gson.annotations.SerializedName
 import java.util.Objects
 

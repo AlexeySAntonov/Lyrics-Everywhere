@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.Base
+package com.aleksejantonov.lyricseverywhere.ui.base
 
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_AUTO

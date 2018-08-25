@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.ui.Base
+package com.aleksejantonov.lyricseverywhere.ui.base
 
 enum class QueryType {
   RU,
