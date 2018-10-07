@@ -31,7 +31,7 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
     }
   }
 
-  private var track: Track? = null
+  private lateinit var track: Track
 
   @InjectPresenter
   lateinit var presenter: TrackDetailsPresenter
@@ -43,7 +43,7 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
     track = intent.getSerializableExtra(EXTRA_TRACK) as Track
 
     setSupportActionBar(toolbar)
-    supportActionBar?.title = getString(R.string.lyrics_of) + "\"" + track?.trackName + "\""
+    supportActionBar?.title = getString(R.string.lyrics_of) + "\"" + track.trackName + "\""
     toolbar.apply {
       setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
       setNavigationOnClickListener { onBackPressed() }
@@ -54,11 +54,11 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
       albumCover.alpha = 0.5f
     }
 
-    trackName.text = track?.trackName
-    trackAlbum.text = String.format(getString(R.string.album), track?.albumName)
-    Glide.with(this).load(track?.albumCover).into(albumCover)
+    trackName.text = track.trackName
+    trackAlbum.text = String.format(getString(R.string.album), track.albumName)
+    Glide.with(this).load(track.albumCover).into(albumCover)
 
-    presenter.setTrackId(track!!.trackId.toString())
+    presenter.setTrackId(track.trackId.toString())
   }
 
   override fun showData(lyricsText: String) {

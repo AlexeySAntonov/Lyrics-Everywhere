@@ -19,7 +19,8 @@ class AppComponent(private val context: Context) {
   val dataBase by lazy { DataBase(context) }
   val imageRequestManager by lazy { Glide.with(context) }
   val preferences by lazy { context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE) }
-  val client by lazy {
+
+  private val client by lazy {
     OkHttpClient.Builder()
         .addNetworkInterceptor(StethoInterceptor())
         .build()
