@@ -44,12 +44,15 @@ ext {
   supportLibraryVersion = "28.0.0"
   constraintVersion = "1.1.3"
   retrofitVersion = "2.4.0"
+  rxJava = "2.1.0"
+  rxKotlin = "2.3.0"
   moxyVersion = "1.5.5"
   stetho = "1.5.0"
   canary = "1.6.1"
   glide = "4.8.0"
   timber = "4.7.1"
   dodenhof = "2.1.0"
+  adapterDelegate = "3.0.1"
 }
 
 dependencies {
@@ -68,7 +71,10 @@ dependencies {
   implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
   implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
   implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-  implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+  implementation "com.jakewharton.rxrelay2:rxrelay:$rxJava"
+  implementation "io.reactivex.rxjava2:rxandroid:$rxJava"
+  implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin"
 
   implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
   kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
@@ -85,4 +91,6 @@ dependencies {
   implementation "com.jakewharton.timber:timber:$timber"
 
   implementation "de.hdodenhof:circleimageview:$dodenhof"
+
+  implementation "com.hannesdorfmann:adapterdelegates3:$adapterDelegate"
 }

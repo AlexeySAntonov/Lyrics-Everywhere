@@ -50,7 +50,9 @@ abstract class BaseFragment : MvpAppCompatFragment() {
       savedInstanceState: Bundle?
   ): View = inflater.inflate(layoutRes, container, false)
 
-  fun launchTrackDetailsActivity(track: Track) = context?.let { startActivity(TrackDetailsActivity.newIntent(it, track)) }
+  fun launchTrackDetailsActivity(track: Track) {
+    context?.let { startActivity(TrackDetailsActivity.newIntent(it, track)) }
+  }
 
   fun launchTwitter(twitterUrl: String) {
     if (twitterUrl.isNotEmpty()) {

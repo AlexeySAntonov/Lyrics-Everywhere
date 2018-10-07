@@ -8,14 +8,18 @@ import android.view.View
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.ArtistItemDelegate
+import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.TrackItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
 import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter
 import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTrackClickListener
 import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTwitterClickListener
+import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.RU
 import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.SEARCH
+import com.aleksejantonov.lyricseverywhere.ui.base.SimpleAdapter
 import com.aleksejantonov.lyricseverywhere.utils.NetworkUtil
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_artists.progressBar
@@ -35,7 +39,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
   }
 
   private lateinit var queryType: QueryType
-  private var adapter: DataAdapter? = null
+  private val adapter by lazy { ArtistsAndTracksAdapter() }
 
   @InjectPresenter
   lateinit var presenter: ArtistsAndTracksPresenter
@@ -68,42 +72,21 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
       recyclerView.apply {
         layoutManager = LinearLayoutManager(it, LinearLayoutManager.VERTICAL, false)
         addItemDecoration(DividerItemDecoration(it, DividerItemDecoration.VERTICAL))
+        adapter = this@ArtistsAndTracksListFragment.adapter
       }
     }
   }
 
-  override fun onDestroyView() {
-    adapter = null
-    super.onDestroyView()
-  }
-
-  override fun showData(data: List<BaseData>) {
+  override fun showData(items: List<ListItem>) {
     progressBar.visibility = View.INVISIBLE
     swipeRefreshLayout.isRefreshing = false
 
-    context?.let {
-      if (adapter == null) {
-        adapter = DataAdapter(
-            data = data.toMutableList(),
-            onTrackClickListener = object : OnTrackClickListener {
-              override fun onClick(track: Track) {
-                launchTrackDetailsActivity(track)
-              }
-            },
-            onTwitterClickListener = object : OnTwitterClickListener {
-              override fun onClick(twitterUrl: String) {
-                launchTwitter(twitterUrl)
-              }
-            },
-            imageRequestManager = DI.componentManager().appComponent.imageRequestManager,
-            query = null
-        )
-        recyclerView.adapter = adapter
-      } else {
-        adapter?.updateData(data)
-      }
-    }
+    adapter.items = items
   }
+
+  override fun showTwitter(twitterUrl: String) = launchTwitter(twitterUrl)
+
+  override fun showTrackDetails(track: Track) = launchTrackDetailsActivity(track)
 
   override fun showLoading() {
     progressBar.visibility = View.VISIBLE
@@ -136,6 +119,15 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
           .setOnDismissListener { swipeRefreshLayout.isRefreshing = false }
           .create()
           .show()
+    }
+  }
+
+  private inner class ArtistsAndTracksAdapter : SimpleAdapter() {
+    init {
+      delegatesManager.apply {
+        addDelegate(ArtistItemDelegate(viewActions = presenter.viewActions))
+        addDelegate(TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager))
+      }
     }
   }
 }
