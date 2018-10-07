@@ -1,7 +1,7 @@
 package com.aleksejantonov.lyricseverywhere.ui.base
 
 enum class ScreenType {
-  COUNTRY,
+  CHART,
   SEARCH,
   SETTINGS
 }

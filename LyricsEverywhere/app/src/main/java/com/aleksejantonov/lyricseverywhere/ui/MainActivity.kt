@@ -7,17 +7,13 @@ import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.MenuItem
-import com.aleksejantonov.lyricseverywhere.R.drawable
-import com.aleksejantonov.lyricseverywhere.R.id
-import com.aleksejantonov.lyricseverywhere.R.layout
+import com.aleksejantonov.lyricseverywhere.*
 import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
-import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.GB
-import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.RU
-import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.US
+import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.*
 import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType
-import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.COUNTRY
+import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.*
 import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.SETTINGS
 import com.aleksejantonov.lyricseverywhere.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.drawerLayout
@@ -30,25 +26,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   }
 
   private var lastItem: MenuItem? = null
-  private var lastItemId = id.rus
+  private var lastItemId = R.id.rus
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_main)
+    setContentView(R.layout.activity_main)
+
+    defaultInit(lastItemId)
 
     navigationView.apply {
       setNavigationItemSelectedListener(this@MainActivity)
       itemIconTintList = null
     }
-    savedInstanceState?.getInt(DRAWER_ITEM_ID)?.let {
-      lastItemId = it
-      defaultInit(it)
-    } ?: defaultInit(lastItemId)
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
     outState.putInt(DRAWER_ITEM_ID, lastItemId)
+  }
+
+  override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    super.onRestoreInstanceState(savedInstanceState)
+    savedInstanceState?.let { lastItemId = it[DRAWER_ITEM_ID] as Int }
   }
 
   override fun onBackPressed() {
@@ -61,52 +60,54 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     return true
   }
 
-  fun setDrawerState() {
+  fun toggleDrawer() {
     if (drawerLayout.isDrawerOpen(Gravity.START)) drawerLayout.closeDrawer(Gravity.START)
     else drawerLayout.openDrawer(Gravity.START)
   }
 
   private fun defaultInit(lastItemId: Int?) =
       supportFragmentManager
-          .findFragmentById(id.fragmentContainer)?.let {
+          .findFragmentById(R.id.fragmentContainer)?.let {
             lastItemId?.let {
               lastItem = navigationView.menu.findItem(it)
-              if (it != id.settings && it != id.logOut) lastItem?.setIcon(drawable.ic_star_gold_24dp)
+              if (it != R.id.settings && it != R.id.logOut) lastItem?.setIcon(R.drawable.ic_star_gold_24dp)
             }
           }
           ?: onNavigationItemSelected(navigationView.menu.getItem(0))
 
   private fun selectDrawerItem(item: MenuItem) {
+    lastItem?.let { if (it.itemId != R.id.settings) it.setIcon(R.drawable.ic_star_white_24dp) }
 
-    if (lastItem != null && lastItem!!.itemId != id.settings) lastItem!!.setIcon(drawable.ic_star_white_24dp)
+    item.apply {
+      lastItem = this
+      lastItemId = itemId
+    }
 
-    lastItem = item
-    lastItemId = item.itemId
     val country = when (item.itemId) {
-      id.usa -> US
-      id.gb  -> GB
-      else   -> RU
+      R.id.usa -> US
+      R.id.gb  -> GB
+      else     -> RU
     }
 
     when (item.itemId) {
-      id.settings -> navigateTo(SETTINGS, QueryType.SETTINGS)
-      id.logOut   -> {
+      R.id.settings -> navigateTo(SETTINGS)
+      R.id.logOut   -> {
         DI.componentManager().appComponent.preferences.edit().clear().apply()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
       }
     }
 
-    if (item.itemId != id.logOut && item.itemId != id.settings) {
-      navigateTo(COUNTRY, country)
-      item.setIcon(drawable.ic_star_gold_24dp)
+    if (item.itemId != R.id.logOut && item.itemId != R.id.settings) {
+      navigateTo(CHART, country)
+      item.setIcon(R.drawable.ic_star_gold_24dp)
     }
     drawerLayout.closeDrawers()
   }
 
-  fun navigateTo(screen: ScreenType, queryType: QueryType, addToBackStack: Boolean = false) {
+  fun navigateTo(screen: ScreenType, queryType: QueryType = RU, addToBackStack: Boolean = false) {
     supportFragmentManager.beginTransaction()
-        .replace(id.fragmentContainer, BaseFragment.newInstance(screen, queryType))
+        .replace(R.id.fragmentContainer, BaseFragment.newInstance(screen, queryType))
         .apply { if (addToBackStack) addToBackStack(null) }
         .commitAllowingStateLoss()
   }

@@ -5,10 +5,8 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.SearchView.OnQueryTextListener
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
@@ -27,17 +25,16 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
     fun newInstance() = SearchFragment()
   }
 
+  private lateinit var searchView: SearchView
+  private lateinit var searchItem: MenuItem
   private var adapter: DataAdapter? = null
   private var isSubmitted: Boolean = false
-  private var searchView: SearchView? = null
-  private var searchItem: MenuItem? = null
   private var queryTitle: String? = null
 
   @InjectPresenter
   lateinit var presenter: SearchPresenter
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-      inflater.inflate(R.layout.fragment_search, container, false)
+  override val layoutRes = R.layout.fragment_search
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -94,20 +91,20 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
 
   private fun setupSearchView() {
     searchItem = toolbar.menu.findItem(R.id.search)
-    searchItem?.expandActionView()
-    searchView = searchItem?.actionView as SearchView
-    searchView?.apply {
+    searchItem.expandActionView()
+    searchView = searchItem.actionView as SearchView
+    searchView.apply {
       queryHint = getString(R.string.search_by_artist_name)
       isSubmitButtonEnabled = true
       setIconifiedByDefault(false)
     }
 
-    searchView?.setOnQueryTextListener(object : OnQueryTextListener {
+    searchView.setOnQueryTextListener(object : OnQueryTextListener {
       override fun onQueryTextSubmit(submitText: String): Boolean {
         isSubmitted = true
         queryTitle = submitText
         toolbar.title = String.format(getString(R.string.query_results), queryTitle)
-        searchItem?.collapseActionView()
+        searchItem.collapseActionView()
         presenter.loadData(submitText)
         return false
       }

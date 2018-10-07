@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
@@ -42,16 +40,14 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
   @InjectPresenter
   lateinit var presenter: ArtistsAndTracksPresenter
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_artists, container, false)
-  }
+  override val layoutRes = R.layout.fragment_artists
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
     queryType = arguments?.getSerializable(BUNDLE_QUERY_TYPE) as QueryType? ?: RU
 
-    searchIcon.setOnClickListener { activity.navigateTo(SEARCH, QueryType.SEARCH, true) }
+    searchIcon.setOnClickListener { activity.navigateTo(screen = SEARCH, addToBackStack = true) }
 
     toolbar.apply {
       title = when (queryType) {
@@ -59,7 +55,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
         QueryType.GB -> getText(R.string.britain_top_chart)
         else         -> getText(R.string.russian_top_chart)
       }
-      setNavigationOnClickListener { activity.setDrawerState() }
+      setNavigationOnClickListener { activity.toggleDrawer() }
     }
     presenter.setCountry(queryType.name)
 
