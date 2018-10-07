@@ -1,26 +1,55 @@
-//noinspection GradleDependency
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = (System.env.BUILD_NUMBER ?: 0) as int
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion 27
+  compileSdkVersion 28
   defaultConfig {
     applicationId "com.aleksejantonov.lyricseverywhere"
     minSdkVersion 16
-    targetSdkVersion 27
-    versionCode 1
-    versionName "1.0"
+    targetSdkVersion 28
+    versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+    versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+    project.ext.set("archivesBaseName", "Lyrics Everywhere-" + defaultConfig.versionName)
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     vectorDrawables.useSupportLibrary = true
   }
+
+  signingConfigs {
+    release {
+    }
+  }
+
   buildTypes {
+    debug {
+      debuggable true
+      applicationIdSuffix ".debug"
+      versionNameSuffix "-DEBUG"
+    }
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
     }
   }
+}
+
+ext {
+  supportLibraryVersion = "28.0.0"
+  constraintVersion = "1.1.3"
+  retrofitVersion = "2.4.0"
+  moxyVersion = "1.5.5"
+  stetho = "1.5.0"
+  canary = "1.6.1"
+  glide = "4.8.0"
+  timber = "4.7.1"
+  dodenhof = "2.1.0"
 }
 
 dependencies {
@@ -30,30 +59,30 @@ dependencies {
   })
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation 'com.android.support:appcompat-v7:27.1.1'
-  implementation 'com.android.support:design:27.1.1'
-  implementation 'com.android.support:support-vector-drawable:27.1.1'
-  implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-  implementation 'com.android.support:cardview-v7:27.1.1'
+  implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+  implementation "com.android.support:design:$supportLibraryVersion"
+  implementation "com.android.support:support-vector-drawable:$supportLibraryVersion"
+  implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+  implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
 
-  implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-  implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-  implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-  implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+  implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+  implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+  implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+  implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
-  implementation 'com.github.bumptech.glide:glide:4.7.1'
+  implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
+  kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 
-  implementation 'de.hdodenhof:circleimageview:2.1.0'
+  implementation "com.facebook.stetho:stetho:$stetho"
+  implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
 
-  implementation 'com.facebook.stetho:stetho:1.5.0'
-  implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+  debugImplementation "com.squareup.leakcanary:leakcanary-android:$canary"
+  releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$canary"
+  debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$canary"
 
-  implementation 'com.arello-mobile:moxy-app-compat:1.5.5'
-  kapt 'com.arello-mobile:moxy-compiler:1.5.5'
+  implementation "com.github.bumptech.glide:glide:$glide"
 
-  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
-  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
-  debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+  implementation "com.jakewharton.timber:timber:$timber"
 
-  implementation 'com.jakewharton.timber:timber:4.7.1'
+  implementation "de.hdodenhof:circleimageview:$dodenhof"
 }

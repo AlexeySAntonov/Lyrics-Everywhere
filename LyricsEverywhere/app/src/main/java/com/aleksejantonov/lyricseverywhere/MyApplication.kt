@@ -1,8 +1,6 @@
 package com.aleksejantonov.lyricseverywhere
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
 import com.aleksejantonov.lyricseverywhere.di.DI
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
