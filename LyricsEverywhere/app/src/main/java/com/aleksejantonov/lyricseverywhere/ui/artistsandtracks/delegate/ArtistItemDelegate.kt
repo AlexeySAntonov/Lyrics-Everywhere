@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.R.style
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
-import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.ArtistsAndTracksListView.Action.OnTwitterClick
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTwitterClick
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
 import com.aleksejantonov.lyricseverywhere.utils.DateTimeUtil
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate

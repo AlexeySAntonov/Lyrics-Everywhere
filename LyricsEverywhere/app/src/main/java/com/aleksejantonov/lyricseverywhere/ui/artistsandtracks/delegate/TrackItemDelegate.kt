@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
-import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.ArtistsAndTracksListView.Action.OnTrackClick
+import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTrackClick
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
 import com.aleksejantonov.lyricseverywhere.utils.DateTimeUtil
 import com.bumptech.glide.RequestManager

@@ -10,11 +10,11 @@ import android.view.View
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
-import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
+import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.ArtistItemDelegate
+import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.TrackItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
-import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter
-import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTrackClickListener
-import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTwitterClickListener
+import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
+import com.aleksejantonov.lyricseverywhere.ui.base.SimpleAdapter
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_search.progressBar
 import kotlinx.android.synthetic.main.fragment_search.recyclerView
@@ -27,9 +27,10 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
 
   private lateinit var searchView: SearchView
   private lateinit var searchItem: MenuItem
-  private var adapter: DataAdapter? = null
   private var isSubmitted: Boolean = false
   private var queryTitle: String? = null
+
+  private val adapter by lazy { ArtistsAndTracksAdapter() }
 
   @InjectPresenter
   lateinit var presenter: SearchPresenter
@@ -42,6 +43,7 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
     recyclerView.apply {
       layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
       addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+      adapter = this@SearchFragment.adapter
     }
 
     toolbar.apply {
@@ -52,33 +54,9 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
     setupSearchView()
   }
 
-  override fun onDestroyView() {
-    adapter = null
-    super.onDestroyView()
-  }
-
-  override fun showData(data: List<BaseData>, query: String) {
+  override fun showData(items: List<ListItem>, query: String) {
     progressBar.visibility = View.INVISIBLE
-    if (adapter == null) {
-      adapter = DataAdapter(
-          data = data.toMutableList(),
-          onTrackClickListener = object : OnTrackClickListener {
-            override fun onClick(track: Track) {
-              launchTrackDetailsActivity(track)
-            }
-          },
-          onTwitterClickListener = object : OnTwitterClickListener {
-            override fun onClick(twitterUrl: String) {
-              launchTwitter(twitterUrl)
-            }
-          },
-          imageRequestManager = DI.componentManager().appComponent.imageRequestManager,
-          query = query
-      )
-      recyclerView.adapter = adapter
-    } else {
-      adapter?.updateQueryData(data, query)
-    }
+    adapter.items = items
   }
 
   override fun showLoading() {
@@ -88,6 +66,10 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   override fun hideLoading() {
     progressBar.visibility = View.GONE
   }
+
+  override fun showTwitter(twitterUrl: String) = launchTwitter(twitterUrl)
+
+  override fun showTrackDetails(track: Track) = launchTrackDetailsActivity(track)
 
   private fun setupSearchView() {
     searchItem = toolbar.menu.findItem(R.id.search)
@@ -105,7 +87,6 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
         queryTitle = submitText
         toolbar.title = String.format(getString(R.string.query_results), queryTitle)
         searchItem.collapseActionView()
-        presenter.loadData(submitText)
         return false
       }
 
@@ -119,5 +100,14 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
         return false
       }
     })
+  }
+
+  private inner class ArtistsAndTracksAdapter : SimpleAdapter() {
+    init {
+      delegatesManager.apply {
+        addDelegate(ArtistItemDelegate(viewActions = presenter.viewActions))
+        addDelegate(TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager))
+      }
+    }
   }
 }
