@@ -10,11 +10,7 @@ import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
 import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.ArtistItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.TrackItemDelegate
-import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
-import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter
-import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTrackClickListener
-import com.aleksejantonov.lyricseverywhere.ui.base.DataAdapter.OnTwitterClickListener
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.RU
