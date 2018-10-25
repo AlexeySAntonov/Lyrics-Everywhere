@@ -30,7 +30,7 @@ class LoginPresenter : MvpPresenter<LoginView>() {
               viewState.onValidationSuccess()
             },
             {
-              viewState.onValidationFailed("check api key value")
+              viewState.onValidationFailed()
               Timber.d("Validation failed: ${it.message}")
             }
         )

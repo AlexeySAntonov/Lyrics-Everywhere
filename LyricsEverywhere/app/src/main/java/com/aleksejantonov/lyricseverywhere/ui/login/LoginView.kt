@@ -7,5 +7,5 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface LoginView : MvpView {
   fun onValidationSuccess()
-  fun onValidationFailed(message: String)
+  fun onValidationFailed()
 }
