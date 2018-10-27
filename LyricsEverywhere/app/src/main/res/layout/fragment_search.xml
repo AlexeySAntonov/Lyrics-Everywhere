@@ -4,19 +4,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <android.support.v7.widget.Toolbar
-      android:id="@+id/toolbar"
+  <View
+      android:id="@+id/toolbarOverlay"
       android:layout_width="0dp"
       android:layout_height="?attr/actionBarSize"
       android:background="@color/colorPrimary"
-      android:elevation="4dp"
       app:layout_constraintBottom_toTopOf="@+id/recyclerView"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-      app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-      app:titleTextColor="@android:color/white"/>
+      app:layout_constraintTop_toTopOf="parent"/>
+
+  <View
+      android:id="@+id/navigationOverlay"
+      android:layout_width="?attr/actionBarSize"
+      android:layout_height="0dp"
+      android:background="?selectableItemBackgroundBorderless"
+      app:layout_constraintBottom_toBottomOf="@+id/toolbarOverlay"
+      app:layout_constraintStart_toStartOf="@+id/toolbarOverlay"
+      app:layout_constraintTop_toTopOf="@+id/toolbarOverlay"/>
+
+  <ImageView
+      android:id="@+id/navigationIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="@+id/navigationOverlay"
+      app:layout_constraintEnd_toEndOf="@+id/navigationOverlay"
+      app:layout_constraintStart_toStartOf="@+id/navigationOverlay"
+      app:layout_constraintTop_toTopOf="@+id/navigationOverlay"
+      app:srcCompat="@drawable/ic_arrow_back_white_24dp"/>
+
+  <android.support.v7.widget.SearchView
+      android:id="@+id/searchView"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginRight="8dp"
+      app:closeIcon="@drawable/ic_close_white_24dp"
+      app:iconifiedByDefault="false"
+      app:layout_constraintBottom_toBottomOf="@+id/toolbarOverlay"
+      app:layout_constraintEnd_toEndOf="@+id/toolbarOverlay"
+      app:layout_constraintStart_toEndOf="@+id/navigationOverlay"
+      app:layout_constraintTop_toTopOf="@+id/toolbarOverlay"
+      app:queryHint="@string/search_hint_text"
+      app:searchIcon="@drawable/ic_search_white_24dp"/>
 
   <ProgressBar
       android:id="@+id/progressBar"
@@ -36,6 +66,6 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+      app:layout_constraintTop_toBottomOf="@+id/toolbarOverlay"/>
 
 </android.support.constraint.ConstraintLayout>
