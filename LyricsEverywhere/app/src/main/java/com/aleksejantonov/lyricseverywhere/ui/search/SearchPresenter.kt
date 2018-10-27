@@ -10,10 +10,8 @@ import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTrackClick
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTwitterClick
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers

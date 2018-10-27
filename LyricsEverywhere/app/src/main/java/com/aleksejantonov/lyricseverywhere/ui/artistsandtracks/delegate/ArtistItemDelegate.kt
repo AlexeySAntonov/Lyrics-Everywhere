@@ -3,14 +3,10 @@ package com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.RecyclerView
-import android.text.SpannableString
-import android.text.TextUtils
-import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
-import com.aleksejantonov.lyricseverywhere.R.style
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTwitterClick
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
