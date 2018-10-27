@@ -20,7 +20,7 @@ import com.aleksejantonov.lyricseverywhere.utils.NetworkUtil
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_artists.progressBar
 import kotlinx.android.synthetic.main.fragment_artists.recyclerView
-import kotlinx.android.synthetic.main.fragment_artists.searchIcon
+import kotlinx.android.synthetic.main.fragment_artists.searchOverlay
 import kotlinx.android.synthetic.main.fragment_artists.swipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_artists.toolbar
 
@@ -47,7 +47,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
 
     queryType = arguments?.getSerializable(BUNDLE_QUERY_TYPE) as QueryType? ?: RU
 
-    searchIcon.setOnClickListener { activity.navigateTo(screen = SEARCH, addToBackStack = true) }
+    searchOverlay.setOnClickListener { activity.navigateTo(screen = SEARCH, addToBackStack = true, animate = true) }
 
     toolbar.apply {
       title = when (queryType) {

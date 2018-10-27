@@ -105,8 +105,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     drawerLayout.closeDrawers()
   }
 
-  fun navigateTo(screen: ScreenType, queryType: QueryType = RU, addToBackStack: Boolean = false) {
+  fun navigateTo(screen: ScreenType, queryType: QueryType = RU, addToBackStack: Boolean = false, animate: Boolean = false) {
     supportFragmentManager.beginTransaction()
+        .apply { if (animate) setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right) }
         .replace(R.id.fragmentContainer, BaseFragment.newInstance(screen, queryType))
         .apply { if (addToBackStack) addToBackStack(null) }
         .commitAllowingStateLoss()
