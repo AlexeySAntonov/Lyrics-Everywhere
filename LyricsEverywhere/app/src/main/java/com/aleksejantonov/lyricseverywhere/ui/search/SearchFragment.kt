@@ -35,6 +35,9 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   @InjectPresenter
   lateinit var presenter: SearchPresenter
 
+  private val artistDelegate by lazy { ArtistItemDelegate(viewActions = presenter.viewActions) }
+  private val trackDelegate by lazy { TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager) }
+
   override val layoutRes = R.layout.fragment_search
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,6 +60,11 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   override fun showData(items: List<ListItem>, query: String) {
     progressBar.visibility = View.INVISIBLE
     adapter.items = items
+  }
+
+  override fun setQuery(query: String) {
+    artistDelegate.setQuery(query)
+    trackDelegate.setQuery(query)
   }
 
   override fun showLoading() {
@@ -105,8 +113,8 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   private inner class ArtistsAndTracksAdapter : SimpleAdapter() {
     init {
       delegatesManager.apply {
-        addDelegate(ArtistItemDelegate(viewActions = presenter.viewActions))
-        addDelegate(TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager))
+        addDelegate(artistDelegate)
+        addDelegate(trackDelegate)
       }
     }
   }

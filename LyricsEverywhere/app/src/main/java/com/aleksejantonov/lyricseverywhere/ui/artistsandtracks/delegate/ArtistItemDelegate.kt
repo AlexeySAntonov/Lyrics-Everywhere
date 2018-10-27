@@ -15,6 +15,7 @@ import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTwitterClick
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
 import com.aleksejantonov.lyricseverywhere.utils.DateTimeUtil
+import com.aleksejantonov.lyricseverywhere.utils.highlight
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import com.jakewharton.rxrelay2.PublishRelay
 import kotlinx.android.synthetic.main.item_artist.view.artistName
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.item_artist.view.divider
 import kotlinx.android.synthetic.main.item_artist.view.twitterIcon
 
 class ArtistItemDelegate(
-    private val query: String? = null,
+    private var query: String? = null,
     private val viewActions: PublishRelay<Any>
 ) : AbsListItemAdapterDelegate<Artist, ListItem, ArtistItemDelegate.ArtistViewHolder>() {
 
@@ -35,22 +36,15 @@ class ArtistItemDelegate(
     viewHolder.bind(item)
   }
 
+  fun setQuery(query: String) {
+    this.query = query
+  }
+
   inner class ArtistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(artist: Artist) {
       itemView.apply {
         artistName.text = artist.artistName
-        query?.let {
-          val startIndex = indexOfSearchQuery(artist.artistName)
-          if (startIndex != -1) {
-            val highLightedName = SpannableString(artist.artistName)
-            highLightedName.setSpan(
-                TextAppearanceSpan(itemView.context, style.searchTextHighlight),
-                startIndex,
-                startIndex + it.length,
-                0)
-            artistName.text = highLightedName
-          }
-        }
+        query?.let { artist.artistName.highlight(it, context)?.let { artistName.text = it } }
 
         twitterIcon.setOnClickListener { viewActions.accept(OnTwitterClick(artist.twitterUrl)) }
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES || (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_AUTO && DateTimeUtil.isNightModeNecessary())) {
@@ -61,12 +55,6 @@ class ArtistItemDelegate(
           twitterIcon.alpha = 0.5f
         }
       }
-    }
-
-    private fun indexOfSearchQuery(artistName: String): Int {
-      return if (!TextUtils.isEmpty(query)) {
-        artistName.toLowerCase().indexOf(query!!.toLowerCase())
-      } else -1
     }
   }
 }

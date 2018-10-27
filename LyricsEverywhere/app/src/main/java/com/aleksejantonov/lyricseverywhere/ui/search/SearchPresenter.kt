@@ -41,6 +41,7 @@ class SearchPresenter : BasePresenter<SearchFragmentView>() {
               DataMergeUtil.searchListsMerge(artists, tracks, query)
             }
         )
+        .doOnSubscribe { viewState.setQuery(query) }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
