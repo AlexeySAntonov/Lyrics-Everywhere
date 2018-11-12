@@ -52,7 +52,7 @@ class SearchPresenter : BasePresenter<SearchFragmentView>() {
   private fun handleAction(action: Action) {
     when (action) {
       is OnTwitterClick -> viewState.showTwitter(action.twitterUrl)
-      is OnTrackClick   -> viewState.showTrackDetails(action.track)
+      is OnTrackClick   -> viewState.showTrackDetails(action.track, action.sharedImageView)
     }
   }
 }

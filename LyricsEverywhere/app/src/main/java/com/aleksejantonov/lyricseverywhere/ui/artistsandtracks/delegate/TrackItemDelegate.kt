@@ -1,5 +1,6 @@
 package com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate
 
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -46,7 +47,10 @@ class TrackItemDelegate(
 
         trackAlbum.text = track.albumName
         imageRequestManager.load(track.albumCover).into(albumCover)
-        setOnClickListener { viewActions.accept(OnTrackClick(track)) }
+
+        ViewCompat.setTransitionName(albumCover as View, track.trackName)
+
+        setOnClickListener { viewActions.accept(OnTrackClick(track, albumCover)) }
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES || (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_AUTO && DateTimeUtil.isNightModeNecessary())) {
           sound.alpha = 0.5f
           albumCover.alpha = 0.5f

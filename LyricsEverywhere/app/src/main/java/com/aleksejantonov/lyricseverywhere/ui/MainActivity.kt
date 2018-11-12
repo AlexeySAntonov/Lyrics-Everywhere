@@ -55,6 +55,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     else super.onBackPressed()
   }
 
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    when (item?.itemId) {
+      android.R.id.home -> supportFinishAfterTransition()
+    }
+    return super.onOptionsItemSelected(item)
+  }
+
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     selectDrawerItem(item)
     return true

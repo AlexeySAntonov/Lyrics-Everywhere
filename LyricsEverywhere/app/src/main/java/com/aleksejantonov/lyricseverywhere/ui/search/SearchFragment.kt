@@ -5,6 +5,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
 import android.view.View
+import android.widget.ImageView
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.di.DI
@@ -75,7 +76,7 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
 
   override fun showTwitter(twitterUrl: String) = launchTwitter(twitterUrl)
 
-  override fun showTrackDetails(track: Track) = launchTrackDetailsActivity(track)
+  override fun showTrackDetails(track: Track, sharedImageView: ImageView) = launchTrackDetailsActivity(track, sharedImageView)
 
   private fun setupSearchView() {
     with(searchView) {

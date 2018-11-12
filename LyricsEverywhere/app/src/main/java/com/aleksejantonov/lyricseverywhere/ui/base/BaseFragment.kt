@@ -21,6 +21,9 @@ import com.aleksejantonov.lyricseverywhere.ui.settings.SettingsFragment
 import com.aleksejantonov.lyricseverywhere.ui.trackdetails.TrackDetailsActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import timber.log.Timber
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
+import android.widget.ImageView
 
 abstract class BaseFragment : MvpAppCompatFragment() {
 
@@ -50,8 +53,16 @@ abstract class BaseFragment : MvpAppCompatFragment() {
       savedInstanceState: Bundle?
   ): View = inflater.inflate(layoutRes, container, false)
 
-  fun launchTrackDetailsActivity(track: Track) {
-    context?.let { startActivity(TrackDetailsActivity.newIntent(it, track)) }
+  fun launchTrackDetailsActivity(track: Track, sharedImageView: ImageView) {
+    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+        activity,
+        sharedImageView,
+        ViewCompat.getTransitionName(sharedImageView) ?: ""
+    )
+
+    context?.let {
+      startActivity(TrackDetailsActivity.newIntent(it, track, ViewCompat.getTransitionName(sharedImageView)), options.toBundle())
+    }
   }
 
   fun launchTwitter(twitterUrl: String) {
