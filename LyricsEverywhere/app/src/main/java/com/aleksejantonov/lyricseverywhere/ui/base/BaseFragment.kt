@@ -24,15 +24,18 @@ import timber.log.Timber
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewCompat
 import android.widget.ImageView
+import com.aleksejantonov.lyricseverywhere.ui.advancedsearch.AdvancedSearchFragment
+import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.ADVANCED_SEARCH
 
 abstract class BaseFragment : MvpAppCompatFragment() {
 
   companion object {
     fun newInstance(type: ScreenType, query: QueryType = RU): BaseFragment {
       return when (type) {
-        CHART    -> ArtistsAndTracksListFragment.newInstance(query)
-        SEARCH   -> SearchFragment.newInstance()
-        SETTINGS -> SettingsFragment.newInstance()
+        CHART           -> ArtistsAndTracksListFragment.newInstance(query)
+        SEARCH          -> SearchFragment.newInstance()
+        SETTINGS        -> SettingsFragment.newInstance()
+        ADVANCED_SEARCH -> AdvancedSearchFragment.newInstance()
       }
     }
   }

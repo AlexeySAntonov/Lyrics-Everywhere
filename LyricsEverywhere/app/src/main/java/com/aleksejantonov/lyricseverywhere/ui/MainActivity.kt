@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+    savedInstanceState?.let { lastItemId = it[DRAWER_ITEM_ID] as Int }
     defaultInit(lastItemId)
 
     navigationView.apply {
@@ -43,11 +44,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
     outState.putInt(DRAWER_ITEM_ID, lastItemId)
-  }
-
-  override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-    super.onRestoreInstanceState(savedInstanceState)
-    savedInstanceState?.let { lastItemId = it[DRAWER_ITEM_ID] as Int }
   }
 
   override fun onBackPressed() {
@@ -77,13 +73,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .findFragmentById(R.id.fragmentContainer)?.let {
             lastItemId?.let {
               lastItem = navigationView.menu.findItem(it)
-              if (it != R.id.settings && it != R.id.logOut) lastItem?.setIcon(R.drawable.ic_star_gold_24dp)
+              if (it != R.id.settings && it != R.id.logOut && it != R.id.advancedSearch) lastItem?.setIcon(R.drawable.ic_star_gold_24dp)
             }
           }
           ?: onNavigationItemSelected(navigationView.menu.getItem(0))
 
   private fun selectDrawerItem(item: MenuItem) {
-    lastItem?.let { if (it.itemId != R.id.settings) it.setIcon(R.drawable.ic_star_white_24dp) }
+    lastItem?.let {
+      if (it.itemId != R.id.settings && it.itemId != R.id.advancedSearch) it.setIcon(R.drawable.ic_star_white_24dp)
+    }
 
     item.apply {
       lastItem = this
@@ -97,15 +95,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     when (item.itemId) {
-      R.id.settings -> navigateTo(SETTINGS)
-      R.id.logOut   -> {
+      R.id.advancedSearch -> navigateTo(ADVANCED_SEARCH)
+      R.id.settings       -> navigateTo(SETTINGS)
+      R.id.logOut         -> {
         DI.componentManager().appComponent.preferences.edit().clear().apply()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
       }
     }
 
-    if (item.itemId != R.id.logOut && item.itemId != R.id.settings) {
+    if (item.itemId != R.id.logOut && item.itemId != R.id.settings && item.itemId != R.id.advancedSearch) {
       navigateTo(CHART, country)
       item.setIcon(R.drawable.ic_star_gold_24dp)
     }
