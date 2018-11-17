@@ -9,6 +9,7 @@ import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTrackClick
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTwitterClick
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
+import com.aleksejantonov.lyricseverywhere.ui.base.delegate.entity.LoadingItem
 import com.aleksejantonov.lyricseverywhere.utils.DataContainersUtil
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState
@@ -72,13 +73,12 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { viewState.showLoading() }
-        .doAfterTerminate { viewState.hideLoading() }
+        .doOnSubscribe { viewState.showItems(listOf(LoadingItem())) }
         .subscribe(
             {
               if (it.isNotEmpty()) {
                 tracks = it
-                viewState.showData(DataMergeUtil.listsMerge(artists, tracks))
+                viewState.showItems(DataMergeUtil.listsMerge(artists, tracks))
               } else {
                 loadArtists()
               }
@@ -100,8 +100,7 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnComplete { loadTracks() }
-        .doOnSubscribe { viewState.showLoading() }
-        .doAfterTerminate { viewState.hideLoading() }
+        .doOnSubscribe { viewState.showItems(listOf(LoadingItem())) }
         .subscribe(
             { Timber.d("Artists loading succeed") },
             { Timber.d("Artists loading failed: ${it.message}") }
@@ -121,10 +120,9 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { viewState.showLoading() }
-        .doAfterTerminate { viewState.hideLoading() }
+        .doOnSubscribe { viewState.showItems(listOf(LoadingItem())) }
         .subscribe(
-            { viewState.showData(DataMergeUtil.listsMerge(artists, tracks)) },
+            { viewState.showItems(DataMergeUtil.listsMerge(artists, tracks)) },
             { Timber.d("Tracks loading failed: ${it.message}") }
         )
         .keepUntilDestroy()

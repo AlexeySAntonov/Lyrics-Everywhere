@@ -13,6 +13,10 @@
         android:id="@+id/gb"
         android:icon="@drawable/ic_star_white_24dp"
         android:title="@string/britain_top_chart"/>
+    <item
+        android:id="@+id/advancedSearch"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/advanced_search"/>
     <item android:title="">
       <menu>
         <item

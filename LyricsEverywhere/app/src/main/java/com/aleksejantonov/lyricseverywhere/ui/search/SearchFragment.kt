@@ -14,6 +14,7 @@ import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.TrackIte
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
 import com.aleksejantonov.lyricseverywhere.ui.base.SimpleAdapter
+import com.aleksejantonov.lyricseverywhere.ui.base.delegate.LoadingDelegate
 import com.aleksejantonov.lyricseverywhere.utils.getColor
 import com.aleksejantonov.lyricseverywhere.utils.hideKeyboard
 import com.aleksejantonov.lyricseverywhere.utils.setTextColor
@@ -21,7 +22,6 @@ import com.aleksejantonov.lyricseverywhere.utils.setUnderscoreColor
 import com.aleksejantonov.lyricseverywhere.utils.textChangeListener
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_search.navigationOverlay
-import kotlinx.android.synthetic.main.fragment_search.progressBar
 import kotlinx.android.synthetic.main.fragment_search.recyclerView
 import kotlinx.android.synthetic.main.fragment_search.searchView
 
@@ -56,22 +56,13 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
     setupSearchView()
   }
 
-  override fun showData(items: List<ListItem>, query: String) {
-    progressBar.visibility = View.INVISIBLE
+  override fun showItems(items: List<ListItem>) {
     adapter.items = items
   }
 
   override fun setQuery(query: String) {
     artistDelegate.setQuery(query)
     trackDelegate.setQuery(query)
-  }
-
-  override fun showLoading() {
-    progressBar.visibility = View.VISIBLE
-  }
-
-  override fun hideLoading() {
-    progressBar.visibility = View.GONE
   }
 
   override fun showTwitter(twitterUrl: String) = launchTwitter(twitterUrl)
@@ -91,6 +82,7 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   private inner class ArtistsAndTracksAdapter : SimpleAdapter() {
     init {
       delegatesManager.apply {
+        addDelegate(LoadingDelegate())
         addDelegate(artistDelegate)
         addDelegate(trackDelegate)
       }

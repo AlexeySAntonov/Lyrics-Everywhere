@@ -7,8 +7,8 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface SearchFragmentView : BaseView {
-  fun showData(items: List<ListItem>, query: String)
+  fun showItems(items: List<ListItem>)
   fun setQuery(query: String)
-  fun showLoading()
-  fun hideLoading()
+//  fun showLoading()
+//  fun hideLoading()
 }

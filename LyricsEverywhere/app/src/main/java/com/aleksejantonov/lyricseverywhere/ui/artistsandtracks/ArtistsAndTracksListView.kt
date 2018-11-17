@@ -7,7 +7,5 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface ArtistsAndTracksListView : BaseView {
-  fun showData(items: List<ListItem>)
-  fun showLoading()
-  fun hideLoading()
+  fun showItems(items: List<ListItem>)
 }

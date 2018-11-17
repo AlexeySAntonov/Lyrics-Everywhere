@@ -17,9 +17,9 @@ import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.RU
 import com.aleksejantonov.lyricseverywhere.ui.base.ScreenType.SEARCH
 import com.aleksejantonov.lyricseverywhere.ui.base.SimpleAdapter
+import com.aleksejantonov.lyricseverywhere.ui.base.delegate.LoadingDelegate
 import com.aleksejantonov.lyricseverywhere.utils.NetworkUtil
 import com.arellomobile.mvp.presenter.InjectPresenter
-import kotlinx.android.synthetic.main.fragment_artists.progressBar
 import kotlinx.android.synthetic.main.fragment_artists.recyclerView
 import kotlinx.android.synthetic.main.fragment_artists.searchOverlay
 import kotlinx.android.synthetic.main.fragment_artists.swipeRefreshLayout
@@ -74,24 +74,14 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
     }
   }
 
-  override fun showData(items: List<ListItem>) {
-    progressBar.visibility = View.INVISIBLE
+  override fun showItems(items: List<ListItem>) {
     swipeRefreshLayout.isRefreshing = false
-
     adapter.items = items
   }
 
   override fun showTwitter(twitterUrl: String) = launchTwitter(twitterUrl)
 
   override fun showTrackDetails(track: Track, sharedImageView: ImageView) = launchTrackDetailsActivity(track, sharedImageView)
-
-  override fun showLoading() {
-    progressBar.visibility = View.VISIBLE
-  }
-
-  override fun hideLoading() {
-    progressBar.visibility = View.GONE
-  }
 
   private fun showLostInternetConnectionDialog() {
     context?.let {
@@ -122,6 +112,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
   private inner class ArtistsAndTracksAdapter : SimpleAdapter() {
     init {
       delegatesManager.apply {
+        addDelegate(LoadingDelegate())
         addDelegate(ArtistItemDelegate(viewActions = presenter.viewActions))
         addDelegate(TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager))
       }

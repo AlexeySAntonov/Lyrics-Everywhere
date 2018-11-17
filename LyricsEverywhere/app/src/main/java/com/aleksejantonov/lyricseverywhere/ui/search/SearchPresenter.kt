@@ -8,6 +8,7 @@ import com.aleksejantonov.lyricseverywhere.ui.base.BasePresenter
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTrackClick
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTwitterClick
+import com.aleksejantonov.lyricseverywhere.ui.base.delegate.entity.LoadingItem
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.Observable
@@ -39,13 +40,12 @@ class SearchPresenter : BasePresenter<SearchFragmentView>() {
               DataMergeUtil.searchListsMerge(artists, tracks, query)
             }
         )
-        .doOnSubscribe { viewState.setQuery(query) }
+        .firstElement()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-            { viewState.showData(it, query) },
-            { Timber.e("Search failed: ${it.message}") }
-        )
+        .doOnSubscribe { viewState.showItems(listOf(LoadingItem())) }
+        .doOnSuccess { viewState.setQuery(query) }
+        .subscribe(viewState::showItems, Timber::e)
         .keepUntilDestroy()
   }
 
