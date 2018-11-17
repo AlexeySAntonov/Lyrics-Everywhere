@@ -10,7 +10,7 @@
       android:layout_width="0dp"
       android:layout_height="?attr/actionBarSize"
       android:background="@color/colorPrimary"
-      app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+      app:layout_constraintBottom_toTopOf="@+id/searchInputLayout"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
@@ -56,6 +56,37 @@
       app:constraint_referenced_ids="toolbarOverlay, navigationOverlay, navigationIcon, title"
       tools:targetApi="lollipop"/>
 
+  <android.support.design.widget.TextInputLayout
+      android:id="@+id/searchInputLayout"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"
+      android:hint="@string/advanced_search_hint"
+      android:theme="@style/TextInputLayoutStyle"
+      app:counterEnabled="true"
+      app:counterMaxLength="15"
+      app:counterTextAppearance="@style/InputLayoutCounterAppearance"
+      app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbarOverlay">
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLength="15"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/searchInputTextColor"
+        android:textSize="20sp"/>
+
+  </android.support.design.widget.TextInputLayout>
+
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recyclerView"
       android:layout_width="0dp"
@@ -64,6 +95,6 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/toolbarOverlay"/>
+      app:layout_constraintTop_toBottomOf="@+id/searchInputLayout"/>
 
 </android.support.constraint.ConstraintLayout>

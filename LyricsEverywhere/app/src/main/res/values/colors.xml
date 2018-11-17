@@ -7,4 +7,6 @@
   <color name="colorAccentTransparent">#55E8EAF6</color>
   <color name="colorPrimaryDarkTransparent">#55B61827</color>
   <color name="white">#FFFFFF</color>
+  <color name="searchInputHintColor">#1565C0</color>
+  <color name="searchInputTextColor">#003C8F</color>
 </resources>

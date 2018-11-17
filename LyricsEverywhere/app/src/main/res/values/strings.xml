@@ -34,4 +34,5 @@
   <string name="system_mode">Follow system</string>
   <string name="auto_mode">Auto</string>
   <string name="search_hint_text">&lt;font color=#E9E9E9&gt;artist or track&lt;/font&gt;</string>
+  <string name="advanced_search_hint">Any word in the song title or artist name or lyrics</string>
 </resources>

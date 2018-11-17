@@ -22,4 +22,12 @@
     <item name="android:textSize">24sp</item>
   </style>
 
+  <style name="TextInputLayoutStyle" parent="AppTheme">
+    <item name="colorAccent">@color/searchInputHintColor</item>
+  </style>
+
+  <style name="InputLayoutCounterAppearance" parent="TextAppearance.AppCompat.Small">
+    <item name="android:textColor">@color/searchInputHintColor</item>
+  </style>
+
 </resources>
