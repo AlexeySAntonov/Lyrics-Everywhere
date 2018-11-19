@@ -7,5 +7,5 @@ object Constants {
   const val TOP_PAGE = "page"
   const val TOP_PAGE_SIZE = "page_size"
   const val TRACK_ID = "track_id"
-  const val QUERY = "query"
+  const val QUERY = "q"
 }

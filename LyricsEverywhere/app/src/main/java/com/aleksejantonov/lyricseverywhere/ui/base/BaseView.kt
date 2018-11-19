@@ -15,5 +15,6 @@ interface BaseView : MvpView {
   sealed class Action {
     data class OnTwitterClick(val twitterUrl: String) : Action()
     data class OnTrackClick(val track: Track, val sharedImageView: ImageView) : Action()
+    data class OnSearchClick(val query: String): Action()
   }
 }

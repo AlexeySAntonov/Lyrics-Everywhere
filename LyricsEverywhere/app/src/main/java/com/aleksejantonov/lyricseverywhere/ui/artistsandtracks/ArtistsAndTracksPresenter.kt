@@ -88,6 +88,7 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         .keepUntilDestroy()
   }
 
+  @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
   fun loadArtists() {
     musixMatchService
         .getArtists(preferences.getString(Constants.API_KEY, ""), country, PAGE_NUMBER, PAGE_SIZE)
