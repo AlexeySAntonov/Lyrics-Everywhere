@@ -42,7 +42,7 @@ android {
 
 ext {
   supportLibraryVersion = "28.0.0"
-  constraintVersion = "1.1.3"
+  constraintVersion = "2.0.0-alpha2"
   retrofitVersion = "2.4.0"
   rxJava = "2.1.0"
   rxKotlin = "2.3.0"
