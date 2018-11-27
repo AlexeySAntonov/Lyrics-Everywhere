@@ -2,7 +2,7 @@ package com.aleksejantonov.lyricseverywhere.ui.search
 
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseData
 import com.aleksejantonov.lyricseverywhere.ui.base.BasePresenter
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action
@@ -21,7 +21,7 @@ import timber.log.Timber
 @InjectViewState
 class SearchPresenter : BasePresenter<SearchFragmentView>() {
 
-  private val dataBase = DI.componentManager().appComponent.dataBase
+  private val dataBase = SL.componentManager().appComponent.dataBase
 
   override fun onFirstViewAttach() {
     super.onFirstViewAttach()

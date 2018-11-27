@@ -2,7 +2,7 @@ package com.aleksejantonov.lyricseverywhere.ui.advancedsearch
 
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.ui.base.BasePresenter
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnSearchClick
@@ -18,8 +18,8 @@ import timber.log.Timber
 
 @InjectViewState
 class AdvancedSearchPresenter : BasePresenter<AdvancedSearchView>() {
-  private val musixMatchService = DI.componentManager().appComponent.service
-  private val preferences = DI.componentManager().appComponent.preferences
+  private val musixMatchService = SL.componentManager().appComponent.service
+  private val preferences = SL.componentManager().appComponent.preferences
 
   override fun onFirstViewAttach() {
     viewState.showItems(listOf(PlaceHolderItem(R.drawable.ic_cloud_blue_128dp)))

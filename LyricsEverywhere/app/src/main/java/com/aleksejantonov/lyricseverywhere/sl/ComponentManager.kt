@@ -1,4 +1,4 @@
-package com.aleksejantonov.lyricseverywhere.di
+package com.aleksejantonov.lyricseverywhere.sl
 
 import android.content.Context
 

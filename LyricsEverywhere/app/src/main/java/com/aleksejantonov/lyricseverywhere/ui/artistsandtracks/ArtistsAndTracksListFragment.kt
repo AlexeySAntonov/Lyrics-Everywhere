@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.ArtistItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.TrackItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
@@ -114,7 +114,7 @@ class ArtistsAndTracksListFragment : BaseFragment(), ArtistsAndTracksListView {
       delegatesManager.apply {
         addDelegate(LoadingDelegate())
         addDelegate(ArtistItemDelegate(viewActions = presenter.viewActions))
-        addDelegate(TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager))
+        addDelegate(TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = SL.componentManager().appComponent.imageRequestManager))
       }
     }
   }

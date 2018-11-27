@@ -1,7 +1,7 @@
 package com.aleksejantonov.lyricseverywhere
 
 import android.app.Application
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 import timber.log.Timber
@@ -14,7 +14,7 @@ class MyApplication : Application() {
 
     initLeakCanary()
     initTimber()
-    DI.init(this)
+    SL.init(this)
   }
 
   private fun initLeakCanary() {

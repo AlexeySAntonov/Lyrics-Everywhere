@@ -1,7 +1,7 @@
 package com.aleksejantonov.lyricseverywhere.ui.trackdetails
 
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,8 +13,8 @@ import timber.log.Timber
 class TrackDetailsPresenter : MvpPresenter<TrackDetailsView>() {
 
   private lateinit var trackId: String
-  private val musixMatchService = DI.componentManager().appComponent.service
-  private val preferences = DI.componentManager().appComponent.preferences
+  private val musixMatchService = SL.componentManager().appComponent.service
+  private val preferences = SL.componentManager().appComponent.preferences
   private val subscriptions = CompositeDisposable()
 
   override fun onFirstViewAttach() {

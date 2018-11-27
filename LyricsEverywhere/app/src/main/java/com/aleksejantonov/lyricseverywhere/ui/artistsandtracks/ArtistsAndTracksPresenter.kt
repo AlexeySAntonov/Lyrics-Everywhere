@@ -3,7 +3,7 @@ package com.aleksejantonov.lyricseverywhere.ui.artistsandtracks
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.api.entities.artist.Artist
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.ui.base.BasePresenter
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTrackClick
@@ -31,10 +31,10 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
 
   private var artists: List<Artist> = ArrayList()
   private var tracks: List<Track> = ArrayList()
-  private val musixMatchService = DI.componentManager().appComponent.service
+  private val musixMatchService = SL.componentManager().appComponent.service
   private var country: String? = null
-  private val dataBase = DI.componentManager().appComponent.dataBase
-  private val preferences = DI.componentManager().appComponent.preferences
+  private val dataBase = SL.componentManager().appComponent.dataBase
+  private val preferences = SL.componentManager().appComponent.preferences
 
   override fun onFirstViewAttach() {
     super.onFirstViewAttach()

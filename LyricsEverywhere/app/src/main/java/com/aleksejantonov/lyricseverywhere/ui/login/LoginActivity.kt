@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.aleksejantonov.lyricseverywhere.ui.MainActivity
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.config.Constants
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.utils.toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_login.loginButton
 import kotlinx.android.synthetic.main.activity_login.registerButton
 
 class LoginActivity : MvpAppCompatActivity(), LoginView {
-  private val preferences = DI.componentManager().appComponent.preferences
+  private val preferences = SL.componentManager().appComponent.preferences
 
   @InjectPresenter
   lateinit var presenter: LoginPresenter

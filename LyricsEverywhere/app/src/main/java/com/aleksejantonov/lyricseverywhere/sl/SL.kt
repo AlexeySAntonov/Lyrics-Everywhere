@@ -1,9 +1,9 @@
-package com.aleksejantonov.lyricseverywhere.di
+package com.aleksejantonov.lyricseverywhere.sl
 
 import android.annotation.SuppressLint
 import android.content.Context
 
-object DI {
+object SL {
   @SuppressLint("StaticFieldLeak")
   private lateinit var componentManager: ComponentManager
 

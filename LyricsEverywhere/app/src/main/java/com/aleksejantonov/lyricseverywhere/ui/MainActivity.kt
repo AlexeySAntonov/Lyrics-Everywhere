@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.MenuItem
 import com.aleksejantonov.lyricseverywhere.*
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType
 import com.aleksejantonov.lyricseverywhere.ui.base.QueryType.*
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.id.advancedSearch -> navigateTo(ADVANCED_SEARCH)
       R.id.settings       -> navigateTo(SETTINGS)
       R.id.logOut         -> {
-        DI.componentManager().appComponent.preferences.edit().clear().apply()
+        SL.componentManager().appComponent.preferences.edit().clear().apply()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
       }

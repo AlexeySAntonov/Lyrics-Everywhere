@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import com.aleksejantonov.lyricseverywhere.R
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
-import com.aleksejantonov.lyricseverywhere.di.DI
+import com.aleksejantonov.lyricseverywhere.sl.SL
 import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.ArtistItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.artistsandtracks.delegate.TrackItemDelegate
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseFragment
@@ -36,7 +36,7 @@ class SearchFragment : BaseFragment(), SearchFragmentView {
   lateinit var presenter: SearchPresenter
 
   private val artistDelegate by lazy { ArtistItemDelegate(viewActions = presenter.viewActions) }
-  private val trackDelegate by lazy { TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = DI.componentManager().appComponent.imageRequestManager) }
+  private val trackDelegate by lazy { TrackItemDelegate(viewActions = presenter.viewActions, imageRequestManager = SL.componentManager().appComponent.imageRequestManager) }
 
   override val layoutRes = R.layout.fragment_search
 
