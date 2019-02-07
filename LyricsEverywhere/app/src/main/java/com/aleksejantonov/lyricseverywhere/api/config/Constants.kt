@@ -8,4 +8,6 @@ object Constants {
   const val TOP_PAGE_SIZE = "page_size"
   const val TRACK_ID = "track_id"
   const val QUERY = "q"
+
+  const val ALBUM_STUB = "https://drive.google.com/uc?export=download&id=1cdqKLN8bNbNl5Io4swoIsy1lVtZwzi5g"
 }

@@ -18,6 +18,5 @@ class DataBaseContract {
     const val COLUMN_TRACK_NAME = "name"
     const val COLUMN_TRACK_ALBUM = "album"
     const val COLUMN_TRACK_ARTIST_ID = "artistId"
-    const val COLUMN_TRACK_ALBUM_COVER = "albumCover"
   }
 }

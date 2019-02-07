@@ -11,8 +11,7 @@ data class Track(
     @SerializedName("track_id") val trackId: Int,
     @SerializedName("track_name") val trackName: String,
     @SerializedName("album_name") val albumName: String,
-    @SerializedName("artist_id") override var artistId: Int,
-    @SerializedName("album_coverart_100x100") val albumCover: String
+    @SerializedName("artist_id") override var artistId: Int
 ) : BaseData, Serializable {
 
   override fun toString(): String {
@@ -21,7 +20,6 @@ data class Track(
         ", trackName='" + trackName + '\''.toString() +
         ", albumName='" + albumName + '\''.toString() +
         ", artistId=" + artistId +
-        ", albumCover='" + albumCover + '\''.toString() +
         '}'.toString()
   }
 
@@ -31,5 +29,5 @@ data class Track(
   }
 
   @RequiresApi(VERSION_CODES.KITKAT)
-  override fun hashCode() = Objects.hash(trackId, trackName, albumName, artistId, albumCover)
+  override fun hashCode() = Objects.hash(trackId, trackName, albumName, artistId)
 }

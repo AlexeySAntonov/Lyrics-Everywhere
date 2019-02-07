@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.aleksejantonov.lyricseverywhere.R
+import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.aleksejantonov.lyricseverywhere.api.entities.track.Track
 import com.aleksejantonov.lyricseverywhere.ui.base.BaseView.Action.OnTrackClick
 import com.aleksejantonov.lyricseverywhere.ui.base.ListItem
@@ -46,7 +47,7 @@ class TrackItemDelegate(
         query?.let { track.trackName.highlight(it, context)?.let { trackName.text = it } }
 
         trackAlbum.text = track.albumName
-        imageRequestManager.load(track.albumCover).into(albumCover)
+        imageRequestManager.load(Constants.ALBUM_STUB).into(albumCover)
 
         ViewCompat.setTransitionName(albumCover as View, track.trackName)
 

@@ -9,7 +9,6 @@ import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLU
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_TOP_CHART_COUNTRIES
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_TWITTER
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ALBUM
-import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ALBUM_COVER
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ARTIST_ID
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ID
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_NAME
@@ -28,8 +27,7 @@ class DataBaseHelper(context: Context, name: String, factory: SQLiteDatabase.Cur
         COLUMN_TRACK_ID + " INTEGER, " +
         COLUMN_TRACK_NAME + " TEXT, " +
         COLUMN_TRACK_ALBUM + " TEXT, " +
-        COLUMN_TRACK_ARTIST_ID + " INTEGER, " +
-        COLUMN_TRACK_ALBUM_COVER + " TEXT)")
+        COLUMN_TRACK_ARTIST_ID + " INTEGER)")
   }
 
   override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {

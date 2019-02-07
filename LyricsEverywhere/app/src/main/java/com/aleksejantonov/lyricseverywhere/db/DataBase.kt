@@ -12,7 +12,6 @@ import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLU
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_TOP_CHART_COUNTRIES
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_TWITTER
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ALBUM
-import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ALBUM_COVER
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ARTIST_ID
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_ID
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.TracksTable.COLUMN_TRACK_NAME
@@ -79,8 +78,7 @@ class DataBase(context: Context) {
               trackId = cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ID)),
               trackName = cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_NAME)),
               albumName = cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_ALBUM)),
-              artistId = cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ARTIST_ID)),
-              albumCover = cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_ALBUM_COVER))
+              artistId = cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ARTIST_ID))
           )
           tracks.add(track)
         } while (cursor.moveToNext())
@@ -159,7 +157,6 @@ class DataBase(context: Context) {
         values.put(COLUMN_TRACK_NAME, track.trackName)
         values.put(COLUMN_TRACK_ALBUM, track.albumName)
         values.put(COLUMN_TRACK_ARTIST_ID, track.artistId)
-        values.put(COLUMN_TRACK_ALBUM_COVER, track.albumCover)
 
         db.insert(TRACKS_TABLE_NAME, null, values)
       }
@@ -229,7 +226,6 @@ class DataBase(context: Context) {
             trackId = cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ID)),
             trackName = cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_NAME)),
             albumName = cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_ALBUM)),
-            albumCover = cursor.getString(cursor.getColumnIndex(COLUMN_TRACK_ALBUM_COVER)),
             artistId = cursor.getInt(cursor.getColumnIndex(COLUMN_TRACK_ARTIST_ID))
         )
         tracks.add(track)

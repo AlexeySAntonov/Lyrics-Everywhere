@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_track_details.toolbar
 import kotlinx.android.synthetic.main.activity_track_details.trackAlbum
 import kotlinx.android.synthetic.main.activity_track_details.trackName
 import android.os.Build
+import com.aleksejantonov.lyricseverywhere.api.config.Constants
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -72,7 +73,7 @@ class TrackDetailsActivity : MvpAppCompatActivity(), TrackDetailsView {
     trackName.text = track.trackName
     trackAlbum.text = String.format(getString(R.string.album), track.albumName)
     Glide.with(this)
-        .load(track.albumCover)
+        .load(Constants.ALBUM_STUB)
         .listener(object : RequestListener<Drawable> {
           override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
             supportStartPostponedEnterTransition()
