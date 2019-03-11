@@ -56,11 +56,6 @@ ext {
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
-
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
   implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
   implementation "com.android.support:design:$supportLibraryVersion"
