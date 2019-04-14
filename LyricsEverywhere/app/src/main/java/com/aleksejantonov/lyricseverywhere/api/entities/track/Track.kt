@@ -8,10 +8,10 @@ import java.io.Serializable
 import java.util.Objects
 
 data class Track(
-    @SerializedName("track_id") val trackId: Int,
+    @SerializedName("track_id") val trackId: Long,
     @SerializedName("track_name") val trackName: String,
     @SerializedName("album_name") val albumName: String,
-    @SerializedName("artist_id") override var artistId: Int
+    @SerializedName("artist_id") override var artistId: Long
 ) : BaseData, Serializable {
 
   override fun toString(): String {

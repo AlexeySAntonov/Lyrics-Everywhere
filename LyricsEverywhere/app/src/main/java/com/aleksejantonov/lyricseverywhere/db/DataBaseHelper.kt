@@ -3,6 +3,10 @@ package com.aleksejantonov.lyricseverywhere.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.AlbumsTable.ALBUMS_TABLE_NAME
+import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.AlbumsTable.COLUMN_ALBUM_COVER
+import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.AlbumsTable.COLUMN_ALBUM_ID
+import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.AlbumsTable.COLUMN_ALBUM_NAME
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.ARTISTS_TABLE_NAME
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_ID
 import com.aleksejantonov.lyricseverywhere.db.DataBaseContract.ArtistsTable.COLUMN_ARTIST_NAME
@@ -28,6 +32,11 @@ class DataBaseHelper(context: Context, name: String, factory: SQLiteDatabase.Cur
         COLUMN_TRACK_NAME + " TEXT, " +
         COLUMN_TRACK_ALBUM + " TEXT, " +
         COLUMN_TRACK_ARTIST_ID + " INTEGER)")
+
+    db.execSQL("CREATE TABLE " + ALBUMS_TABLE_NAME + " (" +
+        COLUMN_ALBUM_ID + " INTEGER, " +
+        COLUMN_ALBUM_NAME + " TEXT, " +
+        COLUMN_ALBUM_COVER + " TEXT)")
   }
 
   override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {

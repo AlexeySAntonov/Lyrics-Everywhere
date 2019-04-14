@@ -18,7 +18,7 @@
   <string name="advanced_search">Advanced search</string>
   <string name="settings">Settings</string>
   <string name="exit">Log out</string>
-  <string name="no_twitter">Artist have no Twitter</string>
+  <string name="no_twitter">The musician has no twitter</string>
   <string name="query_results">Results for \"%s\"</string>
   <string name="search_by_artist_name">Search by…</string>
   <string name="lyrics_of">Lyrics of &#160;</string>
@@ -33,6 +33,6 @@
   <string name="day_mode">Day</string>
   <string name="system_mode">Follow system</string>
   <string name="auto_mode">Auto</string>
-  <string name="search_hint_text">&lt;font color=#E9E9E9&gt;artist or track&lt;/font&gt;</string>
-  <string name="advanced_search_hint">Any word in the song title or artist name or lyrics</string>
+  <string name="search_hint_text">&lt;font color=#E9E9E9&gt;musician or track&lt;/font&gt;</string>
+  <string name="advanced_search_hint">Any word in the song title or musician name or lyrics</string>
 </resources>

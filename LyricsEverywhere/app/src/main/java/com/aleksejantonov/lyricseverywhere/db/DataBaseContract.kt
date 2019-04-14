@@ -19,4 +19,12 @@ class DataBaseContract {
     const val COLUMN_TRACK_ALBUM = "album"
     const val COLUMN_TRACK_ARTIST_ID = "artistId"
   }
+
+  object AlbumsTable {
+    const val ALBUMS_TABLE_NAME = "albums"
+
+    const val COLUMN_ALBUM_ID = "albumId"
+    const val COLUMN_ALBUM_NAME = "name"
+    const val COLUMN_ALBUM_COVER = "cover"
+  }
 }

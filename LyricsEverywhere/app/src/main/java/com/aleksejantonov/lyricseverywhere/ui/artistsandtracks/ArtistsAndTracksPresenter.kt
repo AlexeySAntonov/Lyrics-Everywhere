@@ -14,6 +14,7 @@ import com.aleksejantonov.lyricseverywhere.utils.DataContainersUtil
 import com.aleksejantonov.lyricseverywhere.utils.DataMergeUtil
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -21,6 +22,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.ArrayList
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 @InjectViewState
 class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
 
@@ -88,7 +90,6 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         .keepUntilDestroy()
   }
 
-  @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
   fun loadArtists() {
     musixMatchService
         .getArtists(preferences.getString(Constants.API_KEY, ""), country, PAGE_NUMBER, PAGE_SIZE)
@@ -102,14 +103,13 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         .observeOn(AndroidSchedulers.mainThread())
         .doOnComplete { loadTracks() }
         .doOnSubscribe { viewState.showItems(listOf(LoadingItem())) }
-        .subscribe(
-            { Timber.d("Artists loading succeed") },
-            { Timber.d("Artists loading failed: ${it.message}") }
+        .subscribeBy(
+            onComplete = { Timber.d("Artists loading succeed") },
+            onError = { Timber.d("Artists loading failed: ${it.message}") }
         )
         .keepUntilDestroy()
   }
 
-  @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
   private fun loadTracks() {
     musixMatchService
         .getTracks(preferences.getString(Constants.API_KEY, ""), country, PAGE_NUMBER, PAGE_SIZE)
@@ -121,10 +121,30 @@ class ArtistsAndTracksPresenter : BasePresenter<ArtistsAndTracksListView>() {
         }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { viewState.showItems(listOf(LoadingItem())) }
-        .subscribe(
-            { viewState.showItems(DataMergeUtil.listsMerge(artists, tracks)) },
-            { Timber.d("Tracks loading failed: ${it.message}") }
+        .doOnComplete { loadAlbums() }
+        .subscribeBy(
+            onComplete = { viewState.showItems(DataMergeUtil.listsMerge(artists, tracks)) },
+            onError = { Timber.d("Tracks loading failed: ${it.message}") }
+        )
+        .keepUntilDestroy()
+  }
+
+  private fun loadAlbums() {
+    Observable
+        .fromIterable(artists)
+        .flatMapSingle {
+          musixMatchService.getAlbums(preferences.getString(Constants.API_KEY, ""), it.artistId)
+        }
+        .flatMapCompletable {
+          Completable.fromAction {
+            dataBase.insertAlbums(DataContainersUtil.albumContainersToAlbums(it.message.body.albumsContainers))
+          }
+        }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onComplete = {},
+            onError = Timber::e
         )
         .keepUntilDestroy()
   }

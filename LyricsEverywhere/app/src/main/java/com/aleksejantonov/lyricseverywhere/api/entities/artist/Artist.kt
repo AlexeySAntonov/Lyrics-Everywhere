@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 data class Artist(
-    @SerializedName("artist_id") override var artistId: Int,
+    @SerializedName("artist_id") override var artistId: Long,
     @SerializedName("artist_name") val artistName: String,
     @SerializedName("artist_twitter_url") val twitterUrl: String
 ) : BaseData {
