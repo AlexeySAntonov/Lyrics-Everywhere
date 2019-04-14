@@ -9,4 +9,5 @@
   <color name="white">#FFFFFF</color>
   <color name="searchInputHintColor">#1565C0</color>
   <color name="searchInputTextColor">#003C8F</color>
+  <color name="semiTransparentStatusBar">#42000000</color>
 </resources>
